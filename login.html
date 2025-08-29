@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jami Tender | Login</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-dark: #1e429f;
+            --primary-light: #a4cafe;
+            --accent: #ff9d3b;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #9ca3af;
+            --gray-light: #f3f4f6;
+            --border-radius: 16px;
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --error: #e53e3e;
+            --success: #38a169;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+        }
+
+        .shape-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            top: -250px;
+            right: -250px;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            bottom: -200px;
+            left: -200px;
+        }
+
+        .shape-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary-dark);
+            top: 50%;
+            left: -150px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            box-shadow: 0 10px 20px rgba(26, 86, 219, 0.3);
+        }
+
+        .logo-icon span {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--dark);
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            color: var(--gray);
+            font-size: 18px;
+            margin-top: 10px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .main-content {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            animation: fadeInUp 1s ease;
+        }
+
+        .graphic-side {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .graphic-side::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .graphic-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .graphic-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .graphic-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 300px;
+        }
+
+        .features {
+            text-align: left;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-side {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .form-subtitle {
+            color: var(--gray);
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .input-field {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 18px 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 16px;
+            transition: var(--transition);
+            background: var(--gray-light);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(26, 86, 219, 0.1);
+        }
+
+        input.error {
+            border-color: var(--error);
+        }
+
+        input.success {
+            border-color: var(--success);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .password-requirements {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .toggle-password:hover {
+            color: var(--primary);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(26, 86, 219, 0.3);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .login-button:hover::before {
+            left: 100%;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(26, 86, 219, 0.4);
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        .link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .link i {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: var(--gray);
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--gray-light);
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-size: 14px;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-button {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .social-button:hover {
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 30px 0 10px;
+            margin-top: 40px;
+            color: var(--gray);
+            animation: fadeIn 1s ease;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            color: var(--primary);
+        }
+
+        /* Custom Notification */
+        .custom-notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            z-index: 10000;
+            transition: top 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .custom-notification.show {
+            top: 20px;
+        }
+
+        .notification-icon {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .notification-info .notification-icon {
+            color: var(--primary);
+        }
+
+        .notification-warning .notification-icon {
+            color: var(--accent);
+        }
+
+        .notification-error .notification-icon {
+            color: var(--error);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notification-message {
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--gray);
+            margin-left: 16px;
+        }
+
+        /* Redirect Overlay */
+        .redirect-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .redirect-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .redirect-content {
+            text-align: center;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .redirect-overlay.active .redirect-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .jami-animation {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .jami-animation span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px) rotate(10deg);
+            animation: letterAnimation 1.2s forwards;
+        }
+
+        .jami-animation span:nth-child(1) { animation-delay: 0.1s; }
+        .jami-animation span:nth-child(2) { animation-delay: 0.2s; }
+        .jami-animation span:nth-child(3) { animation-delay: 0.3s; }
+        .jami-animation span:nth-child(4) { animation-delay: 0.4s; }
+
+        .loading-text {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 0.8s;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(26, 86, 219, 0.1);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            margin: 0 auto;
+            opacity: 0;
+            animation: spin 1s linear infinite, fadeIn 1s forwards;
+            animation-delay: 1s;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 6px;
+            background: var(--gray-light);
+            border-radius: 3px;
+            margin: 20px auto 0;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 1.2s;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 3px;
+            animation: progressAnimation 3s linear forwards;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes letterAnimation {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) rotate(10deg);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateY(-15px) rotate(-5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotate(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes progressAnimation {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .graphic-side {
+                display: none;
+            }
+            
+            .form-side {
+                padding: 30px;
+            }
+            
+            .social-login {
+                flex-direction: column;
+            }
+        }
+
+        @media (min-width: 901px) {
+            .graphic-side {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .links {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .logo-text {
+                font-size: 28px;
+            }
+            
+            .logo-icon {
+                width: 60px;
+                height: 60px;
+            }
+
+            .jami-animation {
+                font-size: 3rem;
+            }
+
+            .loading-text {
+                font-size: 1.2rem;
+            }
+
+            .progress-bar {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container"> 
+        <div class="main-content">
+            <div class="graphic-side">
+                <div class="graphic-content">
+                    <h2 class="graphic-title">Welcome to Jami Tender</h2>
+                    <p class="graphic-text">Access your account to manage tenders, bids, and procurement processes with our premium platform.</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="feature-text">Enterprise-grade Security</div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="feature-text">Lightning Fast Processing</div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="feature-text">Real-time Analytics</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-side">
+                <h1 class="form-title">Login to Your Account</h1>
+                <p class="form-subtitle">Enter your credentials to access the platform</p>
+                
+                <div class="input-group">
+                    <label for="email">Email / Phone</label>
+                    <div class="input-field">
+                        <input type="text" id="email" placeholder="Enter your email or phone number">
+                    </div>
+                    <div class="error-message" id="email-error">Please enter a valid email or phone number</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-field">
+                        <input type="password" id="password" placeholder="Enter your password">
+                        <button class="toggle-password" id="togglePassword">
+                            <i class="far fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="password-error">Password must be at least 8 characters with letters and numbers</div>
+                    <div class="password-requirements">Must be at least 8 characters with letters and numbers</div>
+                </div>
+                
+                <button class="login-button" id="loginButton">Sign In</button>
+                
+                <div class="links">
+                    <a href="#" class="link">
+                        <i class="fas fa-lock"></i>Forgot Password?
+                    </a>
+                    <a href="#" class="link">
+                        <i class="fas fa-user-plus"></i>Create Account
+                    </a>
+                </div>
+                
+                <div class="divider">
+                    <span>Or continue with</span>
+                </div>
+                
+                <div class="social-login">
+                    <button class="social-button" id="googleLogin">
+                        <svg class="social-icon" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Google
+                    </button>
+                    
+                    <button class="social-button" id="microsoftLogin">
+                        <svg class="social-icon" viewBox="0 0 24 24">
+                            <path fill="#7FBA00" d="M3 12c0-1.5.6-2.9 1.6-4 .9-1 2.2-1.6 3.6-1.6h3v3.9H8.2c-.4 0-.7.3-.7.7s.3.7.7.7h3V12h-3c-1.7 0-3-1.3-3-3zm6.8-1.8h5.5c.4 0 .7-.3.7-.7s-.3-.7-.7-.7H9.8c-.4 0-.7.3-.7.7s.3.7.7.7zm0 2.5h5.5c.4 0 .7-.3.7-.7s-.3-.7-.7-.7H9.8c-.4 0-.7.3-.7.7s.3.7.7.7zm8.5-2.9c.9 1 1.6 2.4 1.6 4 0 1.5-.6 2.9-1.6 4-1 1-2.2 1.6-3.6 1.6h-3v-3.9h2.2c.4 0 .7-.3.7-.7s-.3-.7-.7-.7h-2.2V12h3c1.7 0 3-1.3 3-3 0-1.7-1.3-3-3-3H6.2c-1.7 0-3 1.3-3 3h14.6z"/>
+                        </svg>
+                        Microsoft
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Support</a>
+                <a href="#" class="footer-link">© 2026 Jami Tender</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Notification -->
+    <div class="custom-notification" id="customNotification">
+        <div class="notification-icon">
+            <i class="fas fa-info-circle"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title" id="notificationTitle">Info</div>
+            <div class="notification-message" id="notificationMessage">This is a notification message</div>
+        </div>
+        <button class="notification-close" id="notificationClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Redirect Overlay -->
+    <div class="redirect-overlay" id="redirectOverlay">
+        <div class="redirect-content">
+            <div class="jami-animation">
+                <span>J</span>
+                <span>A</span>
+                <span>M</span>
+                <span>I</span>
+            </div>
+            <div class="loading-text">Redirecting you to Jami Tender...</div>
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Change the eye icon
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        });
+        
+        // Language toggle functionality
+        document.querySelectorAll('.language-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.language-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
+        // Add subtle animation to input fields on focus
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Custom notification system
+        const customNotification = document.getElementById('customNotification');
+        const notificationTitle = document.getElementById('notificationTitle');
+        const notificationMessage = document.getElementById('notificationMessage');
+        const notificationClose = document.getElementById('notificationClose');
+        
+        function showNotification(type, title, message, duration = 5000) {
+            // Set notification content
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+            
+            // Set notification type (color)
+            customNotification.className = 'custom-notification';
+            customNotification.classList.add(`notification-${type}`);
+            
+            // Show notification
+            customNotification.classList.add('show');
+            
+            // Auto hide after duration
+            setTimeout(() => {
+                hideNotification();
+            }, duration);
+        }
+        
+        function hideNotification() {
+            customNotification.classList.remove('show');
+        }
+        
+        notificationClose.addEventListener('click', hideNotification);
+
+        // Form validation
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailError = document.getElementById('email-error');
+        const passwordError = document.getElementById('password-error');
+        const loginButton = document.getElementById('loginButton');
+        const redirectOverlay = document.getElementById('redirectOverlay');
+        
+        // Email validation
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Phone validation
+        function isValidPhone(phone) {
+            const re = /^[\+]?[1-9][\d]{0,15}$/;
+            return re.test(phone.replace(/[\s\-\(\)]/g, ''));
+        }
+        
+        // Password validation (minimum 8 chars, alphanumeric)
+        function isValidPassword(password) {
+            const re = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+            return re.test(password);
+        }
+        
+        // Show error function
+        function showError(input, errorElement, message) {
+            input.classList.remove('success');
+            input.classList.add('error');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+        
+        // Show success function
+        function showSuccess(input, errorElement) {
+            input.classList.remove('error');
+            input.classList.add('success');
+            errorElement.style.display = 'none';
+        }
+        
+        // Validate email/phone on blur
+        emailInput.addEventListener('blur', function() {
+            const value = this.value.trim();
+            
+            if (value === '') {
+                showError(this, emailError, 'Email or phone number is required');
+            } else if (value.includes('@') && !isValidEmail(value)) {
+                showError(this, emailError, 'Please enter a valid email address');
+            } else if (!value.includes('@') && !isValidPhone(value)) {
+                showError(this, emailError, 'Please enter a valid phone number');
+            } else {
+                showSuccess(this, emailError);
+            }
+        });
+        
+        // Validate password on blur
+        passwordInput.addEventListener('blur', function() {
+            const value = this.value;
+            
+            if (value === '') {
+                showError(this, passwordError, 'Password is required');
+            } else if (!isValidPassword(value)) {
+                showError(this, passwordError, 'Password must be at least 8 characters with letters and numbers');
+            } else {
+                showSuccess(this, passwordError);
+            }
+        });
+        
+        // Handle form submission
+        loginButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Trigger validation
+            emailInput.dispatchEvent(new Event('blur'));
+            passwordInput.dispatchEvent(new Event('blur'));
+            
+            // Check if form is valid
+            const emailValid = !emailInput.classList.contains('error') && emailInput.value.trim() !== '';
+            const passwordValid = !passwordInput.classList.contains('error') && passwordInput.value !== '';
+            
+            if (emailValid && passwordValid) {
+                // Show redirect animation
+                redirectOverlay.classList.add('active');
+                
+                // Simulate redirect after 3 seconds
+                setTimeout(() => {
+                    // In a real application, this would redirect to the actual page
+                    window.location.href = 'https://jamitender.com/dashboard';
+                }, 3000);
+            } else {
+                // Show error notification if form is invalid
+                showNotification('error', 'Validation Error', 'Please fix the errors in the form');
+                
+                if (!emailValid) {
+                    showError(emailInput, emailError, 'Please enter a valid email or phone number');
+                }
+                if (!passwordValid) {
+                    showError(passwordInput, passwordError, 'Password must be at least 8 characters with letters and numbers');
+                }
+            }
+        });
+        
+        // Social login buttons - show custom notification
+        document.getElementById('googleLogin').addEventListener('click', function() {
+            showNotification('warning', 'Under Development', 'Google login is currently under development. Please Create Account.', 4000);
+        });
+        
+        document.getElementById('microsoftLogin').addEventListener('click', function() {
+            showNotification('warning', 'Under Development', 'Microsoft login is currently under development. Please Create Account.', 4000);
+        });
+    </script>
+</body>
+</html>
