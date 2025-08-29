@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jami Tender - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a4f72;
+            --secondary: #3a7ca5;
+            --accent: #f7b538;
+            --light: #f0f4f8;
+            --dark: #1e2a38;
+            --success: #28a745;
+            --error: #dc3545;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .register-container {
+            display: flex;
+            width: 100%;
+            max-width: 950px;
+            min-height: 600px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .corporate-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                linear-gradient(30deg, #ffffff 12%, transparent 12.5%, transparent 87%, #ffffff 87.5%, #ffffff),
+                linear-gradient(150deg, #ffffff 12%, transparent 12.5%, transparent 87%, #ffffff 87.5%, #ffffff),
+                linear-gradient(30deg, #ffffff 12%, transparent 12.5%, transparent 87%, #ffffff 87.5%, #ffffff),
+                linear-gradient(150deg, #ffffff 12%, transparent 12.5%, transparent 87%, #ffffff 87.5%, #ffffff),
+                linear-gradient(60deg, #ffffff77 25%, transparent 25.5%, transparent 75%, #ffffff77 75%, #ffffff77),
+                linear-gradient(60deg, #ffffff77 25%, transparent 25.5%, transparent 75%, #ffffff77 75%, #ffffff77);
+            background-size: 80px 140px;
+            background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+        }
+        
+        .logo {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .left-panel-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .left-panel h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .left-panel p {
+            font-size: 16px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+            max-width: 320px;
+        }
+        
+        .features {
+            list-style-type: none;
+            margin-top: 30px;
+        }
+        
+        .features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+        
+        .features i {
+            margin-right: 12px;
+            color: var(--accent);
+            font-size: 16px;
+        }
+        
+        .right-panel {
+            flex: 1.2;
+            padding: 40px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .right-panel h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .welcome-text {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+        
+        .progress-bar {
+            display: flex;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .progress-step-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #e9ecef;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-weight: 600;
+            border: 2px solid #e9ecef;
+            transition: var(--transition);
+        }
+        
+        .progress-step.active .progress-step-circle {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .progress-step.completed .progress-step-circle {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+        
+        .progress-step-text {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        .progress-step.active .progress-step-text {
+            color: var(--primary);
+        }
+        
+        .progress-bar-line {
+            position: absolute;
+            height: 2px;
+            background: #e9ecef;
+            top: 17px;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+        
+        .progress-bar-line-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: var(--transition);
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .input-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(58, 124, 165, 0.2);
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            color: #999;
+        }
+        
+        .input-group-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .input-group-row .input-group {
+            flex: 1;
+        }
+        
+        .terms-agreement {
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        .terms-agreement input {
+            margin-top: 3px;
+            margin-right: 10px;
+        }
+        
+        .terms-agreement a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .terms-agreement a:hover {
+            text-decoration: underline;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .btn {
+            padding: 14px 25px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .otp-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .otp-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+        
+        .otp-input:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(58, 124, 165, 0.2);
+        }
+        
+        .otp-actions {
+            text-align: center;
+            margin: 15px 0 25px;
+            font-size: 14px;
+        }
+        
+        .otp-actions a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+        
+        .otp-actions a:hover {
+            text-decoration: underline;
+        }
+        
+        .verification-success {
+            text-align: center;
+            padding: 20px;
+            background: #f0fff4;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #c6f6d5;
+        }
+        
+        .verification-success i {
+            font-size: 40px;
+            color: var(--success);
+            margin-bottom: 15px;
+        }
+        
+        .verification-success h3 {
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+        }
+        
+        .footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        /* Improved responsive design */
+        @media (max-width: 950px) {
+            .register-container {
+                flex-direction: column;
+                max-width: 600px;
+                min-height: auto;
+            }
+            
+            .left-panel {
+                padding: 30px 25px;
+                order: 2;
+            }
+            
+            .right-panel {
+                padding: 30px 25px;
+                order: 1;
+            }
+            
+            .left-panel p {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .register-container {
+                border-radius: 8px;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 25px 20px;
+            }
+            
+            .left-panel h2 {
+                font-size: 22px;
+            }
+            
+            .right-panel h2 {
+                font-size: 21px;
+            }
+            
+            .input-group-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .progress-step-text {
+                font-size: 10px;
+            }
+            
+            .otp-input {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 380px) {
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .left-panel h2 {
+                font-size: 20px;
+            }
+            
+            .input-group input, .input-group select {
+                padding: 12px 15px;
+            }
+            
+            .btn {
+                padding: 12px 15px;
+                font-size: 15px;
+            }
+            
+            .progress-step-circle {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+            
+            .progress-step-text {
+                font-size: 9px;
+            }
+            
+            .progress-bar-line {
+                top: 15px;
+            }
+        }
+        
+        /* Mobile menu for very small screens */
+        .mobile-menu-btn {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        @media (max-width: 950px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .left-panel {
+                display: none;
+            }
+            
+            .left-panel.active {
+                display: flex;
+            }
+        }
+        
+        /* Animation for better UX */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .right-panel > * {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        /* Message styles */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: slideIn 0.3s ease;
+        }
+        
+        .message.success {
+            background: var(--success);
+        }
+        
+        .message.error {
+            background: var(--error);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-btn" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="register-container">
+        <div class="left-panel" id="leftPanel">
+            <div class="corporate-pattern"></div>
+            <div class="logo">
+                <h1>JAMI <span>TENDER</span></h1>
+            </div>
+            <div class="left-panel-content">
+                <h2>Global Tender Management Platform</h2>
+                <p>Create your corporate account to manage tenders, contracts, and supplier relationships across international markets.</p>
+                
+                <ul class="features">
+                    <li><i class="fas fa-check-circle"></i> Secure global access</li>
+                    <li><i class="fas fa-check-circle"></i> Multi-language support</li>
+                    <li><i class="fas fa-check-circle"></i> Enterprise-grade security</li>
+                    <li><i class="fas fa-check-circle"></i> Real-time collaboration</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="right-panel">
+            <h2>Create Your Account</h2>
+            <p class="welcome-text">Complete the registration process to access the platform</p>
+            
+            <div class="progress-bar">
+                <div class="progress-bar-line">
+                    <div class="progress-bar-line-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-step active" id="step1">
+                    <div class="progress-step-circle">1</div>
+                    <div class="progress-step-text">Account Info</div>
+                </div>
+                <div class="progress-step" id="step2">
+                    <div class="progress-step-circle">2</div>
+                    <div class="progress-step-text">Company Details</div>
+                </div>
+                <div class="progress-step" id="step3">
+                    <div class="progress-step-circle">3</div>
+                    <div class="progress-step-text">Verification</div>
+                </div>
+                <div class="progress-step" id="step4">
+                    <div class="progress-step-circle">4</div>
+                    <div class="progress-step-text">Complete</div>
+                </div>
+            </div>
+            
+            <form id="registrationForm">
+                <!-- Step 1: Account Information -->
+                <div class="form-step active" id="formStep1">
+                    <div class="input-group-row">
+                        <div class="input-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" placeholder="Enter your first name" required>
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                        <div class="input-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" placeholder="Enter your last name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="email">Corporate Email</label>
+                        <input type="email" id="email" placeholder="your.name@company.com" required>
+                        <i class="fas fa-envelope input-icon"></i>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="phone">Mobile Number</label>
+                        <input type="tel" id="phone" placeholder="+1 234 567 8900" required>
+                        <i class="fas fa-phone input-icon"></i>
+                    </div>
+                    
+                    <div class="input-group-row">
+                        <div class="input-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" placeholder="Create a password" required>
+                            <i class="fas fa-lock input-icon"></i>
+                        </div>
+                        <div class="input-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                            <i class="fas fa-lock input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Company Details -->
+                <div class="form-step" id="formStep2">
+                    <div class="input-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" id="companyName" placeholder="Enter your company name" required>
+                        <i class="fas fa-building input-icon"></i>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="companyType">Company Type</label>
+                        <select id="companyType" required>
+                            <option value="">Select company type</option>
+                            <option value="corporation">Corporation</option>
+                            <option value="llc">Limited Liability Company (LLC)</option>
+                            <option value="partnership">Partnership</option>
+                            <option value="sole-proprietorship">Sole Proprietorship</option>
+                            <option value="government">Government Entity</option>
+                            <option value="non-profit">Non-Profit Organization</option>
+                        </select>
+                        <i class="fas fa-chevron-down input-icon"></i>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="industry">Industry</label>
+                        <select id="industry" required>
+                            <option value="">Select industry</option>
+                            <option value="construction">Construction</option>
+                            <option value="technology">Technology</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="manufacturing">Manufacturing</option>
+                            <option value="transportation">Transportation & Logistics</option>
+                            <option value="energy">Energy & Utilities</option>
+                            <option value="finance">Financial Services</option>
+                            <option value="education">Education</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <i class="fas fa-chevron-down input-icon"></i>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="address">Company Address</label>
+                        <input type="text" id="address" placeholder="Enter company address" required>
+                        <i class="fas fa-map-marker-alt input-icon"></i>
+                    </div>
+                    
+                    <div class="input-group-row">
+                        <div class="input-group">
+                            <label for="country">Country</label>
+                            <select id="country" required>
+                                <option value="">Select country</option>
+                                <option value="us">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="ca">Canada</option>
+                                <option value="au">Australia</option>
+                                <option value="de">Germany</option>
+                                <option value="fr">France</option>
+                                <option value="in">India</option>
+                                <option value="cn">China</option>
+                                <option value="jp">Japan</option>
+                            </select>
+                            <i class="fas fa-chevron-down input-icon"></i>
+                        </div>
+                        <div class="input-group">
+                            <label for="taxId">Tax ID / VAT Number</label>
+                            <input type="text" id="taxId" placeholder="Enter tax ID" required>
+                        </div>
+                    </div>
+                    
+                    <div class="terms-agreement">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>, and confirm that all information provided is accurate.</label>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(1)">Back</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Verification -->
+                <div class="form-step" id="formStep3">
+                    <div class="input-group">
+                        <label>Email Verification</label>
+                        <p style="margin-bottom: 15px; font-size: 14px; color: #666;">We've sent a 6-digit code to <strong id="emailDisplay">your.email@company.com</strong>. Please check your inbox and enter the code below.</p>
+                    </div>
+                    
+                    <div class="otp-container">
+                        <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 1)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 2)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 3)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 4)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 5)">
+                        <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 6)">
+                    </div>
+                    
+                    <div class="otp-actions">
+                        <a id="resendEmail" onclick="resendOTP('email')">Resend Email Code</a>
+                        <a onclick="switchToMobileVerification()">Verify with Mobile Instead</a>
+                    </div>
+                    
+                    <div class="input-group" id="mobileVerification" style="display: none;">
+                        <label>Mobile Verification</label>
+                        <p style="margin-bottom: 15px; font-size: 14px; color: #666;">We've sent a 6-digit code to <strong id="mobileDisplay">+1 234 567 8900</strong>. Please enter the code below.</p>
+                        
+                        <div class="otp-container">
+                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 1)">
+                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 2)">
+                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 3)">
+                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 4)">
+                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 5)">
+                            <input type="text" class="otp-input" maxlength="1" oninput="moveToNext(this, 6)">
+                        </div>
+                        
+                        <div class="otp-actions">
+                            <a id="resendMobile" onclick="resendOTP('mobile')">Resend SMS Code</a>
+                            <a onclick="switchToEmailVerification()">Verify with Email Instead</a>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Back</button>
+                        <button type="button" class="btn btn-primary" onclick="verifyOTP()">Verify & Complete</button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Completion -->
+                <div class="form-step" id="formStep4">
+                    <div class="verification-success">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Registration Successful!</h3>
+                        <p>Your account has been created successfully. You can now access the Jami Tender platform.</p>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='index.html'">Go to Login</button>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="footer">
+                <p>© 2026 Jami Tender. All rights reserved.<br>
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        let verificationMethod = 'email'; // 'email' or 'mobile'
+        
+        // Initialize progress bar
+        updateProgressBar();
+        
+        function nextStep(step) {
+            // Validate current step before proceeding
+            if (!validateStep(currentStep)) {
+                return;
+            }
+            
+            // Hide current step
+            document.getElementById(`formStep${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            // Update current step
+            currentStep = step;
+            
+            // Show next step
+            document.getElementById(`formStep${currentStep}`).classList.add('active');
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // If moving to verification step, update the displayed email/phone
+            if (currentStep === 3) {
+                document.getElementById('emailDisplay').textContent = document.getElementById('email').value;
+                document.getElementById('mobileDisplay').textContent = document.getElementById('phone').value;
+                
+                // Simulate sending OTP
+                simulateSendOTP();
+            }
+            
+            // Update progress bar
+            updateProgressBar();
+        }
+        
+        function prevStep(step) {
+            // Hide current step
+            document.getElementById(`formStep${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            // Update current step
+            currentStep = step;
+            
+            // Show previous step
+            document.getElementById(`formStep${currentStep}`).classList.add('active');
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Update progress bar
+            updateProgressBar();
+        }
+        
+        function updateProgressBar() {
+            const progressPercentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progressFill').style.width = `${progressPercentage}%`;
+            
+            // Mark previous steps as completed
+            for (let i = 1; i < currentStep; i++) {
+                document.getElementById(`step${i}`).classList.add('completed');
+            }
+            
+            // Remove completed class from future steps
+            for (let i = currentStep; i <= totalSteps; i++) {
+                document.getElementById(`step${i}`).classList.remove('completed');
+            }
+        }
+        
+        function validateStep(step) {
+            let isValid = true;
+            
+            if (step === 1) {
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (!firstName || !lastName || !email || !phone || !password || !confirmPassword) {
+                    showMessage('Please fill all required fields', 'error');
+                    isValid = false;
+                }
+                
+                // Email validation
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email)) {
+                    showMessage('Please enter a valid email address', 'error');
+                    isValid = false;
+                }
+                
+                // Phone validation (simple international format)
+               /*  const phonePattern = /^\+[1-9]{1}[0-9]{3,14}$/;
+                if (!phonePattern.test(phone)) {
+                    showMessage('Please enter a valid international phone number (e.g., +1234567890)', 'error');
+                    isValid = false;
+                } */
+                
+                // Password validation
+                if (password.length < 8) {
+                    showMessage('Password must be at least 8 characters long', 'error');
+                    isValid = false;
+                }
+                
+                if (password !== confirmPassword) {
+                    showMessage('Passwords do not match', 'error');
+                    isValid = false;
+                }
+            }
+            
+            if (step === 2) {
+                const companyName = document.getElementById('companyName').value;
+                const companyType = document.getElementById('companyType').value;
+                const industry = document.getElementById('industry').value;
+                const address = document.getElementById('address').value;
+                const country = document.getElementById('country').value;
+                const taxId = document.getElementById('taxId').value;
+                const terms = document.getElementById('terms').checked;
+                
+                if (!companyName || !companyType || !industry || !address || !country || !taxId) {
+                    showMessage('Please fill all required fields', 'error');
+                    isValid = false;
+                }
+                
+                if (!terms) {
+                    showMessage('You must agree to the terms and conditions', 'error');
+                    isValid = false;
+                }
+            }
+            
+            return isValid;
+        }
+        
+        function moveToNext(input, index) {
+            const maxLength = parseInt(input.getAttribute('maxlength'));
+            const currentLength = input.value.length;
+            
+            if (currentLength >= maxLength) {
+                const nextInput = input.nextElementSibling;
+                if (nextElementSibling) {
+                    nextInput.focus();
+                }
+            }
+            
+            // Auto-backspace
+            if (currentLength === 0 && input.value === '') {
+                const prevInput = input.previousElementSibling;
+                if (prevInput) {
+                    prevInput.focus();
+                }
+            }
+        }
+        
+        function switchToMobileVerification() {
+            verificationMethod = 'mobile';
+            document.getElementById('mobileVerification').style.display = 'block';
+            simulateSendOTP();
+        }
+        
+        function switchToEmailVerification() {
+            verificationMethod = 'email';
+            document.getElementById('mobileVerification').style.display = 'none';
+            simulateSendOTP();
+        }
+        
+        function resendOTP(method) {
+            const button = document.getElementById(`resend${method.charAt(0).toUpperCase() + method.slice(1)}`);
+            button.innerHTML = 'Sending...';
+            button.style.opacity = '0.7';
+            button.style.pointerEvents = 'none';
+            
+            // Simulate API call to resend OTP
+            setTimeout(() => {
+                showMessage(`Verification code sent to your ${method}`, 'success');
+                button.innerHTML = `Resend ${method === 'email' ? 'Email' : 'SMS'} Code`;
+                button.style.opacity = '1';
+                button.style.pointerEvents = 'auto';
+                
+                // Start countdown for next resend
+                startResendCountdown(button, method);
+            }, 1500);
+        }
+        
+        function startResendCountdown(button, method) {
+            let countdown = 30;
+            button.innerHTML = `Resend in ${countdown}s`;
+            button.style.pointerEvents = 'none';
+            
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    button.innerHTML = `Resend in ${countdown}s`;
+                } else {
+                    clearInterval(countdownInterval);
+                    button.innerHTML = `Resend ${method === 'email' ? 'Email' : 'SMS'} Code`;
+                    button.style.pointerEvents = 'auto';
+                }
+            }, 1000);
+        }
+        
+        function simulateSendOTP() {
+            showMessage(`Verification code sent to your ${verificationMethod}`, 'success');
+            
+            // Start countdown for resend buttons
+            startResendCountdown(document.getElementById('resendEmail'), 'email');
+            if (verificationMethod === 'mobile') {
+                startResendCountdown(document.getElementById('resendMobile'), 'mobile');
+            }
+        }
+        
+        function verifyOTP() {
+            // In a real application, this would verify the OTP with your backend
+            // For demo purposes, we'll assume it's always successful
+            
+            const otpInputs = document.querySelectorAll('.otp-input');
+            let otp = '';
+            let allFilled = true;
+            
+            otpInputs.forEach(input => {
+                otp += input.value;
+                if (!input.value) allFilled = false;
+            });
+            
+            if (!allFilled) {
+                showMessage('Please enter the complete verification code', 'error');
+                return;
+            }
+            
+            if (otp.length !== 6) {
+                showMessage('Verification code must be 6 digits', 'error');
+                return;
+            }
+            
+            // Simulate API verification call
+            showMessage('Verifying code...', 'success');
+            
+            setTimeout(() => {
+                nextStep(4);
+            }, 1500);
+        }
+        
+        function showMessage(message, type) {
+            // Remove any existing messages
+            const existingMsg = document.querySelector('.message');
+            if (existingMsg) {
+                existingMsg.remove();
+            }
+            
+            // Create message element
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${type}`;
+            messageEl.textContent = message;
+            
+            document.body.appendChild(messageEl);
+            
+            // Remove message after 3 seconds
+            setTimeout(() => {
+                messageEl.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    messageEl.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const leftPanel = document.getElementById('leftPanel');
+        
+        menuToggle.addEventListener('click', () => {
+            leftPanel.classList.toggle('active');
+            
+            if (leftPanel.classList.contains('active')) {
+                menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+    </script>
+</body>
+</html>
