@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jami Tender | OTP Verification</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Link-css -->
+     <link rel="stylesheet" href="css/login-otp.css">
+</head>
+<body>
+    <div class="background-shapes"> 
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <h1 class="form-title">Verify Your Identity</h1>
+            <p class="form-subtitle">Enter the 6-digit code sent to your account</p>
+            
+            <div class="verification-method">
+                <div class="verification-icon">
+                    <i class="fas fa-comment-alt" id="verificationIcon"></i>
+                </div>
+                <div class="verification-details">
+                    <div class="verification-title" id="verificationMethod">SMS to your phone</div>
+                    <div class="verification-text" id="verificationTarget">Code sent to +8801********</div>
+                </div>
+            </div>
+            
+            <div class="otp-container">
+                <input type="text" class="otp-input" id="otp1" maxlength="1" onkeyup="moveToNext(this, 'otp2')">
+                <input type="text" class="otp-input" id="otp2" maxlength="1" onkeyup="moveToNext(this, 'otp3')">
+                <input type="text" class="otp-input" id="otp3" maxlength="1" onkeyup="moveToNext(this, 'otp4')">
+                <input type="text" class="otp-input" id="otp4" maxlength="1" onkeyup="moveToNext(this, 'otp5')">
+                <input type="text" class="otp-input" id="otp5" maxlength="1" onkeyup="moveToNext(this, 'otp6')">
+                <input type="text" class="otp-input" id="otp6" maxlength="1" onkeyup="validateOtp(this)">
+            </div>
+            <div class="error-message" id="otp-error">Please enter a valid 6-digit code</div>
+            
+            <div class="resend-container">
+                <div class="resend-text">Didn't receive the code?</div>
+                <a class="resend-link disabled" id="resendLink">Resend code in <span id="countdown">60</span>s</a>
+            </div>
+            
+            <button class="verify-button" id="verifyButton">Verify & Continue</button>
+            
+            <a href="login.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Login
+            </a>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Support</a>
+                <a href="#" class="footer-link">© 2026 Jami Tender</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Notification -->
+    <div class="custom-notification" id="customNotification">
+        <div class="notification-icon">
+            <i class="fas fa-info-circle"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title" id="notificationTitle">Info</div>
+            <div class="notification-message" id="notificationMessage">This is a notification message</div>
+        </div>
+        <button class="notification-close" id="notificationClose">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- JAMI Loader -->
+    <div class="jami-loader-overlay" id="jamiLoader">
+        <div class="jami-loader">
+            <div class="jami-text">JAMI</div>
+            <div class="loader-subtext">Redirecting to Dashboard...</div>
+        </div>
+    </div>
+
+<!--link-js -->
+<script src="javascript/login-otp.js"></script>r
+</body>
+</html>
