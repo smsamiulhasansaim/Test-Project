@@ -152,7 +152,7 @@
                 if (!passwordValid) {
                     showError(passwordInput, passwordError, 'Password must be at least 8 characters with letters and numbers');
                 }
-                showNotification('error', 'Login Failed', 'Please fix the errors and try again');
+                showNotification('error', 'Authentication failed', 'Please enter a valid email, phone number, and a password that is at least 8 characters long.');
             }
         });
         
