@@ -1,4 +1,4 @@
-         :root {
+    :root {
             --primary: #1a56db;
             --primary-dark: #1e429f;
             --primary-light: #a4cafe;
@@ -426,7 +426,7 @@
             color: var(--primary);
         }
 
-        /* Custom Notification - Updated to slide from right */
+        /* Custom Notification */
         .custom-notification {
             position: fixed;
             top: 20px;
@@ -444,6 +444,13 @@
 
         .custom-notification.show {
             right: 20px;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(0);}
+            40% {transform: translateX(-10px);}
+            60% {transform: translateX(-5px);}
         }
 
         .notification-icon {
@@ -488,6 +495,105 @@
             cursor: pointer;
             color: var(--gray);
             margin-left: 16px;
+        }
+
+        /* Account Selection Modal */
+        .account-selection-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .account-selection-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .account-list {
+            margin-top: 15px;
+        }
+
+        .account-item {
+            padding: 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .account-item:hover {
+            border-color: var(--primary);
+            background: var(--gray-light);
+            transform: translateY(-2px);
+        }
+
+        .account-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .account-email {
+            font-size: 14px;
+            color: var(--gray);
         }
 
         /* Responsive adjustments */
@@ -538,5 +644,25 @@
             .logo-icon {
                 width: 60px;
                 height: 60px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
             }
         }

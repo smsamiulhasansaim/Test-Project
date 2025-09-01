@@ -1,4 +1,4 @@
-        // Toggle password visibility
+         // Toggle password visibility
         document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -10,28 +10,7 @@
             icon.classList.toggle('fa-eye-slash');
         });
         
-        // Language toggle functionality
-        document.querySelectorAll('.language-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                document.querySelectorAll('.language-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                this.classList.add('active');
-            });
-        });
-
-        // Add subtle animation to input fields on focus
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.style.transform = 'translateY(-2px)';
-            });
-            
-            input.addEventListener('blur', function() {
-                this.parentElement.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Custom notification system - 
+        // Custom notification system
         const customNotification = document.getElementById('customNotification');
         const notificationTitle = document.getElementById('notificationTitle');
         const notificationMessage = document.getElementById('notificationMessage');
@@ -142,8 +121,24 @@
             const passwordValid = !passwordInput.classList.contains('error') && passwordInput.value !== '';
             
             if (emailValid && passwordValid) {
-                // Redirect directly to OTP page
-                window.location.href = 'login-otp.html';
+                // Simulate API call to check if email has multiple accounts
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                
+                // Check for specific demo credentials
+                if (email === 'safwan110817@gmail.com'   && password === 'Saim@2005') {
+                    // Show account selection modal for demo account
+                    const accounts = [
+                        { id: 1, company: 'Safwan Corporation', email: email },
+                        { id: 2, company: 'Saim Enterprises', email: email },
+                        { id: 3, company: 'Safwan & Co.', email: email }
+                    ];
+                    showAccountSelection(accounts);
+                } 
+                else {
+                    // For other accounts, redirect directly to OTP
+                    window.location.href = 'login-otp.html';
+                }
             } else {
                 // Show error notification if form is invalid
                 if (!emailValid) {
@@ -155,6 +150,46 @@
                 showNotification('error', 'Authentication failed', 'Please enter a valid email, phone number, and a password that is at least 8 characters long.');
             }
         });
+        
+        // Function to show account selection modal
+        function showAccountSelection(accounts) {
+            const modal = document.getElementById('accountSelectionModal');
+            const accountList = document.getElementById('accountList');
+            
+            // Clear previous list
+            accountList.innerHTML = '';
+            
+            // Populate account list
+            accounts.forEach(account => {
+                const accountItem = document.createElement('div');
+                accountItem.className = 'account-item';
+                accountItem.innerHTML = `
+                    <div class="account-name">${account.company}</div>
+                    <div class="account-email">${account.email}</div>
+                `;
+                
+                accountItem.addEventListener('click', () => {
+                    // Store selected account (you might want to use a more secure method)
+                    localStorage.setItem('selectedAccount', JSON.stringify(account));
+                    hideAccountSelection();
+                    window.location.href = 'login-otp.html';
+                });
+                
+                accountList.appendChild(accountItem);
+            });
+            
+            // Show modal
+            modal.classList.add('show');
+        }
+        
+        // Function to hide account selection modal
+        function hideAccountSelection() {
+            const modal = document.getElementById('accountSelectionModal');
+            modal.classList.remove('show');
+        }
+        
+        // Close modal when close button is clicked
+        document.getElementById('modalClose').addEventListener('click', hideAccountSelection);
         
         // Social login buttons - show custom notification
         document.getElementById('googleLogin').addEventListener('click', function() {
