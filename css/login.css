@@ -1,4 +1,4 @@
-    :root {
+:root {
             --primary: #1a56db;
             --primary-dark: #1e429f;
             --primary-light: #a4cafe;
@@ -22,7 +22,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            background: linear-gradient(135dheg, #f3f4f6 0%, #e5e7eb 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -78,38 +78,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-        .logo-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border-radius: 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-            box-shadow: 0 10px 20px rgba(26, 86, 219, 0.3);
-        }
-
-        .logo-icon span {
-            color: white;
-            font-size: 32px;
-            font-weight: bold;
-        }
-
-        .logo-text {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--dark);
-            letter-spacing: 1px;
-        }
-
-        .tagline {
-            color: var(--gray);
-            font-size: 18px;
-            margin-top: 10px;
-            font-weight: 300;
-            letter-spacing: 0.5px;
         }
 
         .main-content {
@@ -200,6 +168,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
         }
 
         .form-title {
@@ -596,6 +565,490 @@
             color: var(--gray);
         }
 
+        /* OTP Section Styles */
+        .otp-section {
+            display: none;
+        }
+
+        .verification-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: var(--gray-light);
+            border-radius: 12px;
+        }
+
+        .verification-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: white;
+        }
+
+        .verification-details {
+            flex: 1;
+        }
+
+        .verification-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .verification-text {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .otp-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            gap: 10px;
+        }
+
+        .otp-input {
+            width: 55px;
+            height: 65px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            background: var(--gray-light);
+            transition: var(--transition);
+        }
+
+        .otp-input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(26, 86, 219, 0.1);
+        }
+
+        .otp-input.error {
+            border-color: var(--error);
+        }
+
+        .otp-input.success {
+            border-color: var(--success);
+        }
+
+        .resend-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .resend-text {
+            color: var(--gray);
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .resend-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .resend-link:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .resend-link.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .verify-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(26, 86, 219, 0.3);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .verify-button.loading {
+            pointer-events: none;
+        }
+
+        .verify-button .spinner {
+            width: 20px;
+            height: 20px;
+            margin-left: 8px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+            display: none;
+        }
+
+        .verify-button.loading .spinner {
+            display: block;
+        }
+
+        .verify-button.loading .button-text {
+            display: inline-block;
+        }
+
+        .verify-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .verify-button:hover::before {
+            left: 100%;
+        }
+
+        .verify-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(26, 86, 219, 0.4);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            color: var(--primary-dark);
+            cursor: pointer;
+        }
+
+        /* JAMI Loader */
+        .jami-loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .jami-loader-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .jami-loader {
+            text-align: center;
+        }
+
+        .jami-text {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 40%, var(--accent) 60%, var(--primary) 100%);
+            background-size: 300% 300%;
+            -webkit-background-clip:text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 2s ease infinite, pulse 1.5s ease-in-out infinite;
+            letter-spacing: 2px;
+        }
+
+        .loader-subtext {
+            margin-top: 20px;
+            color: var(--dark);
+            font-weight: 500;
+            animation: fadeInOut 1.5s ease-in-out infinite;
+        }
+
+        /* Searching Animation -*/
+        .searching-animation {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .searching-animation .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--gray-light);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 15px;
+            position: relative;
+        }
+
+        .searching-animation .spinner::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border: 3px solid transparent;
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+
+        .searching-animation p {
+            color: var(--gray);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Success Message - Improved with Seal Animation */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(56, 161, 105, 0.1);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-message i {
+            color: var(--success);
+            font-size: 40px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .success-message p {
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+
+        .success-message::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            background: rgba(56, 161, 105, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: sealExpand 0.6s ease-out forwards;
+            z-index: 1;
+        }
+
+        @keyframes sealExpand {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+        }
+
+        /* Verification Seal */
+        .verification-seal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 150px;
+            height: 150px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 10002;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .verification-seal.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            animation: sealStamp 0.8s ease-out;
+        }
+
+        .verification-seal i {
+            font-size: 60px;
+        }
+
+        @keyframes sealStamp {
+            0% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(0.8); opacity: 1; }
+            60% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        /* Enhanced OTP Inputs */
+        .otp-container.enhanced {
+            position: relative;
+        }
+
+        .otp-input.enhanced {
+            width: 60px;
+            height: 70px;
+            font-size: 26px;
+            border: 2px solid var(--primary-light);
+            background: white;
+            box-shadow: 0 4px 10px rgba(26, 86, 219, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .otp-input.enhanced:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Enhanced Verify Button */
+        .verify-button.enhanced {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            border-radius: 12px;
+            padding: 18px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(26, 86, 219, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .verify-button.enhanced::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .verify-button.enhanced:hover::before {
+            left: 100%;
+        }
+
+        .verify-button.enhanced:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(26, 86, 219, 0.4);
+        }
+
+        .verify-button.enhanced:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(26, 86, 219, 0.3);
+        }
+
+        .verify-button.enhanced .button-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .verify-button.enhanced .button-icon {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* No Account Found Message */
+        .no-account-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(229, 62, 62, 0.1);
+            border-radius: 12px;
+            margin: 20px 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .no-account-message i {
+            color: var(--error);
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .no-account-message p {
+            color: var(--dark);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .no-account-message .action-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+
+        .no-account-message .action-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
         /* Responsive adjustments */
         @media (max-width: 900px) {
             .main-content {
@@ -617,6 +1070,22 @@
             .custom-notification {
                 max-width: calc(100% - 40px);
             }
+            
+            .otp-container {
+                justify-content: space-around;
+            }
+            
+            .otp-input {
+                width: 45px;
+                height: 55px;
+                font-size: 20px;
+            }
+
+            .otp-input.enhanced {
+                width: 50px;
+                height: 60px;
+                font-size: 22px;
+            }
         }
 
         @media (min-width: 901px) {
@@ -637,13 +1106,33 @@
                 gap: 10px;
             }
             
-            .logo-text {
-                font-size: 28px;
+            .otp-container {
+                gap: 5px;
             }
             
-            .logo-icon {
-                width: 60px;
-                height: 60px;
+            .otp-input {
+                width: 40px;
+                height: 50px;
+                font-size: 18px;
+            }
+
+            .otp-input.enhanced {
+                width: 45px;
+                height: 55px;
+                font-size: 20px;
+            }
+            
+            .jami-text {
+                font-size: 36px;
+            }
+
+            .verification-seal {
+                width: 120px;
+                height: 120px;
+            }
+
+            .verification-seal i {
+                font-size: 50px;
             }
         }
 

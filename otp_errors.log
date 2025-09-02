@@ -1,0 +1,40 @@
+[02-Sep-2025 23:57:19 Europe/Berlin] Sending SMS to: 8801866969660
+[02-Sep-2025 23:57:19 Europe/Berlin] SMS API Request: Array
+(
+    [api_key] => pdVTRfargFxVFVh6miaC
+    [senderid] => 8809617628623
+    [number] => 8801866969660
+    [message] => Your Jami Tender verification code is: 708132. This code will expire in 10 minutes.
+)
+
+[02-Sep-2025 23:57:19 Europe/Berlin] SMS API Response - HTTP Code: 200
+[02-Sep-2025 23:57:19 Europe/Berlin] SMS API Response: {"response_code":202,"message_id":56026196,"success_message":"SMS Submitted Successfully 1","error_message":""}
+[02-Sep-2025 23:57:19 Europe/Berlin] SMS API CURL Error: 
+[02-Sep-2025 23:57:19 Europe/Berlin] SMS API JSON Response: Array
+(
+    [response_code] => 202
+    [message_id] => 56026196
+    [success_message] => SMS Submitted Successfully 1
+    [error_message] => 
+)
+
+[03-Sep-2025 00:06:22 Europe/Berlin] Sending SMS to: 8801911638811
+[03-Sep-2025 00:06:22 Europe/Berlin] SMS API Request: Array
+(
+    [api_key] => pdVTRfargFxVFVh6miaC
+    [senderid] => 8809617628623
+    [number] => 8801911638811
+    [message] => Your Jami Tender verification code is: 724805. This code will expire in 10 minutes.
+)
+
+[03-Sep-2025 00:06:23 Europe/Berlin] SMS API Response - HTTP Code: 200
+[03-Sep-2025 00:06:23 Europe/Berlin] SMS API Response: {"response_code":202,"message_id":56026312,"success_message":"SMS Submitted Successfully 1","error_message":""}
+[03-Sep-2025 00:06:23 Europe/Berlin] SMS API CURL Error: 
+[03-Sep-2025 00:06:23 Europe/Berlin] SMS API JSON Response: Array
+(
+    [response_code] => 202
+    [message_id] => 56026312
+    [success_message] => SMS Submitted Successfully 1
+    [error_message] => 
+)
+
