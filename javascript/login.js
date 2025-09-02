@@ -130,7 +130,7 @@
                     // Show account selection modal for demo account
                     const accounts = [
                         { id: 1, company: 'Safwan Corporation', email: email },
-                        { id: 2, company: 'Saim Enterprises', email: email },
+                        { id: 2, company: 'Saim Vondami Enterprises', email: email },
                         { id: 3, company: 'Safwan & Co.', email: email }
                     ];
                     showAccountSelection(accounts);
