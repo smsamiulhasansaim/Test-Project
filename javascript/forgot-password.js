@@ -28,7 +28,7 @@ let userData = {
     company: '',
     contact: '',
     method: 'email',
-    name: 'User' // This would normally come from your database
+    name: 'User'
 };
 
 // Show a specific step
@@ -106,21 +106,37 @@ step4Button.addEventListener('click', function() {
         return;
     }
     
-    // Show loading overlay with database connection message
     showLoadingOverlay('Updating Password', 'Please wait while we update your password');
     
-    // In a real application, you would send this to your backend
-    setTimeout(() => {
+    // Send password reset request to backend
+    fetch('auth/forgot_password.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            identifier: userData.contact,
+            new_password: newPassword
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
         hideLoadingOverlay();
         
-        // Show success notification
-        showNotification('success', 'Password Reset Successful', 'Your password has been reset successfully. You can now login with your new password.', 5000);
-        
-        // Redirect to login page after a delay
-        setTimeout(() => {
-            window.location.href = 'login.html';
-        }, 3000);
-    }, 2500);
+        if (data.success) {
+            showNotification('success', 'Password Reset Successful', 'Your password has been reset successfully. You can now login with your new password.', 5000);
+            
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 3000);
+        } else {
+            showNotification('error', 'Password Reset Failed', data.message);
+        }
+    })
+    .catch(error => {
+        hideLoadingOverlay();
+        showNotification('error', 'Network Error', 'Unable to connect to server');
+    });
 });
 
 // Back navigation
@@ -173,33 +189,27 @@ otpInputs.forEach(input => {
         const value = this.value;
         const index = parseInt(this.getAttribute('data-index'));
         
-        // Limit to one character
         if (value.length > 1) {
             this.value = value.charAt(0);
         }
         
-        // Auto-advance to next input
         if (value.length === 1 && index < 6) {
             otpInputs[index].focus();
         }
         
-        // Auto-verify when all 6 digits are entered
         let otpCode = '';
         otpInputs.forEach(input => {
             otpCode += input.value;
         });
         
         if (otpCode.length === 6) {
-            // Show verifying state
             buttonText.textContent = 'Verifying...';
             buttonSpinner.style.display = 'inline-block';
             step3Button.disabled = true;
             
-            // Verify after a short delay to show the spinner
             setTimeout(verifyOTP, 1000);
         }
         
-        // Clear error when typing
         if (value.length > 0) {
             showSuccess(this, document.getElementById('otp-error'));
         }
@@ -213,7 +223,6 @@ otpInputs.forEach(input => {
         }
     });
     
-    // Fix for mobile - ensure inputs are visible
     input.addEventListener('focus', function() {
         this.style.fontSize = '28px';
         this.style.height = '70px';
@@ -255,7 +264,6 @@ document.getElementById('toggleConfirmPassword').addEventListener('click', funct
 function sendOTP(isResend = false) {
     showLoadingOverlay('Sending Verification Code', `Sending code to your ${userData.method === 'email' ? 'email' : 'phone'}`);
     
-    // Prepare data for API
     const data = {
         action: 'send_otp',
         name: userData.name,
@@ -268,7 +276,6 @@ function sendOTP(isResend = false) {
         data.mobile = userData.contact;
     }
     
-    // Send request to PHP API
     fetch('send_forgot_otp.php', {
         method: 'POST',
         headers: {
@@ -281,17 +288,13 @@ function sendOTP(isResend = false) {
         hideLoadingOverlay();
         
         if (data.success) {
-            // Show notification
             showNotification('info', 'Verification Code Sent', `We've sent a 6-digit code to your ${userData.method === 'email' ? 'email' : 'phone'}`, 5000);
             
-            // Update contact method text
             contactMethod.textContent = userData.method === 'email' ? 'email' : 'phone';
             
-            // Move to next step
             showStep(3);
             
             if (isResend) {
-                // Clear OTP inputs on resend
                 otpInputs.forEach(input => {
                     input.value = '';
                 });
@@ -318,7 +321,6 @@ function verifyOTP() {
     if (otpCode.length !== 6) {
         showError(otpInputs[0], document.getElementById('otp-error'), 'Please enter a valid 6-digit code');
         
-        // Reset button state
         buttonText.textContent = 'Verify Code';
         buttonSpinner.style.display = 'none';
         step3Button.disabled = false;
@@ -328,7 +330,6 @@ function verifyOTP() {
     
     showLoadingOverlay('Verifying Code', 'Please wait while we verify your code');
     
-    // Prepare data for API
     const data = {
         action: 'verify_otp',
         otp: otpCode
@@ -340,7 +341,6 @@ function verifyOTP() {
         data.mobile = userData.contact;
     }
     
-    // Send request to PHP API
     fetch('send_forgot_otp.php', {
         method: 'POST',
         headers: {
@@ -355,14 +355,11 @@ function verifyOTP() {
         if (data.success) {
             showSuccess(otpInputs[0], document.getElementById('otp-error'));
             
-            // Show success notification
             showNotification('success', 'Verification Successful', 'Your code has been verified successfully.', 3000);
             
-            // Move to next step after a short delay
             setTimeout(() => {
                 showStep(4);
                 
-                // Reset button state
                 buttonText.textContent = 'Verify Code';
                 buttonSpinner.style.display = 'none';
                 step3Button.disabled = false;
@@ -370,7 +367,6 @@ function verifyOTP() {
         } else {
             showError(otpInputs[0], document.getElementById('otp-error'), data.message || 'Invalid verification code');
             
-            // Reset button state
             buttonText.textContent = 'Verify Code';
             buttonSpinner.style.display = 'none';
             step3Button.disabled = false;
@@ -381,7 +377,6 @@ function verifyOTP() {
         showNotification('error', 'Connection Error', 'Unable to connect to the server. Please check your internet connection.', 5000);
         console.error('Error:', error);
         
-        // Reset button state
         buttonText.textContent = 'Verify Code';
         buttonSpinner.style.display = 'none';
         step3Button.disabled = false;
@@ -411,7 +406,6 @@ function isValidPhone(phone) {
 }
 
 function isValidPassword(password) {
-    // At least 8 characters with letters and numbers
     const re = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
     return re.test(password);
 }
@@ -449,20 +443,15 @@ const notificationMessage = document.getElementById('notificationMessage');
 const notificationClose = document.getElementById('notificationClose');
 
 function showNotification(type, title, message, duration = 5000) {
-    // Remove previous classes
     notification.classList.remove('notification-info', 'notification-warning', 'notification-error', 'notification-success');
     
-    // Add appropriate class based on type
     notification.classList.add(`notification-${type}`);
     
-    // Set title and message
     notificationTitle.textContent = title;
     notificationMessage.textContent = message;
     
-    // Show notification
     notification.classList.add('show');
     
-    // Auto hide after duration
     setTimeout(() => {
         hideNotification();
     }, duration);

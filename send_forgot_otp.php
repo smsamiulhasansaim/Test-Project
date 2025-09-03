@@ -6,12 +6,10 @@ require 'src/Exception.php';
 require 'src/PHPMailer.php';
 require 'src/SMTP.php';
 
-// Hide all warnings/notices but log them
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 
-// Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -22,7 +20,6 @@ header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
 function cleanResponse() {
-    // Clear any previous output
     if (ob_get_length()) {
         ob_clean();
     }
@@ -39,7 +36,6 @@ function sendResponse($success, $message, $data = []) {
     exit;
 }
 
-// Handle preflight request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
@@ -62,7 +58,7 @@ if ($input['action'] === 'send_otp') {
     $name   = isset($input['name']) ? trim($input['name']) : '';
     $email  = isset($input['email']) ? trim($input['email']) : '';
     $mobile = isset($input['mobile']) ? trim($input['mobile']) : '';
-    $method = isset($input['method']) ? trim($input['method']) : 'email'; // default email
+    $method = isset($input['method']) ? trim($input['method']) : 'email';
 
     if (empty($name)) {
         sendResponse(false, 'Name is required');
@@ -76,14 +72,12 @@ if ($input['action'] === 'send_otp') {
 
     $otp = rand(100000, 999999);
 
-    // Store OTP in session with prefix to avoid conflict with other OTP systems
     $_SESSION['forgot_otp'] = $otp;
     $_SESSION['forgot_otp_email'] = $email;
     $_SESSION['forgot_otp_mobile'] = $mobile;
-    $_SESSION['forgot_otp_expiry'] = time() + 600; // 10 minutes
+    $_SESSION['forgot_otp_expiry'] = time() + 600;
 
     if ($method === 'sms') {
-        // Mobile number format correction for Bangladesh
         $mobile = preg_replace('/[^0-9]/', '', $mobile);
         
         if (substr($mobile, 0, 2) === '01') {
@@ -94,9 +88,8 @@ if ($input['action'] === 'send_otp') {
             $mobile = '880' . $mobile;
         }
 
-        // Send OTP via BulkSMSBD
-        $api_key  = "pdVTRfargFxVFVh6miaC"; // put your BulkSMSBD API key
-        $senderid = "8809617628623"; // approved senderid
+        $api_key  = "pdVTRfargFxVFVh6miaC";
+        $senderid = "8809617628623";
         $number   = $mobile;
         $message  = "Hello $name, your password reset OTP is: $otp. Valid for 10 minutes.";
 
@@ -121,7 +114,6 @@ if ($input['action'] === 'send_otp') {
         $curlError = curl_error($ch);
         curl_close($ch);
 
-        // Log the raw response for debugging
         error_log("BulkSMSBD Raw Response: " . $response);
         
         if ($response === false) {
@@ -130,7 +122,6 @@ if ($input['action'] === 'send_otp') {
         } else {
             $responseData = json_decode($response, true);
             
-            // Check multiple possible success indicators from BulkSMSBD
             $isSuccess = false;
             if (isset($responseData['success']) && $responseData['success']) {
                 $isSuccess = true;
@@ -146,14 +137,11 @@ if ($input['action'] === 'send_otp') {
                 sendResponse(true, 'OTP sent via SMS', ['otp' => $otp]);
             } else {
                 error_log("BulkSMSBD API Error: " . $response);
-                // Even if API says failed, if user receives OTP, we should return success
-                // But for now, we'll return success if we can't determine failure
                 sendResponse(true, 'OTP sent via SMS', ['otp' => $otp]);
             }
         }
 
     } else {
-        // Send OTP via Email (PHPMailer)
         try {
             $mail = new PHPMailer(true);
 
@@ -161,7 +149,7 @@ if ($input['action'] === 'send_otp') {
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = 'hello.smsamiulhasan@gmail.com';
-            $mail->Password   = 'ayhwgwbcdnsjshop';   // Gmail App Password
+            $mail->Password   = 'ayhwgwbcdnsjshop';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
             $mail->SMTPOptions = array(
@@ -223,3 +211,4 @@ elseif ($input['action'] === 'verify_otp') {
 else {
     sendResponse(false, 'Unknown action');
 }
+?>

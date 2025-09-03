@@ -41,7 +41,6 @@ togglePassword.addEventListener('click', function() {
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
     passwordInput.setAttribute('type', type);
     
-    // Change the eye icon
     const icon = this.querySelector('i');
     icon.classList.toggle('fa-eye');
     icon.classList.toggle('fa-eye-slash');
@@ -49,18 +48,14 @@ togglePassword.addEventListener('click', function() {
 
 // Custom notification system
 function showNotification(type, title, message, duration = 5000) {
-    // Set notification content
     notificationTitle.textContent = title;
     notificationMessage.textContent = message;
     
-    // Set notification type (color)
     customNotification.className = 'custom-notification';
     customNotification.classList.add(`notification-${type}`);
     
-    // Show notification
     customNotification.classList.add('show');
     
-    // Auto hide after duration
     setTimeout(() => {
         hideNotification();
     }, duration);
@@ -137,50 +132,60 @@ passwordInput.addEventListener('blur', function() {
 loginButton.addEventListener('click', function(e) {
     e.preventDefault();
     
-    // Trigger validation
     emailInput.dispatchEvent(new Event('blur'));
     passwordInput.dispatchEvent(new Event('blur'));
     
-    // Check if form is valid
     const emailValid = !emailInput.classList.contains('error') && emailInput.value.trim() !== '';
     const passwordValid = !passwordInput.classList.contains('error') && passwordInput.value !== '';
     
     if (emailValid && passwordValid) {
-        // Hide any previous no account message
         noAccountMessage.style.display = 'none';
         
-        // Show searching animation
         searchingAnimation.style.display = 'block';
         loginButton.style.display = 'none';
         
-        // Simulate API call to check if email has multiple accounts
-        setTimeout(() => {
+        const identifier = emailInput.value.trim();
+        const password = passwordInput.value;
+        
+        // Send login request to backend
+        fetch('auth/login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                identifier: identifier,
+                password: password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
             searchingAnimation.style.display = 'none';
             loginButton.style.display = 'block';
             
-            const identifier = emailInput.value.trim();
-            const password = passwordInput.value;
-            
-            // Check for specific demo credentials
-            if (identifier === 'safwan110817@gmail.com' && password === 'Saim@2005') {
-                // Show account selection modal for demo account
-                const accounts = [
-                    { id: 1, company: 'Safwan Corporation', email: identifier },
-                    { id: 2, company: 'Saim Vondami Enterprises', email: identifier },
-                    { id: 3, company: 'Safwan & Co.', email: identifier }
-                ];
-                showAccountSelection(accounts);
-            } else if (identifier === 'noaccount@example.com') {
-                // Show no account found message for demo
-                noAccountMessage.style.display = 'block';
-                showNotification('error', 'Account Not Found', 'No account found with these credentials. Please try again or create a new account.');
+            if (data.success) {
+                if (data.companies && data.companies.length > 1) {
+                    // Multiple accounts found - show selection
+                    showAccountSelection(data.companies, data.user_id, data.full_name);
+                } else if (data.companies && data.companies.length === 1) {
+                    // Single account - proceed directly
+                    redirectToDashboard(data.user_id, data.companies[0].id, data.full_name);
+                } else {
+                    // No companies found
+                    showNotification('error', 'No Companies', 'No companies found for this account');
+                }
             } else {
-                // For other accounts, show OTP section directly
-                sendOtpRequest(identifier, identifier.includes('@') ? 'email' : 'sms');
+                noAccountMessage.style.display = 'block';
+                showNotification('error', 'Login Failed', data.message);
             }
-        }, 2000);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            searchingAnimation.style.display = 'none';
+            loginButton.style.display = 'block';
+            showNotification('error', 'Network Error', 'Unable to connect to server');
+        });
     } else {
-        // Show error notification if form is invalid
         if (!emailValid) {
             showError(emailInput, emailError, 'Please enter a valid email or 11-digit phone number');
         }
@@ -197,32 +202,25 @@ createAccountButton.addEventListener('click', function() {
 });
 
 // Function to show account selection modal
-function showAccountSelection(accounts) {
+function showAccountSelection(companies, user_id, full_name) {
     const accountList = document.getElementById('accountList');
     
-    // Clear previous list
     accountList.innerHTML = '';
     
-    // Populate account list
-    accounts.forEach(account => {
+    companies.forEach(company => {
         const accountItem = document.createElement('div');
         accountItem.className = 'account-item';
         accountItem.innerHTML = `
-            <div class="account-name">${account.company}</div>
-            <div class="account-email">${account.email}</div>
+            <div class="account-name">${company.company_name}</div>
         `;
         
         accountItem.addEventListener('click', () => {
-            // Store selected account
-            localStorage.setItem('selectedAccount', JSON.stringify(account));
-            hideAccountSelection();
-            sendOtpRequest(account.email, 'email');
+            redirectToDashboard(user_id, company.id, full_name);
         });
         
         accountList.appendChild(accountItem);
     });
     
-    // Show modal
     accountSelectionModal.classList.add('show');
 }
 
@@ -234,75 +232,18 @@ function hideAccountSelection() {
 // Close modal when close button is clicked
 modalClose.addEventListener('click', hideAccountSelection);
 
-// Send OTP request to backend
-function sendOtpRequest(identifier, method) {
-    showNotification('info', 'Sending OTP', 'Please wait while we send the verification code...');
+// Redirect to dashboard
+function redirectToDashboard(user_id, company_id, full_name) {
+    // Store user data in localStorage
+    localStorage.setItem('user_id', user_id);
+    localStorage.setItem('company_id', company_id);
+    localStorage.setItem('full_name', full_name);
     
-    // Determine if identifier is email or phone
-    const isEmail = identifier.includes('@');
-    const name = isEmail ? identifier.split('@')[0] : 'User';
-    
-    // Prepare request data
-    const requestData = {
-        action: 'send_otp',
-        identifier: identifier,
-        method: method
-    };
-    
-    // Send request to backend
-    fetch('send_login_otp.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            currentIdentifier = identifier;
-            otpMethod = method;
-            showOtpSection(identifier, method, data.data.identifier);
-            showNotification('success', 'OTP Sent', 'Verification code has been sent successfully');
-        } else {
-            showNotification('error', 'OTP Failed', data.message || 'Failed to send verification code. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('error', 'Network Error', 'Unable to connect to server. Please try again.');
-    });
-}
-
-// Show OTP section
-function showOtpSection(identifier, method, displayIdentifier) {
-    // Update verification method text and icon
-    verificationMethod.textContent = method === 'email' ? 'Email to your address' : 'SMS to your phone';
-    verificationIcon.className = method === 'email' ? 'fas fa-envelope' : 'fas fa-comment-alt';
-    
-    // Use the masked identifier from server response or create one
-    if (!displayIdentifier) {
-        if (method === 'email') {
-            const [name, domain] = identifier.split('@');
-            displayIdentifier = `${name.substring(0, 3)}***@${domain}`;
-        } else {
-            displayIdentifier = `+8801******${identifier.slice(-3)}`;
-        }
-    }
-    
-    verificationTarget.textContent = `Code sent to ${displayIdentifier}`;
-    
-    // Switch to OTP section
-    loginSection.style.display = 'none';
-    otpSection.style.display = 'block';
-    
-    // Start countdown for resend
-    startCountdown();
-    
-    // Focus on first OTP input
+    // Show loader and redirect
+    jamiLoader.classList.add('active');
     setTimeout(() => {
-        document.getElementById('otp1').focus();
-    }, 100);
+        window.location.href = 'dashboard.html';
+    }, 2000);
 }
 
 // OTP input navigation
@@ -311,7 +252,6 @@ function moveToNext(current, nextFieldId) {
         document.getElementById(nextFieldId).focus();
     }
     
-    // Auto validate when all fields are filled
     if (nextFieldId === 'otp6' && current.value.length >= current.maxLength) {
         setTimeout(() => {
             validateOtp(document.getElementById('otp6'));
@@ -339,17 +279,14 @@ function validateOtp(lastInput) {
 
 // Verify OTP with backend
 function verifyOtp(code) {
-    // Show loading state on verify button
     verifyButton.classList.add('loading');
     
-    // Prepare request data
     const requestData = {
         action: 'verify_otp',
         otp: code,
         identifier: currentIdentifier
     };
     
-    // Send request to backend
     fetch('send_login_otp.php', {
         method: 'POST',
         headers: {
@@ -362,28 +299,22 @@ function verifyOtp(code) {
         verifyButton.classList.remove('loading');
         
         if (data.success) {
-            // Show verification seal animation
             verificationSeal.classList.add('active');
             
-            // After seal animation completes, show success message
             setTimeout(() => {
                 verificationSeal.classList.remove('active');
                 
-                // Show success message
                 successMessage.style.display = 'block';
                 
-                // After 2 seconds, redirect to dashboard
                 setTimeout(() => {
                     jamiLoader.classList.add('active');
                     
-                    // After another 2 seconds, redirect to dashboard
                     setTimeout(() => {
                         window.location.href = 'dashboard.html';
                     }, 2000);
                 }, 2000);
             }, 1500);
         } else {
-            // Show error state
             const inputs = document.querySelectorAll('.otp-input');
             inputs.forEach(input => {
                 input.classList.remove('success');
@@ -414,7 +345,6 @@ verifyButton.addEventListener('click', function() {
     if (otpCode.length === 6) {
         verifyOtp(otpCode);
     } else {
-        // Show error state
         const inputs = document.querySelectorAll('.otp-input');
         inputs.forEach(input => {
             input.classList.remove('success');
@@ -448,10 +378,7 @@ function startCountdown() {
 
 resendLink.addEventListener('click', function() {
     if (!resendLink.classList.contains('disabled')) {
-        // Request a new OTP from the backend
         sendOtpRequest(currentIdentifier, otpMethod);
-        
-        // Reset countdown
         startCountdown();
     }
 });
@@ -461,7 +388,6 @@ backToLogin.addEventListener('click', function() {
     otpSection.style.display = 'none';
     loginSection.style.display = 'block';
     
-    // Clear OTP inputs
     const inputs = document.querySelectorAll('.otp-input');
     inputs.forEach(input => {
         input.value = '';
