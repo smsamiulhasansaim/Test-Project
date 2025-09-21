@@ -3,212 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Earth - Plant Trees, Grow Future</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Cricket Dream Team</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .subscribe-button-gradient {
+            background-image: linear-gradient(to right, #f87171, #facc15);
+        }
+        .gradient-button {
+            background-image: linear-gradient(to right, #f87171, #facc15);
+        }
+        .background-image-container {
+            background-image: url('assets/bg-shadow.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
-<body>
-    <!-- Navigation bar - S M Samiul Hasan -->
-    <nav class="bg-green-700 text-white p-4 flex justify-between items-center">
-        <div class="text-2xl font-bold">Green Earth</div>
+<body class="bg-white flex flex-col min-h-screen">
+    
+    <!-- Header Section -->
+    <header class="w-full h-20 flex items-center justify-between px-8">
+        <!-- Left side logo -->
+        <div class="flex items-center space-x-2">
+            <img src="assets/logo.png" alt="Cricket Logo" class="h-12 w-12 object-contain">
+        </div>
+
+        <!-- Right side: nav + button -->
         <div class="flex items-center space-x-6">
-            <a href="#about" class="text-white hover:underline">About</a>
-            <a href="#" class="text-white hover:underline">Gallery</a>
-            <a href="#plant" class="text-white hover:underline">Plant a Tree</a>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-800 hover:text-blue-600 transition duration-300">Home</a>
+                <a href="#" class="text-gray-800 hover:text-blue-600 transition duration-300">Fixture</a>
+                <a href="#" class="text-gray-800 hover:text-blue-600 transition duration-300">Teams</a>
+                <a href="#" class="text-gray-800 hover:text-blue-600 transition duration-300">Schedules</a>
+            </nav>
+            <button class="bg-gray-100 text-gray-800 font-semibold py-2 px-4 rounded-full flex items-center space-x-2 shadow-sm hover:bg-gray-200 transition duration-300">
+                <span>0 Coin</span>
+                <span class="text-yellow-500 text-xl">🪙</span>
+            </button>
         </div>
-        <a href="#plant" class="bg-yellow-400 text-black font-semibold py-2 px-6 rounded-full shadow-lg hover:bg-yellow-500 transition duration-300">
-            Plant a Tree
-        </a>
-    </nav>
+    </header>
 
-    <!-- Hero section - S M Samiul Hasan -->
-    <div class="bg-[#e6f9ed] relative flex justify-center items-center py-20 px-4 overflow-hidden">
-        <div class="absolute left-0 top-1/2 transform -translate-y-1/2 w-[500px] h-[350px] bg-no-repeat bg-contain" style="background-image: url('assets/hero-leaf1.png');"></div>
-        <div class="absolute right-0 top-1/2 transform -translate-y-1/2 w-[500px] h-[350px] bg-no-repeat bg-contain" style="background-image: url('assets/hero-leaf2.png');"></div>
-
-        <div class="text-center z-10 max-w-2xl">
-            <h1 class="text-5xl font-bold text-black mb-2">Plant a Tree, Grow a Future</h1>
-            <p class="text-lg text-[#455a64] mb-6">Join our mission to plant 1 million trees and make the Earth greener for future generations.</p>
-            <a href="#" class="inline-block bg-[#FACC15] text-[#15803D] font-bold text-lg py-3 px-8 rounded-full shadow-lg hover:bg-yellow-500 transition duration-300">
-                Get Involved
-            </a>
-        </div>
-    </div>
-
-    <!-- Main content section - S M Samiul Hasan -->
-    <div class="container main-content">
-        <aside class="sidebar">
-            <h2 class="sidebar-title">
-                <i class="fas fa-list" style="color: var(--primary);"></i>
-                Categories
-            </h2>
-            <div id="error-message" class="error-message" style="display: none;">
-                API থেকে ডেটা লোড করা যায়নি। স্যাম্পল ডেটা দেখানো হচ্ছে।
-            </div>
-            <ul class="sidebar-categories" id="categories-list">
-                <li class="category-item category-active" data-category="all">All Trees</li>
-            </ul>
-        </aside>
-
-        <main class="trees-main">
-            <h1 class="trees-title">
-                Choose Your Trees
+    <!-- Hero Banner Section -->
+    <section class="bg-gray-900 relative w-full mx-auto p-8 rounded-lg shadow-lg overflow-hidden background-image-container" style="min-height: 500px;">
+        <div class="relative z-10 flex flex-col items-center justify-center h-full text-center">
+            <img src="assets/banner-main.png" alt="Cricket Logo" class="mb-8 w-auto h-16 sm:h-20 md:h-28 lg:h-32">
+            <h1 class="text-white text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+                Assemble Your Ultimate Dream 11 Cricket Team
             </h1>
-            <div class="spinner" id="loading-spinner"></div>
-            <div class="trees-grid" id="trees-grid">
-            </div>
-            <div class="empty-state" id="empty-state" style="display: none;">
-                <i class="fas fa-tree" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                <h3>No trees found</h3>
-                <p>Try selecting a different category</p>
-            </div>
-        </main>
-        
-        <!-- Cart sidebar - S M Samiul Hasan -->
-        <aside class="cart-sidebar">
-            <h2 class="cart-title">
-                <i class="fas fa-shopping-cart" style="color: var(--primary);"></i>
-                Your Cart
-            </h2>
-            <div class="cart-items" id="cart-items">
-                <div class="empty-state" id="empty-cart" style="display: block;">
-                    <i class="fas fa-shopping-cart" style="font-size: 2rem; margin-bottom: 1rem;"></i>
-                    <p>Your cart is empty</p>
+            <p class="text-gray-300 text-lg sm:text-xl mb-8">
+                Beyond Boundaries Beyond Limits
+            </p>
+            <button class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold mt-8 py-3 px-8 rounded-lg shadow-lg transition duration-300 transform hover:scale-105">
+                Claim Free Credit
+            </button>
+        </div>
+    </section>
+
+    <!-- Players Selection Section -->
+    <section class="bg-gray-50 p-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 sm:mb-0">
+                    Available Players
+                </h2>
+                <div class="flex space-x-2 p-1 bg-gray-200 rounded-full text-sm font-semibold">
+                    <button class="bg-yellow-400 text-gray-800 px-4 py-2 rounded-full shadow-md">
+                        Available
+                    </button>
+                    <button class="text-gray-600 px-4 py-2 rounded-full">
+                        Selected (0)
+                    </button>
                 </div>
             </div>
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cart-total">৳0</span>
-            </div>
-            <button class="cart-checkout">
-                <i class="fas fa-check-circle"></i>
-                Checkout
-            </button>
-        </aside>
-    </div>
 
-    <!-- About section - S M Samiul Hasan -->
-    <section id="about" class="about-section">
-        <div class="about-container">
-            <h2 class="about-title">
-                About the Campaign
-            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Player Card 1 -->
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <div class="mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/samiul.png" alt="Viral Kohli" class="w-full h-auto object-cover">
+                    </div>
+                    <div class="flex items-center space-x-2 text-gray-700 mb-2">
+                        <i class="fas fa-user-circle text-lg text-gray-500"></i>
+                        <span class="font-bold">Viral Kohli</span>
+                    </div>
+                    <div class="flex items-center justify-between text-gray-500 text-sm mb-4">
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-flag text-xs"></i>
+                            <span>India</span>
+                        </div>
+                        <span class="bg-gray-200 text-xs font-semibold px-2 py-1 rounded-full">All-Rounder</span>
+                    </div>
 
-            <div class="about-content">
-                <div class="about-image">
-                    <div class="about-img-placeholder">
-                        <img src="assets/about.png" alt="About Green Earth" style="width: 100%; height: 300px; object-fit: cover; border-radius: 8px;">
+                    <!-- Rating -->
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-800">Rating:</span>
+                        <span class="text-gray-500 font-semibold">Left-Hand-Bat</span>
+                    </div>
+
+                    <!-- Price এবং Button একই লাইনে -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500">Price: <span class="text-gray-800 font-bold">$1500000</span></span>
+                        <button class="border border-gray-300 rounded-full py-2 px-4 font-semibold text-gray-800 hover:bg-gray-100 transition duration-200">
+                            Choose Player
+                        </button>
                     </div>
                 </div>
-                
-                <div class="about-text">
-                    <p class="about-description">
-                        Green Earth is a global tree plantation initiative dedicated to fighting climate change. Since our start, we've planted over 500,000 trees worldwide. By joining our campaign, you help restore forests, create habitats for wildlife, and combat global warming.
+
+                <!-- Player Card 2 -->
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <div class="mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/samiul.png" alt="Viral Kohli" class="w-full h-auto object-cover">
+                    </div>
+                    <div class="flex items-center space-x-2 text-gray-700 mb-2">
+                        <i class="fas fa-user-circle text-lg text-gray-500"></i>
+                        <span class="font-bold">Viral Kohli</span>
+                    </div>
+                    <div class="flex items-center justify-between text-gray-500 text-sm mb-4">
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-flag text-xs"></i>
+                            <span>India</span>
+                        </div>
+                        <span class="bg-gray-200 text-xs font-semibold px-2 py-1 rounded-full">All-Rounder</span>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-800">Rating:</span>
+                        <span class="text-gray-500 font-semibold">Left-Hand-Bat</span>
+                    </div>
+
+                    <!-- Price এবং Button একই লাইনে -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500">Price: <span class="text-gray-800 font-bold">$1500000</span></span>
+                        <button class="border border-gray-300 rounded-full py-2 px-4 font-semibold text-gray-800 hover:bg-gray-100 transition duration-200">
+                            Choose Player
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Player Card 3 -->
+                <div class="bg-white rounded-xl shadow-lg p-4">
+                    <div class="mb-4 rounded-lg overflow-hidden">
+                        <img src="assets/samiul.png" alt="Viral Kohli" class="w-full h-auto object-cover">
+                    </div>
+                    <div class="flex items-center space-x-2 text-gray-700 mb-2">
+                        <i class="fas fa-user-circle text-lg text-gray-500"></i>
+                        <span class="font-bold">Viral Kohli</span>
+                    </div>
+                    <div class="flex items-center justify-between text-gray-500 text-sm mb-4">
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-flag text-xs"></i>
+                            <span>India</span>
+                        </div>
+                        <span class="bg-gray-200 text-xs font-semibold px-2 py-1 rounded-full">All-Rounder</span>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="flex justify-between mb-2">
+                        <span class="text-gray-800">Rating:</span>
+                        <span class="text-gray-500 font-semibold">Left-Hand-Bat</span>
+                    </div>
+
+                    <!-- Price এবং Button একই লাইনে -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-500">Price: <span class="text-gray-800 font-bold">$1500000</span></span>
+                        <button class="border border-gray-300 rounded-full py-2 px-4 font-semibold text-gray-800 hover:bg-gray-100 transition duration-200">
+                            Choose Player
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="flex items-center justify-center p-4 my-12">
+        <div class="max-w-[1200px] w-full mx-auto">
+            <div class="relative rounded-[22px] overflow-hidden h-[300px]">
+                <!-- Background Image -->
+                <div class="absolute inset-0">
+                    <img src="assets/bg-shadow.png" alt="Newsletter Background" class="w-full h-full object-cover">
+                </div>
+
+                <div class="absolute inset-0 bg-black/10"></div>
+
+                <!-- Content -->
+                <div class="relative p-8 sm:p-12 text-center text-black flex flex-col justify-center h-full">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold mb-2">
+                        Subscribe to our Newsletter
+                    </h2>
+                    <p class="text-base mb-6 sm:mb-8">
+                        Get the latest updates and news right in your inbox!
                     </p>
-                    <ul class="about-features">
-                        <li class="about-feature">
-                            <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i>
-                            Restoration of natural habitats
-                        </li>
-                        <li class="about-feature">
-                            <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i>
-                            Improvement of air quality
-                        </li>
-                        <li class="about-feature">
-                            <i class="fas fa-check-circle" style="color: var(--primary); margin-right: 0.5rem;"></i>
-                            Support for local communities
-                        </li>
+                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <input 
+                            type="email" 
+                            placeholder="Enter your email" 
+                            class="w-full sm:w-80 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-black"
+                        />
+                        <button class="w-full sm:w-auto px-6 py-3 text-white font-semibold rounded-lg shadow-lg gradient-button transition duration-300 hover:scale-105">
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-900 text-gray-300 py-12 px-8 mt-auto">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-center mb-12">
+                <div class="text-center">
+                    <img src="assets/logo-footer.png" alt="Cricket Logo" class="mx-auto mb-2">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-gray-700 pb-12 mb-8">
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">About Us</h4>
+                    <p class="text-sm">
+                        We are a passionate team dedicated to providing the best services to our customers.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="hover:text-white transition duration-200">Home</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200">Services</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200">About</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-200">Contact</a></li>
                     </ul>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Impact section - S M Samiul Hasan -->
-    <section id="impact" class="impact-section">
-        <div class="impact-container">
-            <h2 class="impact-title">
-                Our Impact
-            </h2>
-
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <p class="impact-number">500K+</p>
-                    <p class="impact-label">Trees Planted</p>
-                </div>
-
-                <div class="impact-card">
-                    <p class="impact-number">120+</p>
-                    <p class="impact-label">Communities Involved</p>
-                </div>
-
-                <div class="impact-card">
-                    <p class="impact-number">30+</p>
-                    <p class="impact-label">Countries Reached</p>
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Subscribe</h4>
+                    <p class="text-sm mb-4">
+                        Subscribe to our newsletter for the latest updates.
+                    </p>
+                    <div class="flex items-center space-x-2">
+                        <input 
+                            type="email" 
+                            placeholder="Enter your email" 
+                            class="flex-grow px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                        <button class="px-6 py-2 text-white font-semibold rounded-lg subscribe-button-gradient hover:opacity-90 transition duration-300">
+                            Subscribe
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Plant a tree section - S M Samiul Hasan -->
-    <section id="plant" class="plant-section">
-        <div class="plant-container">
-            <div class="plant-form-container">
-                <h2 class="plant-title">
-                    <i class="fas fa-seedling"></i>
-                    Plant a Tree Today
-                </h2>
-                
-                <form class="plant-form" id="donation-form">
-                    <div class="form-group">
-                        <i class="fas fa-user form-icon"></i>
-                        <input type="text" id="name" name="name" placeholder="Your Name" class="form-input" required>
-                    </div>
-                    <div class="form-group">
-                        <i class="fas fa-envelope form-icon"></i>
-                        <input type="email" id="email" name="email" placeholder="Your Email Address" class="form-input" required>
-                    </div>
-                    <div class="form-group">
-                        <i class="fas fa-tree form-icon"></i>
-                        <select id="trees" name="trees" class="form-select" required>
-                            <option value="" disabled selected>Number of Trees</option>
-                            <option value="1">1 Tree</option>
-                            <option value="5">5 Trees</option>
-                            <option value="10">10 Trees</option>
-                            <option value="20">20 Trees</option>
-                        </select>
-                        <i class="fas fa-chevron-down select-arrow"></i>
-                    </div>
-                    <button type="submit" class="form-button">
-                        Donate Now
-                    </button>
-                </form>
+            <div class="text-center text-sm text-gray-500">
+                <p>@2024 Your Company All Rights Reserved.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer - S M Samiul Hasan -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="footer-text">© 2025 Green Earth. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- Modal for plant details - S M Samiul Hasan -->
-    <div class="modal" id="tree-modal">
-        <div class="modal-content">
-            <span class="close-modal" id="close-modal">&times;</span>
-            <img src="#" alt="" class="modal-image" id="modal-image">
-            <h2 id="modal-title"></h2>
-            <p id="modal-description"></p>
-            <div class="tree-details" style="margin-top: 1rem;">
-                <span class="tree-category" id="modal-category"></span>
-                <span class="tree-price" id="modal-price"></span>
-            </div>
-        </div>
-    </div>
-    <script src="main.js"></script>
 </body>
 </html>
