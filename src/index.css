@@ -1,1 +1,77 @@
 @import "tailwindcss";
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+.samiul-gradient-purple {
+  background: linear-gradient(135deg, #632EE3 0%, #9F62F2 100%);
+}
+
+.samiul-gradient-green {
+  background: linear-gradient(135deg, #54CF68 0%, #00827A 100%);
+}
+
+.samiul-background-image {
+  opacity: 0.4;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.samiul-image-container {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.samiul-left-image {
+  left: 0;
+  top: 0;
+}
+
+.samiul-right-image {
+  right: 0;
+  top: 0;
+}
+
+.samiul-task-status-container {
+  height: fit-content;
+  max-height: 100%;
+}
+
+.samiul-ticket-card {
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.samiul-ticket-card.selected {
+  border-color: #4F46E5;
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+}
+
+.samiul-status-badge {
+  position: relative;
+  padding-left: 20px;
+}
+
+.samiul-status-badge::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.samiul-status-open-badge::before { background-color: #10B981; }
+.samiul-status-in-progress-badge::before { background-color: #F59E0B; }
+.samiul-status-resolved-badge::before { background-color: #6B7280; }
+
+.samiul-priority-critical { background-color: #EF4444; color: white; }
+.samiul-priority-high { background-color: #F59E0B; color: white; }
+.samiul-priority-medium { background-color: #3B82F6; color: white; }
+.samiul-priority-low { background-color: #6B7280; color: white; }
