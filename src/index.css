@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
 .samiul-gradient-purple {
   background: linear-gradient(135deg, #632EE3 0%, #9F62F2 100%);
 }
@@ -45,11 +47,6 @@
   border: 2px solid transparent;
 }
 
-.samiul-ticket-card.selected {
-  border-color: #4F46E5;
-  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
-}
-
 .samiul-status-badge {
   position: relative;
   padding-left: 20px;
@@ -66,10 +63,6 @@
   border-radius: 50%;
   background-color: currentColor;
 }
-
-.samiul-status-open-badge::before { background-color: #10B981; }
-.samiul-status-in-progress-badge::before { background-color: #F59E0B; }
-.samiul-status-resolved-badge::before { background-color: #6B7280; }
 
 .samiul-priority-high {  color:  #EF4444;}
 .samiul-priority-medium {  color:#F59E0B;}

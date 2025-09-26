@@ -1,4 +1,3 @@
-// src/components/Footer.jsx
 const Footer = () => {
   return (
     <footer className="bg-black text-white p-8 mt-12">

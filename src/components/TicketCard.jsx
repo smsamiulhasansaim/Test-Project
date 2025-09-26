@@ -29,10 +29,6 @@ const TicketCard = ({ ticket, isSelected, onSelect }) => {
   let priorityClass = '';
   let priorityText = '';
   switch(ticket.priority) {
-    case 'critical':
-      priorityClass = 'samiul-priority-low';
-      priorityText = 'LOW PRIORITY';
-      break;
     case 'high':
       priorityClass = 'samiul-priority-high';
       priorityText = 'HIGH PRIORITY';
@@ -46,10 +42,9 @@ const TicketCard = ({ ticket, isSelected, onSelect }) => {
       priorityText = 'LOW PRIORITY';
       break;
     default:
-      priorityClass = 'bg-gray-500 text-white';
+      priorityClass = 'samiul-priority-low';
       priorityText = ticket.priority.toUpperCase();
   }
-
   return (
     <div 
       className={`samiul-ticket-card bg-white rounded-lg shadow-md p-6 relative ${isSelected ? 'selected' : ''}`}

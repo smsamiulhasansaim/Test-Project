@@ -3,7 +3,7 @@
     "id": 1,
     "title": "Login issues on mobile app",
     "description": "Unable to login to the mobile application. Getting 'Authentication Failed' error even with correct credentials.",
-    "customer": "sj@email.com",
+    "customer": "Sarah Jones",
     "priority": "high",
     "status": "open",
     "createdAt": "2024-01-15T09:30:00Z"
@@ -12,7 +12,7 @@
     "id": 2,
     "title": "Payment gateway not working",
     "description": "Credit card payments are failing during checkout process. Error code: PG-4021",
-    "customer": "mr@company.com",
+    "customer": "Michael Rodriguez",
     "priority": "low",
     "status": "in-progress",
     "createdAt": "2024-01-15T11:15:00Z"
@@ -21,7 +21,7 @@
     "id": 3,
     "title": "Password reset not sending email",
     "description": "Requested password reset but not receiving the reset link email. Checked spam folder as well.",
-    "customer": "dc@example.com",
+    "customer": "David Chen",
     "priority": "medium",
     "status": "open",
     "createdAt": "2024-01-14T14:20:00Z"
@@ -30,7 +30,7 @@
     "id": 4,
     "title": "Dashboard loading slowly",
     "description": "User dashboard takes over 30 seconds to load. This started happening after recent update.",
-    "customer": "lw@business.com",
+    "customer": "Lisa Wang",
     "priority": "medium",
     "status": "open",
     "createdAt": "2024-01-14T16:45:00Z"
@@ -39,7 +39,7 @@
     "id": 5,
     "title": "Report generation error",
     "description": "Monthly sales report fails to generate with 'Memory Allocation Error'. Tried multiple times.",
-    "customer": "rk@corp.com",
+    "customer": "Robert Kim",
     "priority": "high",
     "status": "in-progress",
     "createdAt": "2024-01-13T10:00:00Z"
@@ -48,7 +48,7 @@
     "id": 6,
     "title": "Mobile app crashing on startup",
     "description": "App crashes immediately after splash screen on iOS devices. Android works fine.",
-    "customer": "ag@mail.com",
+    "customer": "Anna Garcia",
     "priority": "high",
     "status": "open",
     "createdAt": "2024-01-13T13:30:00Z"
@@ -57,7 +57,7 @@
     "id": 7,
     "title": "Invoice formatting issues",
     "description": "Generated invoices have misaligned text and broken formatting in PDF export.",
-    "customer": "tb@enterprise.com",
+    "customer": "Thomas Brown",
     "priority": "low",
     "status": "open",
     "createdAt": "2024-01-12T08:15:00Z"
@@ -66,7 +66,7 @@
     "id": 8,
     "title": "API rate limiting too strict",
     "description": "Getting 429 errors too frequently. Need higher rate limits for our integration.",
-    "customer": "dev@startup.io",
+    "customer": "Dev Singh",
     "priority": "medium",
     "status": "open",
     "createdAt": "2024-01-12T11:45:00Z"
@@ -75,7 +75,7 @@
     "id": 9,
     "title": "Data sync delay between devices",
     "description": "Changes made on web app take over 5 minutes to sync to mobile app. Expected real-time sync.",
-    "customer": "jm@email.com",
+    "customer": "Jessica Miller",
     "priority": "medium",
     "status": "in-progress",
     "createdAt": "2024-01-11T15:20:00Z"
@@ -84,7 +84,7 @@
     "id": 10,
     "title": "Unable to delete user account",
     "description": "Delete account option is grayed out in settings. Need assistance removing account permanently.",
-    "customer": "ks@example.com",
+    "customer": "Kevin Smith",
     "priority": "low",
     "status": "open",
     "createdAt": "2024-01-11T17:30:00Z"
@@ -93,7 +93,7 @@
     "id": 11,
     "title": "Two-factor authentication setup failing",
     "description": "QR code scan for 2FA not working. App says 'Invalid QR code' repeatedly.",
-    "customer": "nw@company.com",
+    "customer": "Nadia Williams",
     "priority": "high",
     "status": "open",
     "createdAt": "2024-01-10T09:00:00Z"
@@ -102,7 +102,7 @@
     "id": 12,
     "title": "Export data to CSV corrupted",
     "description": "Exported CSV files have encoding issues and special characters appear broken.",
-    "customer": "at@business.com",
+    "customer": "Arjun Patel",
     "priority": "medium",
     "status": "open",
     "createdAt": "2024-01-10T12:15:00Z"
@@ -111,7 +111,7 @@
     "id": 13,
     "title": "Notification emails going to spam",
     "description": "System notification emails are being marked as spam by Gmail and Outlook.",
-    "customer": "support@retailer.com",
+    "customer": "Support Team (RetailCorp)",
     "priority": "high",
     "status": "in-progress",
     "createdAt": "2024-01-09T14:40:00Z"
@@ -120,7 +120,7 @@
     "id": 14,
     "title": "Calendar integration not syncing",
     "description": "Google Calendar integration stopped syncing events 2 days ago.",
-    "customer": "mg@email.com",
+    "customer": "Maya Gupta",
     "priority": "medium",
     "status": "open",
     "createdAt": "2024-01-09T16:50:00Z"
@@ -129,7 +129,7 @@
     "id": 15,
     "title": "Feature request: Dark mode",
     "description": "Request to add dark mode theme to the web application for better nighttime usage.",
-    "customer": "dp@example.com",
+    "customer": "Daniel Park",
     "priority": "low",
     "status": "open",
     "createdAt": "2024-01-08T10:25:00Z"

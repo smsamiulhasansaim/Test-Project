@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
-        const response = await fetch('/src/data/tickets.json');
+        const response = await fetch('/public/tickets.json');
         if (!response.ok) {
           throw new Error('Failed to fetch tickets');
         }
