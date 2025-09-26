@@ -1,6 +1,4 @@
-// src/components/TicketCard.jsx
 const TicketCard = ({ ticket, isSelected, onSelect }) => {
-  // Format date
   const ticketDate = new Date(ticket.createdAt);
   const formattedDate = ticketDate.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -8,7 +6,6 @@ const TicketCard = ({ ticket, isSelected, onSelect }) => {
     day: 'numeric'
   });
 
-  // Get status badge class
   let statusClass = '';
   let statusText = '';
   switch(ticket.status) {
@@ -29,13 +26,12 @@ const TicketCard = ({ ticket, isSelected, onSelect }) => {
       statusText = ticket.status;
   }
 
-  // Get priority badge class
   let priorityClass = '';
   let priorityText = '';
   switch(ticket.priority) {
     case 'critical':
-      priorityClass = 'samiul-priority-critical';
-      priorityText = 'CRITICAL';
+      priorityClass = 'samiul-priority-low';
+      priorityText = 'LOW PRIORITY';
       break;
     case 'high':
       priorityClass = 'samiul-priority-high';
@@ -60,7 +56,7 @@ const TicketCard = ({ ticket, isSelected, onSelect }) => {
       onClick={onSelect}
     >
       <div className="flex justify-between items-start mb-2">
-        <h3 className="text-xl font-semibold">{ticket.title}</h3>
+        <h3 className="text-black text-xl font-semibold">{ticket.title}</h3>
         <span className={`samiul-status-badge ${statusClass} text-xs font-medium px-4 py-1 rounded-full`}>
           {statusText}
         </span>

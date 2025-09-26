@@ -4,15 +4,14 @@ const HeroSection = ({ inProgressCount, resolvedCount }) => {
     <section className="w-full py-12 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-wrap justify-center">
-          {/* In-Progress Card */}
           <div className="w-full sm:w-1/2 p-4">
             <div className="relative flex flex-col justify-center items-center h-64 md:h-50 samiul-gradient-purple rounded-xl shadow-xl overflow-hidden text-white">
               <div className="samiul-image-container samiul-left-image">
-                <img src="img/vector1.png" alt="Left background" className="samiul-background-image" />
+                <img src="/src/assets/vector1.png" alt="Left background" className="samiul-background-image" />
               </div>
               
               <div className="samiul-image-container samiul-right-image">
-                <img src="#" alt="Right background" className="samiul-background-image" />
+                <img src="/src/assets/vector2.png" alt="Right background" className="samiul-background-image" />
               </div>
 
               <div className="relative z-10 text-center p-6">
@@ -22,15 +21,14 @@ const HeroSection = ({ inProgressCount, resolvedCount }) => {
             </div>
           </div>
 
-          {/* Resolved Card */}
           <div className="w-full sm:w-1/2 p-4">
             <div className="relative flex flex-col justify-center items-center h-64 md:h-50 samiul-gradient-green rounded-xl shadow-xl overflow-hidden text-white">
               <div className="samiul-image-container samiul-left-image">
-                <img src="img/vector1.png" alt="Left background" className="samiul-background-image" />
+                <img src="/src/assets/vector1.png" alt="Left background" className="samiul-background-image" />
               </div>
               
               <div className="samiul-image-container samiul-right-image">
-                <img src="#" alt="Right background" className="samiul-background-image" />
+                <img src="/src/assets/vector2.png" alt="Right background" className="samiul-background-image" />
               </div>
 
               <div className="relative z-10 text-center p-6">

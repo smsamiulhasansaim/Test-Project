@@ -18,9 +18,13 @@ const Header = () => {
               <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors duration-200">Contact</a>
             </div>
             
-            <a href="#" className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-200">
-              + New Ticket
-            </a>
+            <a
+            href="#"
+            className="text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors duration-200"
+            style={{ background: "linear-gradient(135deg, #632EE3 0%, #9F62F2 100%)" }}>
+            + New Ticket
+          </a>
+
           </div>
         </nav>
       </div>
