@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZ Bid Pro - Document Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .doc-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .file-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+        
+        .file-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .folder-card {
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .folder-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+        
+        .file-type-pdf {
+            border-left-color: #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fef2f2 100%);
+        }
+        
+        .file-type-doc {
+            border-left-color: #3b82f6;
+            background: linear-gradient(135deg, #eff6ff 0%, #eff6ff 100%);
+        }
+        
+        .file-type-xls {
+            border-left-color: #10b981;
+            background: linear-gradient(135deg, #f0fdf4 0%, #f0fdf4 100%);
+        }
+        
+        .file-type-img {
+            border-left-color: #f59e0b;
+            background: linear-gradient(135deg, #fffbeb 0%, #fffbeb 100%);
+        }
+        
+        .file-type-zip {
+            border-left-color: #8b5cf6;
+            background: linear-gradient(135deg, #faf5ff 0%, #faf5ff 100%);
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-draft {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        
+        .status-review {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-approved {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-rejected {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .tab-button {
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .filter-pill {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #d1d5db;
+        }
+        
+        .filter-pill.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .file-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .file-icon-pdf {
+            background-color: #fef2f2;
+            color: #ef4444;
+        }
+        
+        .file-icon-doc {
+            background-color: #eff6ff;
+            color: #3b82f6;
+        }
+        
+        .file-icon-xls {
+            background-color: #f0fdf4;
+            color: #10b981;
+        }
+        
+        .file-icon-img {
+            background-color: #fffbeb;
+            color: #f59e0b;
+        }
+        
+        .file-icon-zip {
+            background-color: #faf5ff;
+            color: #8b5cf6;
+        }
+        
+        .file-icon-folder {
+            background-color: #f8fafc;
+            color: #6b7280;
+        }
+        
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #3b82f6;
+            background-color: #f0f9ff;
+        }
+        
+        .upload-area.dragover {
+            border-color: #3b82f6;
+            background-color: #dbeafe;
+        }
+        
+        .version-item {
+            transition: all 0.2s ease;
+            border-left: 3px solid #e5e7eb;
+        }
+        
+        .version-item:hover {
+            background-color: #f9fafb;
+        }
+        
+        .version-item.current {
+            border-left-color: #10b981;
+            background-color: #f0fdf4;
+        }
+        
+        .breadcrumb-item {
+            transition: all 0.2s ease;
+        }
+        
+        .breadcrumb-item:hover {
+            color: #3b82f6;
+        }
+        
+        .context-menu {
+            display: none;
+            position: absolute;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 50;
+            min-width: 160px;
+        }
+        
+        .context-menu-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .context-menu-item:hover {
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                        <i data-lucide="briefcase" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">EZ Bid Pro</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 rounded-full hover:bg-gray-100 relative">
+                        <i data-lucide="bell" class="w-5 h-5 text-gray-600"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="user" class="w-4 h-4 text-blue-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">John Doe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-8">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800 mb-2">Document Manager</h1>
+                <p class="text-gray-600">Manage all your tender documents in one place</p>
+            </div>
+            
+            <div class="mt-4 lg:mt-0 flex items-center space-x-3">
+                <button class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                    Upload Files
+                </button>
+                
+                <button class="flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                    <i data-lucide="folder-plus" class="w-4 h-4 mr-2"></i>
+                    New Folder
+                </button>
+            </div>
+        </div>
+        
+        <!-- Breadcrumb -->
+        <div class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+            <span class="breadcrumb-item cursor-pointer">All Documents</span>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <span class="breadcrumb-item cursor-pointer">Tender Submissions</span>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            <span class="font-medium text-gray-800">Road Construction Project</span>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-8">
+            <div class="tab-button active">All Files</div>
+            <div class="tab-button">Recent</div>
+            <div class="tab-button">Shared</div>
+            <div class="tab-button">Templates</div>
+            <div class="tab-button">Archived</div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Left Sidebar - Filters & Actions -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Quick Stats -->
+                <div class="doc-card p-6">
+                    <h3 class="font-semibold text-gray-800 mb-4">Storage Overview</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm text-gray-700">Storage Used</span>
+                                <span class="text-sm font-medium text-gray-800">4.2 GB / 10 GB</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill bg-blue-500" style="width: 42%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Documents</span>
+                                <span class="font-medium">1.8 GB</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Images</span>
+                                <span class="font-medium">856 MB</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Other Files</span>
+                                <span class="font-medium">1.5 GB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- File Filters -->
+                <div class="doc-card p-6">
+                    <h3 class="font-semibold text-gray-800 mb-4">File Filters</h3>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" checked>
+                            <span class="text-sm text-gray-700">All Files</span>
+                        </label>
+                        
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" checked>
+                            <span class="text-sm text-gray-700">Documents</span>
+                        </label>
+                        
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3">
+                            <span class="text-sm text-gray-700">Spreadsheets</span>
+                        </label>
+                        
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" checked>
+                            <span class="text-sm text-gray-700">PDFs</span>
+                        </label>
+                        
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3">
+                            <span class="text-sm text-gray-700">Images</span>
+                        </label>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <h4 class="font-medium text-gray-700 mb-3">Status</h4>
+                        
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" checked>
+                                <span class="text-sm text-gray-700">Draft</span>
+                            </label>
+                            
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" checked>
+                                <span class="text-sm text-gray-700">In Review</span>
+                            </label>
+                            
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3">
+                                <span class="text-sm text-gray-700">Approved</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="doc-card p-6">
+                    <h3 class="font-semibold text-gray-800 mb-4">Quick Actions</h3>
+                    
+                    <div class="space-y-3">
+                        <button class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <div class="flex items-center">
+                                <i data-lucide="download" class="w-4 h-4 text-gray-600 mr-3"></i>
+                                <span class="text-sm font-medium text-gray-700">Export All</span>
+                            </div>
+                        </button>
+                        
+                        <button class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <div class="flex items-center">
+                                <i data-lucide="share-2" class="w-4 h-4 text-gray-600 mr-3"></i>
+                                <span class="text-sm font-medium text-gray-700">Share Folder</span>
+                            </div>
+                        </button>
+                        
+                        <button class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <div class="flex items-center">
+                                <i data-lucide="archive" class="w-4 h-4 text-gray-600 mr-3"></i>
+                                <span class="text-sm font-medium text-gray-700">Archive Old</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="lg:col-span-3">
+                <!-- Toolbar -->
+                <div class="doc-card p-6 mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <div class="flex items-center space-x-4 mb-4 md:mb-0">
+                            <div class="flex space-x-2">
+                                <button class="filter-pill active">All</button>
+                                <button class="filter-pill">Recent</button>
+                                <button class="filter-pill">Modified</button>
+                            </div>
+                            
+                            <div class="text-sm text-gray-500">24 files • 3 folders</div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <input type="text" placeholder="Search documents..." class="pl-9 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-64">
+                                <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-2.5"></i>
+                            </div>
+                            
+                            <div class="flex border border-gray-300 rounded-lg overflow-hidden">
+                                <button class="p-2 bg-gray-100 border-r border-gray-300">
+                                    <i data-lucide="grid" class="w-4 h-4 text-gray-600"></i>
+                                </button>
+                                <button class="p-2">
+                                    <i data-lucide="list" class="w-4 h-4 text-gray-600"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upload Area -->
+                <div class="upload-area p-8 text-center mb-6 cursor-pointer" id="uploadArea">
+                    <i data-lucide="upload-cloud" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i>
+                    <h3 class="font-semibold text-gray-800 mb-2">Drop files to upload</h3>
+                    <p class="text-sm text-gray-600 mb-4">or click to browse</p>
+                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                        Select Files
+                    </button>
+                    <input type="file" class="hidden" id="fileInput" multiple>
+                </div>
+                
+                <!-- Folders Grid -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Folders</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Folder 1 -->
+                        <div class="folder-card p-4 rounded-lg cursor-pointer" onclick="openFolder('Tender Submissions')">
+                            <div class="flex items-center">
+                                <div class="file-icon file-icon-folder mr-4">
+                                    <i data-lucide="folder"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-800">Tender Submissions</h4>
+                                    <p class="text-sm text-gray-600">12 files • Updated 2 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Folder 2 -->
+                        <div class="folder-card p-4 rounded-lg cursor-pointer" onclick="openFolder('Contract Templates')">
+                            <div class="flex items-center">
+                                <div class="file-icon file-icon-folder mr-4">
+                                    <i data-lucide="folder"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-800">Contract Templates</h4>
+                                    <p class="text-sm text-gray-600">8 files • Updated 1 day ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Folder 3 -->
+                        <div class="folder-card p-4 rounded-lg cursor-pointer" onclick="openFolder('Financial Documents')">
+                            <div class="flex items-center">
+                                <div class="file-icon file-icon-folder mr-4">
+                                    <i data-lucide="folder"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-800">Financial Documents</h4>
+                                    <p class="text-sm text-gray-600">15 files • Updated 3 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Files Grid -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Recent Files</h3>
+                        <button class="text-sm text-blue-600 font-medium flex items-center">
+                            View All
+                            <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- File 1 -->
+                        <div class="file-card p-6 file-type-pdf" oncontextmenu="showContextMenu(event, this)">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="file-icon file-icon-pdf mr-4">
+                                        <i data-lucide="file-text"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Technical Proposal.pdf</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Road Construction Project</p>
+                                    </div>
+                                </div>
+                                <span class="status-badge status-review">In Review</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center text-gray-500">
+                                    <i data-lucide="calendar" class="w-4 h-4 mr-1"></i>
+                                    <span>Oct 5, 2025</span>
+                                </div>
+                                <span class="text-gray-500">2.4 MB</span>
+                            </div>
+                        </div>
+                        
+                        <!-- File 2 -->
+                        <div class="file-card p-6 file-type-doc" oncontextmenu="showContextMenu(event, this)">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="file-icon file-icon-doc mr-4">
+                                        <i data-lucide="file-text"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Financial Budget.docx</h4>
+                                        <p class="text-sm text-gray-600 mt-1">IT Equipment Supply</p>
+                                    </div>
+                                </div>
+                                <span class="status-badge status-draft">Draft</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center text-gray-500">
+                                    <i data-lucide="calendar" class="w-4 h-4 mr-1"></i>
+                                    <span>Oct 3, 2025</span>
+                                </div>
+                                <span class="text-gray-500">1.8 MB</span>
+                            </div>
+                        </div>
+                        
+                        <!-- File 3 -->
+                        <div class="file-card p-6 file-type-xls" oncontextmenu="showContextMenu(event, this)">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="file-icon file-icon-xls mr-4">
+                                        <i data-lucide="file-text"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Cost Analysis.xlsx</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Medical Equipment Tender</p>
+                                    </div>
+                                </div>
+                                <span class="status-badge status-approved">Approved</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center text-gray-500">
+                                    <i data-lucide="calendar" class="w-4 h-4 mr-1"></i>
+                                    <span>Oct 1, 2025</span>
+                                </div>
+                                <span class="text-gray-500">3.1 MB</span>
+                            </div>
+                        </div>
+                        
+                        <!-- File 4 -->
+                        <div class="file-card p-6 file-type-img" oncontextmenu="showContextMenu(event, this)">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="file-icon file-icon-img mr-4">
+                                        <i data-lucide="image"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Site Photos.zip</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Road Construction Project</p>
+                                    </div>
+                                </div>
+                                <span class="status-badge status-approved">Approved</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between text-sm">
+                                <div class="flex items-center text-gray-500">
+                                    <i data-lucide="calendar" class="w-4 h-4 mr-1"></i>
+                                    <span>Sep 28, 2025</span>
+                                </div>
+                                <span class="text-gray-500">15.2 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Version History -->
+                <div class="mt-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Version History</h3>
+                        <button class="text-sm text-gray-500">Show All</button>
+                    </div>
+                    
+                    <div class="doc-card p-6">
+                        <div class="space-y-3">
+                            <!-- Version 1 -->
+                            <div class="version-item current p-4 rounded-lg">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">v3.2 - Final Submission</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Updated financial projections and technical specs</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-800">Oct 5, 2025</p>
+                                        <p class="text-xs text-gray-500">John Doe</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Version 2 -->
+                            <div class="version-item p-4 rounded-lg">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">v3.1 - Review Version</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Incorporated legal team feedback</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-800">Oct 3, 2025</p>
+                                        <p class="text-xs text-gray-500">Sarah Ahmed</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Version 3 -->
+                            <div class="version-item p-4 rounded-lg">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">v3.0 - Initial Draft</h4>
+                                        <p class="text-sm text-gray-600 mt-1">First complete draft with all sections</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-medium text-gray-800">Oct 1, 2025</p>
+                                        <p class="text-xs text-gray-500">Mohammad Rahman</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu">
+        <div class="context-menu-item flex items-center">
+            <i data-lucide="download" class="w-4 h-4 mr-2"></i>
+            <span>Download</span>
+        </div>
+        <div class="context-menu-item flex items-center">
+            <i data-lucide="share-2" class="w-4 h-4 mr-2"></i>
+            <span>Share</span>
+        </div>
+        <div class="context-menu-item flex items-center">
+            <i data-lucide="edit" class="w-4 h-4 mr-2"></i>
+            <span>Rename</span>
+        </div>
+        <div class="context-menu-item flex items-center">
+            <i data-lucide="copy" class="w-4 h-4 mr-2"></i>
+            <span>Make a Copy</span>
+        </div>
+        <div class="border-t border-gray-200"></div>
+        <div class="context-menu-item flex items-center text-red-600">
+            <i data-lucide="trash-2" class="w-4 h-4 mr-2"></i>
+            <span>Move to Trash</span>
+        </div>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+        
+        // Tab functionality
+        document.querySelectorAll('.tab-button').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab-button').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Filter pill functionality
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                const container = this.closest('.flex.space-x-2');
+                if (container) {
+                    container.querySelectorAll('.filter-pill').forEach(p => {
+                        p.classList.remove('active');
+                    });
+                }
+                this.classList.add('active');
+            });
+        });
+        
+        // Upload functionality
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+            if (files.length > 0) {
+                // Show upload success message
+                const originalHTML = uploadArea.innerHTML;
+                uploadArea.innerHTML = `
+                    <i data-lucide="check-circle" class="w-12 h-12 text-green-500 mx-auto mb-3"></i>
+                    <h3 class="font-semibold text-gray-800 mb-2">${files.length} file(s) uploaded successfully!</h3>
+                    <p class="text-sm text-gray-600">Files are being processed...</p>
+                `;
+                lucide.createIcons();
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    uploadArea.innerHTML = originalHTML;
+                    lucide.createIcons();
+                }, 3000);
+            }
+        }
+        
+        // Context menu functionality
+        function showContextMenu(event, element) {
+            event.preventDefault();
+            const contextMenu = document.getElementById('contextMenu');
+            contextMenu.style.display = 'block';
+            contextMenu.style.left = `${event.pageX}px`;
+            contextMenu.style.top = `${event.pageY}px`;
+            
+            // Close context menu when clicking elsewhere
+            document.addEventListener('click', closeContextMenu);
+        }
+        
+        function closeContextMenu() {
+            document.getElementById('contextMenu').style.display = 'none';
+            document.removeEventListener('click', closeContextMenu);
+        }
+        
+        // Folder navigation
+        function openFolder(folderName) {
+            alert(`Opening folder: ${folderName}`);
+            // In a real application, this would navigate to the folder view
+        }
+        
+        // File status toggle
+        document.querySelectorAll('.file-card').forEach(card => {
+            card.addEventListener('dblclick', function() {
+                const statusBadge = this.querySelector('.status-badge');
+                if (statusBadge) {
+                    const statuses = ['draft', 'review', 'approved', 'rejected'];
+                    const currentStatus = statusBadge.className.split(' ').find(cls => cls.startsWith('status-'));
+                    const currentIndex = statuses.indexOf(currentStatus.replace('status-', ''));
+                    const nextIndex = (currentIndex + 1) % statuses.length;
+                    const nextStatus = statuses[nextIndex];
+                    
+                    // Update status badge
+                    statusBadge.className = `status-badge status-${nextStatus}`;
+                    statusBadge.textContent = nextStatus.charAt(0).toUpperCase() + nextStatus.slice(1);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

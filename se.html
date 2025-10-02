@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZ Bid Pro - Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .settings-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d1d5db;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #10b981;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+        
+        .tab-button {
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .api-key {
+            font-family: 'Courier New', monospace;
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+        }
+        
+        .danger-zone {
+            background: linear-gradient(135deg, #fef2f2 0%, #fef2f2 100%);
+            border: 2px solid #fecaca;
+        }
+        
+        .security-badge {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .security-enabled {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .security-disabled {
+            background-color: #f3f4f6;
+            color: #6b7280;
+        }
+        
+        .settings-content {
+            display: none;
+        }
+        
+        .settings-content.active {
+            display: block;
+        }
+        
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #f8fafc;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .integration-card {
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .integration-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        
+        .integration-status {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .status-connected {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-disconnected {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-pending {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .config-item {
+            transition: all 0.2s ease;
+            border-left: 3px solid #e5e7eb;
+        }
+        
+        .config-item:hover {
+            background-color: #f9fafb;
+            border-left-color: #3b82f6;
+        }
+        
+        .plan-card {
+            transition: all 0.3s ease;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .plan-card.featured {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                        <i data-lucide="briefcase" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">EZ Bid Pro</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 rounded-full hover:bg-gray-100 relative">
+                        <i data-lucide="bell" class="w-5 h-5 text-gray-600"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="user" class="w-4 h-4 text-blue-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">John Doe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="sticky-header">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-4">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Settings & Configuration</h1>
+                    <p class="text-gray-600">Manage your account preferences and system configuration</p>
+                </div>
+                
+                <div class="mt-4 lg:mt-0 flex items-center space-x-3">
+                    <button id="save-button" class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        <i data-lucide="save" class="w-4 h-4 mr-2"></i>
+                        Save Changes
+                    </button>
+                    
+                    <button class="flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4 mr-2"></i>
+                        Reset to Default
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Settings Navigation Tabs -->
+            <div class="flex overflow-x-auto space-x-1 pb-2">
+                <div class="tab-button active" data-tab="profile">
+                    <i data-lucide="user" class="w-4 h-4 mr-2 inline"></i>
+                    <span>Profile</span>
+                </div>
+                
+                <div class="tab-button" data-tab="notifications">
+                    <i data-lucide="bell" class="w-4 h-4 mr-2 inline"></i>
+                    <span>Notifications</span>
+                </div>
+                
+                <div class="tab-button" data-tab="security">
+                    <i data-lucide="shield" class="w-4 h-4 mr-2 inline"></i>
+                    <span>Security</span>
+                </div>
+                
+                <div class="tab-button" data-tab="billing">
+                    <i data-lucide="credit-card" class="w-4 h-4 mr-2 inline"></i>
+                    <span>Billing & Plans</span>
+                </div>
+                
+                <div class="tab-button" data-tab="integrations">
+                    <i data-lucide="puzzle" class="w-4 h-4 mr-2 inline"></i>
+                    <span>Integrations</span>
+                </div>
+                
+                <div class="tab-button" data-tab="api">
+                    <i data-lucide="key" class="w-4 h-4 mr-2 inline"></i>
+                    <span>API Keys</span>
+                </div>
+                
+                <div class="tab-button" data-tab="preferences">
+                    <i data-lucide="settings" class="w-4 h-4 mr-2 inline"></i>
+                    <span>Preferences</span>
+                </div>
+                
+                <div class="tab-button" data-tab="advanced">
+                    <i data-lucide="sliders" class="w-4 h-4 mr-2 inline"></i>
+                    <span>Advanced</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Content -->
+        <div class="settings-content-container">
+            <!-- Profile Settings -->
+            <div class="settings-content active" id="profile">
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Profile Information</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                            <input type="text" value="John" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                            <input type="text" value="Doe" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" value="john.doe@company.com" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" value="+880 1234 567890" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                        <input type="text" value="BuildRight Construction Ltd." class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Bio</label>
+                        <textarea class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="4">Senior Project Manager with 10+ years of experience in construction project management and tender submission.</textarea>
+                    </div>
+                </div>
+                
+                <div class="settings-card p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Profile Picture</h3>
+                    
+                    <div class="flex items-center space-x-6">
+                        <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="user" class="w-8 h-8 text-blue-600"></i>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-600 mb-3">Recommended: Square JPG, PNG, at least 400x400 pixels</p>
+                            <div class="flex space-x-3">
+                                <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                                    Upload New
+                                </button>
+                                <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notification Settings -->
+            <div class="settings-content" id="notifications">
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Notification Preferences</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Email Notifications</h4>
+                                <p class="text-sm text-gray-600">Receive notifications via email</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Push Notifications</h4>
+                                <p class="text-sm text-gray-600">Receive browser push notifications</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">SMS Alerts</h4>
+                                <p class="text-sm text-gray-600">Receive important alerts via SMS</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Desktop Notifications</h4>
+                                <p class="text-sm text-gray-600">Show desktop notifications</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-card p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Notification Types</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <h4 class="font-medium text-gray-800 mb-3">Tender Alerts</h4>
+                            
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" checked>
+                                <span class="text-sm text-gray-700">New Tender Matches</span>
+                            </label>
+                            
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" checked>
+                                <span class="text-sm text-gray-700">Tender Updates</span>
+                            </label>
+                            
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3">
+                                <span class="text-sm text-gray-700">Corrigendum Notices</span>
+                            </label>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <h4 class="font-medium text-gray-800 mb-3">System Alerts</h4>
+                            
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" checked>
+                                <span class="text-sm text-gray-700">Deadline Reminders</span>
+                            </label>
+                            
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3">
+                                <span class="text-sm text-gray-700">Team Activities</span>
+                            </label>
+                            
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3" checked>
+                                <span class="text-sm text-gray-700">System Updates</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Security Settings -->
+            <div class="settings-content" id="security">
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Security Settings</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Two-Factor Authentication</h4>
+                                <p class="text-sm text-gray-600">Add an extra layer of security to your account</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="security-badge security-enabled">Enabled</span>
+                                <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                    Manage
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Login Alerts</h4>
+                                <p class="text-sm text-gray-600">Get notified of new sign-ins</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Session Timeout</h4>
+                                <p class="text-sm text-gray-600">Automatically log out after inactivity</p>
+                            </div>
+                            <select class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option>15 minutes</option>
+                                <option selected>30 minutes</option>
+                                <option>1 hour</option>
+                                <option>4 hours</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Password</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+                            <input type="password" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                            <input type="password" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+                            <input type="password" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            Update Password
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="settings-card p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Active Sessions</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i data-lucide="monitor" class="w-5 h-5 text-gray-600 mr-3"></i>
+                                <div>
+                                    <p class="font-medium text-gray-800">Chrome on Windows</p>
+                                    <p class="text-sm text-gray-600">Dhaka, Bangladesh • Current session</p>
+                                </div>
+                            </div>
+                            <span class="text-green-600 text-sm font-medium">Active</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i data-lucide="smartphone" class="w-5 h-5 text-gray-600 mr-3"></i>
+                                <div>
+                                    <p class="font-medium text-gray-800">Safari on iPhone</p>
+                                    <p class="text-sm text-gray-600">Dhaka, Bangladesh • 2 hours ago</p>
+                                </div>
+                            </div>
+                            <button class="text-red-600 hover:text-red-800 text-sm font-medium">
+                                Revoke
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Billing & Plans -->
+            <div class="settings-content" id="billing">
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Current Plan</h3>
+                    
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-lg mb-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Professional Plan</h4>
+                                <p class="text-blue-100">৳15,000/month • Billed annually</p>
+                            </div>
+                            <span class="bg-white text-blue-600 px-3 py-1 rounded-full text-sm font-medium">Active</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <p class="text-2xl font-bold text-gray-800">24/7</p>
+                            <p class="text-sm text-gray-600">Support</p>
+                        </div>
+                        
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <p class="text-2xl font-bold text-gray-800">500GB</p>
+                            <p class="text-sm text-gray-600">Storage</p>
+                        </div>
+                        
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <p class="text-2xl font-bold text-gray-800">Unlimited</p>
+                            <p class="text-sm text-gray-600">Tender Alerts</p>
+                        </div>
+                    </div>
+                    
+                    <button class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                        Upgrade to Enterprise
+                    </button>
+                </div>
+                
+                <div class="settings-card p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Billing History</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                                <p class="font-medium text-gray-800">Professional Plan - October 2025</p>
+                                <p class="text-sm text-gray-600">Oct 1, 2025 • Invoice #INV-2025-10-001</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium text-gray-800">৳15,000</p>
+                                <p class="text-sm text-green-600">Paid</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                                <p class="font-medium text-gray-800">Professional Plan - September 2025</p>
+                                <p class="text-sm text-gray-600">Sep 1, 2025 • Invoice #INV-2025-09-001</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium text-gray-800">৳15,000</p>
+                                <p class="text-sm text-green-600">Paid</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- API Keys -->
+            <div class="settings-content" id="api">
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">API Keys</h3>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                                <p class="font-medium text-gray-800">Production Key</p>
+                                <p class="text-sm text-gray-600">Created on Sep 15, 2025</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <code class="api-key">sk_live_••••••••••••••••••••••••</code>
+                                <button class="text-red-600 hover:text-red-800">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div>
+                                <p class="font-medium text-gray-800">Development Key</p>
+                                <p class="text-sm text-gray-600">Created on Aug 20, 2025</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <code class="api-key">sk_test_••••••••••••••••••••••••</code>
+                                <button class="text-red-600 hover:text-red-800">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                        Generate New API Key
+                    </button>
+                </div>
+                
+                <div class="settings-card p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">API Usage</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <p class="text-2xl font-bold text-gray-800">1,247</p>
+                            <p class="text-sm text-gray-600">Requests Today</p>
+                        </div>
+                        
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <p class="text-2xl font-bold text-gray-800">84%</p>
+                            <p class="text-sm text-gray-600">Success Rate</p>
+                        </div>
+                        
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <p class="text-2xl font-bold text-gray-800">250ms</p>
+                            <p class="text-sm text-gray-600">Avg. Response Time</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-sm text-gray-600">
+                        <p class="mb-2">API Documentation: <a href="#" class="text-blue-600 hover:text-blue-800">View Docs</a></p>
+                        <p>Rate Limit: 1,000 requests per hour per key</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Integrations Settings -->
+            <div class="settings-content" id="integrations">
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Third-Party Integrations</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- ERP Integration -->
+                        <div class="integration-card p-5 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i data-lucide="database" class="w-5 h-5 text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">ERP System</h4>
+                                        <p class="text-sm text-gray-600">SAP, Oracle, Microsoft</p>
+                                    </div>
+                                </div>
+                                <span class="integration-status status-connected">Connected</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">Sync tender data with your enterprise resource planning system</p>
+                            <div class="flex space-x-2">
+                                <button class="flex-1 px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">Configure</button>
+                                <button class="px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Test</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Accounting Software -->
+                        <div class="integration-card p-5 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i data-lucide="calculator" class="w-5 h-5 text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Accounting</h4>
+                                        <p class="text-sm text-gray-600">QuickBooks, Xero</p>
+                                    </div>
+                                </div>
+                                <span class="integration-status status-connected">Connected</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">Automate financial data exchange with accounting software</p>
+                            <div class="flex space-x-2">
+                                <button class="flex-1 px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">Configure</button>
+                                <button class="px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Test</button>
+                            </div>
+                        </div>
+                        
+                        <!-- CRM Integration -->
+                        <div class="integration-card p-5 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i data-lucide="users" class="w-5 h-5 text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">CRM</h4>
+                                        <p class="text-sm text-gray-600">Salesforce, HubSpot</p>
+                                    </div>
+                                </div>
+                                <span class="integration-status status-pending">Pending</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">Connect with customer relationship management systems</p>
+                            <div class="flex space-x-2">
+                                <button class="flex-1 px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">Setup</button>
+                                <button class="px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Learn</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Document Management -->
+                        <div class="integration-card p-5 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i data-lucide="folder" class="w-5 h-5 text-yellow-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Document Management</h4>
+                                        <p class="text-sm text-gray-600">SharePoint, Google Drive</p>
+                                    </div>
+                                </div>
+                                <span class="integration-status status-connected">Connected</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">Store and manage tender documents in cloud storage</p>
+                            <div class="flex space-x-2">
+                                <button class="flex-1 px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">Configure</button>
+                                <button class="px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Test</button>
+                            </div>
+                        </div>
+                        
+                        <!-- E-Government Portal -->
+                        <div class="integration-card p-5 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i data-lucide="globe" class="w-5 h-5 text-red-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">E-GP System</h4>
+                                        <p class="text-sm text-gray-600">Bangladesh E-GP</p>
+                                    </div>
+                                </div>
+                                <span class="integration-status status-connected">Connected</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">Direct integration with Bangladesh E-Government Procurement</p>
+                            <div class="flex space-x-2">
+                                <button class="flex-1 px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">Configure</button>
+                                <button class="px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Sync</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Gateway -->
+                        <div class="integration-card p-5 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3">
+                                        <i data-lucide="credit-card" class="w-5 h-5 text-indigo-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-800">Payment Gateway</h4>
+                                        <p class="text-sm text-gray-600">bKash, Nagad, Bank</p>
+                                    </div>
+                                </div>
+                                <span class="integration-status status-disconnected">Disconnected</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-4">Process tender fees and payments seamlessly</p>
+                            <div class="flex space-x-2">
+                                <button class="flex-1 px-3 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700">Connect</button>
+                                <button class="px-3 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">Docs</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-card p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Integration Settings</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Auto-Sync Data</h4>
+                                <p class="text-sm text-gray-600">Automatically sync data with connected systems every 30 minutes</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Sync Logs</h4>
+                                <p class="text-sm text-gray-600">Keep detailed logs of all integration activities</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Error Notifications</h4>
+                                <p class="text-sm text-gray-600">Receive alerts when integration errors occur</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">API Rate Limiting</h4>
+                                <p class="text-sm text-gray-600">Limit API calls to prevent overuse</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Preferences Settings -->
+            <div class="settings-content" id="preferences">
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Application Preferences</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-3">Language & Region</h4>
+                                <div class="space-y-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Language</label>
+                                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option>English</option>
+                                            <option>Bengali</option>
+                                            <option>Arabic</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Time Zone</label>
+                                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option>Asia/Dhaka (GMT+6)</option>
+                                            <option>Asia/Dubai (GMT+4)</option>
+                                            <option>Asia/Kolkata (GMT+5:30)</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Date Format</label>
+                                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option>DD/MM/YYYY</option>
+                                            <option>MM/DD/YYYY</option>
+                                            <option>YYYY-MM-DD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-3">Display Settings</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-700">Dark Mode</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-700">Compact View</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-700">High Contrast</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-3">Tender Preferences</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-700">Auto-Save Drafts</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-700">Bid Template Suggestions</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-700">Competitor Analysis</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Default Currency</label>
+                                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option>BDT - Bangladeshi Taka</option>
+                                            <option>USD - US Dollar</option>
+                                            <option>EUR - Euro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-3">Workflow Preferences</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-700">Auto-Assign Tasks</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox">
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-700">Approval Workflows</span>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Default Deadline Reminder</label>
+                                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option>1 day before</option>
+                                            <option selected>2 days before</option>
+                                            <option>3 days before</option>
+                                            <option>1 week before</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-card p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Data & Privacy</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Data Analytics</h4>
+                                <p class="text-sm text-gray-600">Help us improve by sharing anonymous usage data</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Auto-Backup</h4>
+                                <p class="text-sm text-gray-600">Automatically backup your data daily</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Clear Browsing Data on Logout</h4>
+                                <p class="text-sm text-gray-600">Remove temporary data when you sign out</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Advanced Settings -->
+            <div class="settings-content" id="advanced">
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">System Configuration</h3>
+                    
+                    <div class="feature-grid">
+                        <div class="config-item p-4 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <i data-lucide="server" class="w-5 h-5 text-blue-600 mr-2"></i>
+                                <h4 class="font-medium text-gray-800">Database Management</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Manage database connections and performance</p>
+                            <button class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">Configure</button>
+                        </div>
+                        
+                        <div class="config-item p-4 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <i data-lucide="bar-chart" class="w-5 h-5 text-green-600 mr-2"></i>
+                                <h4 class="font-medium text-gray-800">Performance Analytics</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Monitor system performance and metrics</p>
+                            <button class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">View Reports</button>
+                        </div>
+                        
+                        <div class="config-item p-4 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <i data-lucide="shield" class="w-5 h-5 text-red-600 mr-2"></i>
+                                <h4 class="font-medium text-gray-800">Security Policies</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Configure advanced security settings</p>
+                            <button class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">Manage Policies</button>
+                        </div>
+                        
+                        <div class="config-item p-4 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <i data-lucide="download" class="w-5 h-5 text-purple-600 mr-2"></i>
+                                <h4 class="font-medium text-gray-800">Backup & Restore</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Manage system backups and restoration</p>
+                            <button class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">Backup Now</button>
+                        </div>
+                        
+                        <div class="config-item p-4 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <i data-lucide="code" class="w-5 h-5 text-yellow-600 mr-2"></i>
+                                <h4 class="font-medium text-gray-800">Custom Scripts</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Add custom JavaScript or CSS</p>
+                            <button class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">Edit Scripts</button>
+                        </div>
+                        
+                        <div class="config-item p-4 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <i data-lucide="activity" class="w-5 h-5 text-indigo-600 mr-2"></i>
+                                <h4 class="font-medium text-gray-800">Logs & Monitoring</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">View system logs and monitoring data</p>
+                            <button class="w-full px-3 py-2 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">View Logs</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-card p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Developer Options</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Developer Mode</h4>
+                                <p class="text-sm text-gray-600">Enable advanced developer features</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Debug Mode</h4>
+                                <p class="text-sm text-gray-600">Show detailed error messages and logs</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-medium text-gray-800">Experimental Features</h4>
+                                <p class="text-sm text-gray-600">Access beta and experimental features</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-card p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">System Information</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-medium text-gray-800 mb-3">Application Details</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Version</span>
+                                    <span class="text-gray-800">v3.2.1</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Build Date</span>
+                                    <span class="text-gray-800">Oct 15, 2025</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">License</span>
+                                    <span class="text-gray-800">Professional</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-medium text-gray-800 mb-3">System Status</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Database</span>
+                                    <span class="text-green-600">Connected</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Storage</span>
+                                    <span class="text-gray-800">245GB / 500GB</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600">Last Backup</span>
+                                    <span class="text-gray-800">Today, 02:30 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Danger Zone -->
+            <div class="settings-card danger-zone p-6 mt-8">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Danger Zone</h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-medium text-gray-800">Delete Account</h4>
+                            <p class="text-sm text-gray-600">Permanently delete your account and all data</p>
+                        </div>
+                        <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                            Delete Account
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-medium text-gray-800">Export Data</h4>
+                            <p class="text-sm text-gray-600">Download all your data in JSON format</p>
+                        </div>
+                        <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                            Export Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+        
+        // Tab navigation functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');   
+                
+                // Hide all settings content
+                document.querySelectorAll('.settings-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show selected settings content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Toggle switch functionality
+        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const label = this.nextElementSibling;
+                if (this.checked) {
+                    label.style.backgroundColor = '#10b981';
+                } else {
+                    label.style.backgroundColor = '#d1d5db';
+                }
+            });
+        });
+        
+        // API key reveal functionality
+        document.querySelectorAll('.api-key').forEach(apiKey => {
+            apiKey.addEventListener('click', function() {
+                if (this.textContent.includes('••••')) {
+                    this.textContent = this.getAttribute('data-full-key');
+                } else {
+                    this.textContent = this.getAttribute('data-masked-key');
+                }
+            });
+        });
+        
+        // Set masked API keys
+        document.querySelectorAll('.api-key').forEach(apiKey => {
+            const fullKey = apiKey.textContent;
+            const maskedKey = fullKey.replace(/.(?=.{4})/g, '•');
+            apiKey.setAttribute('data-full-key', fullKey);
+            apiKey.setAttribute('data-masked-key', maskedKey);
+            apiKey.textContent = maskedKey;
+        });
+        
+        // Save changes functionality
+        document.getElementById('save-button').addEventListener('click', function() {
+            // Show success message
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i data-lucide="check" class="w-4 h-4 mr-2"></i>Changes Saved!';
+            this.classList.remove('bg-blue-600');
+            this.classList.add('bg-green-600');
+            
+            // Reset after 2 seconds
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.classList.remove('bg-green-600');
+                this.classList.add('bg-blue-600');
+                lucide.createIcons();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

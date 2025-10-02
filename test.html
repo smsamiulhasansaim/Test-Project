@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZ Bid Pro - Advanced Tender Management</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Load AOS for animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Load Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .dashboard-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .sidebar {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        }
+        
+        .sidebar-item {
+            transition: all 0.2s ease;
+            border-radius: 8px;
+        }
+        
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-item.active {
+            background-color: #3b82f6;
+        }
+        
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+        
+        .tender-status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-open {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-closed {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-upcoming {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .chart-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .floating-action-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .floating-action-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.6);
+        }
+        
+        .notification-bell {
+            animation: ring 4s 2s ease-in-out infinite;
+            transform-origin: 50% 0%;
+        }
+        
+        @keyframes ring {
+            0% { transform: rotate(0); }
+            1% { transform: rotate(30deg); }
+            3% { transform: rotate(-28deg); }
+            5% { transform: rotate(34deg); }
+            7% { transform: rotate(-32deg); }
+            9% { transform: rotate(30deg); }
+            11% { transform: rotate(-28deg); }
+            13% { transform: rotate(26deg); }
+            15% { transform: rotate(-24deg); }
+            17% { transform: rotate(22deg); }
+            19% { transform: rotate(-20deg); }
+            21% { transform: rotate(18deg); }
+            23% { transform: rotate(-16deg); }
+            25% { transform: rotate(14deg); }
+            27% { transform: rotate(-12deg); }
+            29% { transform: rotate(10deg); }
+            31% { transform: rotate(-8deg); }
+            33% { transform: rotate(6deg); }
+            35% { transform: rotate(-4deg); }
+            37% { transform: rotate(2deg); }
+            39% { transform: rotate(-1deg); }
+            41% { transform: rotate(1deg); }
+            43% { transform: rotate(0); }
+            100% { transform: rotate(0); }
+        }
+        
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+            
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+            
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .slide-in-left {
+            animation: slideInLeft 0.5s ease-out;
+        }
+        
+        @keyframes slideInLeft {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .typewriter h1 {
+            overflow: hidden;
+            border-right: .15em solid #3b82f6;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #3b82f6; }
+        }
+        
+        .dark-mode {
+            background-color: #0f172a;
+            color: #f1f5f9;
+        }
+        
+        .dark-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: #f1f5f9;
+        }
+        
+        .dark-text {
+            color: #f1f5f9;
+        }
+        
+        .dark-border {
+            border-color: #334155;
+        }
+        
+        .dark-input {
+            background-color: #1e293b;
+            color: #f1f5f9;
+            border-color: #334155;
+        }
+        
+        .dark-input::placeholder {
+            color: #94a3b8;
+        }
+        
+        .dark-mode-toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .dark-mode-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1e293b;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #3b82f6;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        
+        .grid-layout-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #f1f5f9;
+            padding: 4px;
+            border-radius: 8px;
+        }
+        
+        .grid-layout-toggle button {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .grid-layout-toggle button.active {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .compact-view .dashboard-card {
+            padding: 1rem;
+        }
+        
+        .compact-view .text-3xl {
+            font-size: 1.5rem;
+        }
+        
+        .compact-view .text-lg {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Floating Action Button -->
+    <div class="floating-action-btn" id="fab">
+        <i data-lucide="plus" class="w-6 h-6 text-white"></i>
+    </div>
+    
+    <!-- FAB Menu (hidden by default) -->
+    <div id="fab-menu" class="fixed bottom-24 right-8 bg-white rounded-xl shadow-xl p-4 z-50 hidden">
+        <div class="space-y-3">
+            <button class="flex items-center w-full p-2 text-left hover:bg-gray-100 rounded-lg transition">
+                <i data-lucide="search" class="w-5 h-5 mr-3 text-blue-600"></i>
+                <span>Quick Search</span>
+            </button>
+            <button class="flex items-center w-full p-2 text-left hover:bg-gray-100 rounded-lg transition">
+                <i data-lucide="plus" class="w-5 h-5 mr-3 text-green-600"></i>
+                <span>New Tender</span>
+            </button>
+            <button class="flex items-center w-full p-2 text-left hover:bg-gray-100 rounded-lg transition">
+                <i data-lucide="calendar" class="w-5 h-5 mr-3 text-purple-600"></i>
+                <span>Add Deadline</span>
+            </button>
+            <button class="flex items-center w-full p-2 text-left hover:bg-gray-100 rounded-lg transition">
+                <i data-lucide="users" class="w-5 h-5 mr-3 text-orange-600"></i>
+                <span>Assign Team</span>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Main Layout -->
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar w-64 flex-shrink-0 text-white p-6 hidden md:block">
+            <div class="flex items-center mb-10">
+                <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                    <i data-lucide="briefcase" class="w-6 h-6 text-white"></i>
+                </div>
+                <h1 class="text-xl font-bold">EZ Bid Pro</h1>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="#" class="sidebar-item active flex items-center p-3">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="search" class="w-5 h-5 mr-3"></i>
+                    <span>Tender Search</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="bell" class="w-5 h-5 mr-3 notification-bell"></i>
+                    <span>Alerts & Notifications</span>
+                    <span class="notification-dot pulse-dot"></span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="calendar" class="w-5 h-5 mr-3"></i>
+                    <span>Bidding Calendar</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                    <span>Team Collaboration</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="file-text" class="w-5 h-5 mr-3"></i>
+                    <span>Document Manager</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            
+            <div class="mt-auto pt-10">
+                <div class="bg-blue-900/30 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-2">Upgrade to Premium</h3>
+                    <p class="text-sm text-blue-200 mb-3">Unlock advanced features and analytics</p>
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm font-medium transition">
+                        Upgrade Now
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white shadow-sm z-10">
+                <div class="flex items-center justify-between p-4">
+                    <div class="flex items-center">
+                        <button class="md:hidden mr-3" id="mobile-menu-toggle">
+                            <i data-lucide="menu" class="w-6 h-6 text-gray-600"></i>
+                        </button>
+                        <h2 class="text-xl font-semibold text-gray-800">Dashboard</h2>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- Search Bar -->
+                        <div class="relative hidden md:block">
+                            <input type="text" placeholder="Search tenders..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-64">
+                            <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-3"></i>
+                        </div>
+                        
+                        <!-- View Controls -->
+                        <div class="flex items-center space-x-2">
+                            <div class="grid-layout-toggle">
+                                <button class="grid-btn active" data-grid="4">
+                                    <i data-lucide="grid-3x3" class="w-4 h-4"></i>
+                                </button>
+                                <button class="grid-btn" data-grid="2">
+                                    <i data-lucide="columns" class="w-4 h-4"></i>
+                                </button>
+                                <button class="grid-btn" data-grid="1">
+                                    <i data-lucide="list" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            
+                            <label class="dark-mode-toggle">
+                                <input type="checkbox" id="dark-mode-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <!-- Notifications -->
+                        <div class="relative">
+                            <button class="p-2 rounded-full hover:bg-gray-100" id="notification-btn">
+                                <i data-lucide="bell" class="w-5 h-5 text-gray-600"></i>
+                                <span class="notification-dot pulse-dot"></span>
+                            </button>
+                            
+                            <!-- Notification Dropdown -->
+                            <div id="notification-dropdown" class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50 hidden">
+                                <div class="p-4 border-b">
+                                    <h3 class="font-semibold text-gray-800">Notifications</h3>
+                                </div>
+                                <div class="max-h-64 overflow-y-auto">
+                                    <div class="p-4 border-b hover:bg-gray-50 cursor-pointer">
+                                        <div class="flex items-start">
+                                            <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                                <i data-lucide="file-text" class="w-4 h-4 text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium">New tender matching your criteria</p>
+                                                <p class="text-xs text-gray-500">Road Construction Project - Ministry of Roads</p>
+                                                <p class="text-xs text-gray-400 mt-1">2 hours ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 border-b hover:bg-gray-50 cursor-pointer">
+                                        <div class="flex items-start">
+                                            <div class="bg-red-100 p-2 rounded-lg mr-3">
+                                                <i data-lucide="clock" class="w-4 h-4 text-red-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium">Deadline approaching</p>
+                                                <p class="text-xs text-gray-500">IT Equipment Supply - 3 days left</p>
+                                                <p class="text-xs text-gray-400 mt-1">5 hours ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 hover:bg-gray-50 cursor-pointer">
+                                        <div class="flex items-start">
+                                            <div class="bg-green-100 p-2 rounded-lg mr-3">
+                                                <i data-lucide="award" class="w-4 h-4 text-green-600"></i>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium">Tender awarded</p>
+                                                <p class="text-xs text-gray-500">Your bid for Medical Equipment was successful</p>
+                                                <p class="text-xs text-gray-400 mt-1">1 day ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-2 border-t">
+                                    <button class="w-full text-center text-sm text-blue-600 font-medium py-2">
+                                        View All Notifications
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- User Menu -->
+                        <div class="relative">
+                            <button class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100" id="user-menu-btn">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-4 h-4 text-blue-600"></i>
+                                </div>
+                                <span class="text-sm font-medium text-gray-700 hidden md:block">John Doe</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500"></i>
+                            </button>
+                            
+                            <!-- User Dropdown -->
+                            <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-50 hidden">
+                                <div class="p-4 border-b">
+                                    <p class="font-medium text-gray-800">John Doe</p>
+                                    <p class="text-sm text-gray-500">john.doe@example.com</p>
+                                </div>
+                                <div class="p-2">
+                                    <a href="#" class="flex items-center p-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                                        <span>Profile</span>
+                                    </a>
+                                    <a href="#" class="flex items-center p-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        <i data-lucide="settings" class="w-4 h-4 mr-2"></i>
+                                        <span>Settings</span>
+                                    </a>
+                                    <a href="#" class="flex items-center p-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                                        <i data-lucide="help-circle" class="w-4 h-4 mr-2"></i>
+                                        <span>Help & Support</span>
+                                    </a>
+                                </div>
+                                <div class="p-2 border-t">
+                                    <a href="#" class="flex items-center p-2 text-sm text-red-600 hover:bg-gray-100 rounded-lg">
+                                        <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+                                        <span>Sign Out</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Dashboard Content -->
+            <main class="flex-1 overflow-y-auto p-6" id="dashboard-content">
+                <!-- Welcome Section -->
+                <div class="mb-8 typewriter">
+                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Welcome back, John!</h1>
+                    <p class="text-gray-600">Here's what's happening with your tenders today.</p>
+                </div>
+                
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="stats-cards">
+                    <div class="dashboard-card p-6 card-hover fade-in" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-700">Active Tenders</h3>
+                            <div class="p-2 bg-blue-100 rounded-lg">
+                                <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold text-gray-800 mb-2">24</p>
+                        <div class="flex items-center text-sm text-green-600">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-1"></i>
+                            <span>+12% from last week</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card p-6 card-hover fade-in" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-700">Submissions</h3>
+                            <div class="p-2 bg-green-100 rounded-lg">
+                                <i data-lucide="send" class="w-5 h-5 text-green-600"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold text-gray-800 mb-2">8</p>
+                        <div class="flex items-center text-sm text-green-600">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-1"></i>
+                            <span>+2 from yesterday</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card p-6 card-hover fade-in" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-700">Win Rate</h3>
+                            <div class="p-2 bg-purple-100 rounded-lg">
+                                <i data-lucide="award" class="w-5 h-5 text-purple-600"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold text-gray-800 mb-2">42%</p>
+                        <div class="flex items-center text-sm text-green-600">
+                            <i data-lucide="trending-up" class="w-4 h-4 mr-1"></i>
+                            <span>+5% from last month</span>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card p-6 card-hover fade-in" data-aos="fade-up" data-aos-delay="400">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-700">Deadlines</h3>
+                            <div class="p-2 bg-red-100 rounded-lg">
+                                <i data-lucide="clock" class="w-5 h-5 text-red-600"></i>
+                            </div>
+                        </div>
+                        <p class="text-3xl font-bold text-gray-800 mb-2">3</p>
+                        <div class="flex items-center text-sm text-red-600">
+                            <i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i>
+                            <span>Urgent action needed</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts and Tenders -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Activity Chart -->
+                    <div class="chart-container card-hover" data-aos="fade-right">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Tender Activity</h3>
+                            <div class="flex space-x-2">
+                                <button class="text-xs px-3 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">Weekly</button>
+                                <button class="text-xs px-3 py-1 bg-gray-100 text-gray-700 rounded-full font-medium">Monthly</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Chart Canvas -->
+                        <div class="h-64">
+                            <canvas id="activityChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Tenders -->
+                    <div class="dashboard-card p-6 card-hover" data-aos="fade-left">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Recent Tenders</h3>
+                            <button class="text-sm text-blue-600 font-medium flex items-center">
+                                View All
+                                <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- Tender Item -->
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg slide-in-left">
+                                <div>
+                                    <h4 class="font-medium text-gray-800">Road Construction Project</h4>
+                                    <p class="text-sm text-gray-600">Ministry of Roads & Highways</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="tender-status-badge status-open">Open</span>
+                                    <p class="text-sm text-gray-600 mt-1">Closes in 2 days</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Tender Item -->
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg slide-in-left" style="animation-delay: 0.1s">
+                                <div>
+                                    <h4 class="font-medium text-gray-800">IT Equipment Supply</h4>
+                                    <p class="text-sm text-gray-600">Bangladesh Computer Council</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="tender-status-badge status-upcoming">Upcoming</span>
+                                    <p class="text-sm text-gray-600 mt-1">Opens in 5 days</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Tender Item -->
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg slide-in-left" style="animation-delay: 0.2s">
+                                <div>
+                                    <h4 class="font-medium text-gray-800">Medical Equipment Tender</h4>
+                                    <p class="text-sm text-gray-600">DG Health Services</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="tender-status-badge status-closed">Closed</span>
+                                    <p class="text-sm text-gray-600 mt-1">Submitted</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions and Progress -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Quick Actions -->
+                    <div class="dashboard-card p-6 card-hover lg:col-span-1" data-aos="zoom-in">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-6">Quick Actions</h3>
+                        
+                        <div class="space-y-4">
+                            <button class="w-full flex items-center justify-between p-4 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition">
+                                <div class="flex items-center">
+                                    <i data-lucide="search" class="w-5 h-5 mr-3"></i>
+                                    <span class="font-medium">Search Tenders</span>
+                                </div>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                            
+                            <button class="w-full flex items-center justify-between p-4 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition">
+                                <div class="flex items-center">
+                                    <i data-lucide="plus" class="w-5 h-5 mr-3"></i>
+                                    <span class="font-medium">Create Alert</span>
+                                </div>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                            
+                            <button class="w-full flex items-center justify-between p-4 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition">
+                                <div class="flex items-center">
+                                    <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i>
+                                    <span class="font-medium">View Analytics</span>
+                                </div>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                            
+                            <button class="w-full flex items-center justify-between p-4 bg-orange-50 text-orange-700 rounded-lg hover:bg-orange-100 transition">
+                                <div class="flex items-center">
+                                    <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                                    <span class="font-medium">Team Workspace</span>
+                                </div>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Submission Progress -->
+                    <div class="dashboard-card p-6 card-hover lg:col-span-2" data-aos="zoom-in" data-aos-delay="200">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-6">Submission Progress</h3>
+                        
+                        <div class="space-y-6">
+                            <!-- Progress Item -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">Road Construction - Dhaka</h4>
+                                    <span class="text-sm font-medium text-blue-600">75%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-blue-500" style="width: 75%"></div>
+                                </div>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-xs text-gray-500">Due: Oct 30, 2025</span>
+                                    <span class="text-xs text-gray-500">3 days left</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Progress Item -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">IT Equipment Procurement</h4>
+                                    <span class="text-sm font-medium text-green-600">100%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-green-500" style="width: 100%"></div>
+                                </div>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-xs text-gray-500">Submitted: Oct 25, 2025</span>
+                                    <span class="text-xs text-green-500">Completed</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Progress Item -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">Medical Equipment Supply</h4>
+                                    <span class="text-sm font-medium text-yellow-600">45%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-yellow-500" style="width: 45%"></div>
+                                </div>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-xs text-gray-500">Due: Nov 5, 2025</span>
+                                    <span class="text-xs text-gray-500">9 days left</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Progress Item -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">School Furniture Tender</h4>
+                                    <span class="text-sm font-medium text-red-600">20%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-red-500" style="width: 20%"></div>
+                                </div>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-xs text-gray-500">Due: Nov 10, 2025</span>
+                                    <span class="text-xs text-red-500">Urgent</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Mobile Sidebar (hidden by default) -->
+    <div id="mobile-sidebar" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black bg-opacity-50" id="mobile-sidebar-backdrop"></div>
+        <div class="relative sidebar w-64 h-full text-white p-6">
+            <div class="flex items-center justify-between mb-10">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                        <i data-lucide="briefcase" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold">EZ Bid Pro</h1>
+                </div>
+                <button id="mobile-sidebar-close">
+                    <i data-lucide="x" class="w-6 h-6 text-white"></i>
+                </button>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="#" class="sidebar-item active flex items-center p-3">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="search" class="w-5 h-5 mr-3"></i>
+                    <span>Tender Search</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="bell" class="w-5 h-5 mr-3"></i>
+                    <span>Alerts & Notifications</span>
+                    <span class="notification-dot pulse-dot"></span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="calendar" class="w-5 h-5 mr-3"></i>
+                    <span>Bidding Calendar</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                    <span>Team Collaboration</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="file-text" class="w-5 h-5 mr-3"></i>
+                    <span>Document Manager</span>
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3">
+                    <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            
+            <div class="mt-auto pt-10">
+                <div class="bg-blue-900/30 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-2">Upgrade to Premium</h3>
+                    <p class="text-sm text-blue-200 mb-3">Unlock advanced features and analytics</p>
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm font-medium transition">
+                        Upgrade Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize AOS (Animate On Scroll)
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
+            });
+            
+            // Initialize Lucide Icons
+            lucide.createIcons();
+            
+            // Initialize Chart.js
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            const activityChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Tenders Submitted',
+                        data: [12, 19, 15, 25, 22, 30, 28, 35, 32, 40],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Tenders Won',
+                        data: [5, 8, 6, 12, 10, 15, 14, 18, 16, 20],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Mobile Menu Toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileSidebar = document.getElementById('mobile-sidebar');
+            const mobileSidebarClose = document.getElementById('mobile-sidebar-close');
+            const mobileSidebarBackdrop = document.getElementById('mobile-sidebar-backdrop');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                mobileSidebar.classList.remove('hidden');
+            });
+            
+            mobileSidebarClose.addEventListener('click', function() {
+                mobileSidebar.classList.add('hidden');
+            });
+            
+            mobileSidebarBackdrop.addEventListener('click', function() {
+                mobileSidebar.classList.add('hidden');
+            });
+            
+            // Notification Dropdown
+            const notificationBtn = document.getElementById('notification-btn');
+            const notificationDropdown = document.getElementById('notification-dropdown');
+            
+            notificationBtn.addEventListener('click', function() {
+                notificationDropdown.classList.toggle('hidden');
+            });
+            
+            // User Menu Dropdown
+            const userMenuBtn = document.getElementById('user-menu-btn');
+            const userDropdown = document.getElementById('user-dropdown');
+            
+            userMenuBtn.addEventListener('click', function() {
+                userDropdown.classList.toggle('hidden');
+            });
+            
+            // FAB Menu
+            const fab = document.getElementById('fab');
+            const fabMenu = document.getElementById('fab-menu');
+            
+            fab.addEventListener('click', function() {
+                fabMenu.classList.toggle('hidden');
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!notificationBtn.contains(event.target) && !notificationDropdown.contains(event.target)) {
+                    notificationDropdown.classList.add('hidden');
+                }
+                
+                if (!userMenuBtn.contains(event.target) && !userDropdown.contains(event.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+                
+                if (!fab.contains(event.target) && !fabMenu.contains(event.target)) {
+                    fabMenu.classList.add('hidden');
+                }
+            });
+            
+            // Dark Mode Toggle
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const body = document.body;
+            
+            darkModeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    body.classList.add('dark-mode');
+                    document.querySelectorAll('.dashboard-card').forEach(card => {
+                        card.classList.add('dark-card');
+                        card.classList.add('dark-border');
+                    });
+                    document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span').forEach(text => {
+                        if (!text.closest('.sidebar') && !text.closest('.dark-card')) {
+                            text.classList.add('dark-text');
+                        }
+                    });
+                    document.querySelectorAll('input').forEach(input => {
+                        input.classList.add('dark-input');
+                    });
+                } else {
+                    body.classList.remove('dark-mode');
+                    document.querySelectorAll('.dashboard-card').forEach(card => {
+                        card.classList.remove('dark-card');
+                        card.classList.remove('dark-border');
+                    });
+                    document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span').forEach(text => {
+                        text.classList.remove('dark-text');
+                    });
+                    document.querySelectorAll('input').forEach(input => {
+                        input.classList.remove('dark-input');
+                    });
+                }
+            });
+            
+            // Grid Layout Toggle
+            const gridButtons = document.querySelectorAll('.grid-btn');
+            const statsCards = document.getElementById('stats-cards');
+            
+            gridButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    gridButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get grid value
+                    const gridValue = this.getAttribute('data-grid');
+                    
+                    // Update grid layout
+                    statsCards.className = `grid grid-cols-1 gap-6 mb-8`;
+                    
+                    if (gridValue === '4') {
+                        statsCards.classList.add('md:grid-cols-2', 'lg:grid-cols-4');
+                    } else if (gridValue === '2') {
+                        statsCards.classList.add('md:grid-cols-2');
+                    } else if (gridValue === '1') {
+                        // Already set to grid-cols-1
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

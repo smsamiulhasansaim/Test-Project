@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZ Bid Pro - Alerts & Notifications</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .notification-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .alert-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+        
+        .alert-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .notification-badge {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .notification-unread {
+            background-color: #3b82f6;
+        }
+        
+        .priority-high {
+            border-left-color: #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fef2f2 100%);
+        }
+        
+        .priority-medium {
+            border-left-color: #f59e0b;
+            background: linear-gradient(135deg, #fffbeb 0%, #fffbeb 100%);
+        }
+        
+        .priority-low {
+            border-left-color: #10b981;
+            background: linear-gradient(135deg, #f0fdf4 0%, #f0fdf4 100%);
+        }
+        
+        .alert-active {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d1d5db;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: #10b981;
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+        
+        .tab-button {
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .channel-badge {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .channel-email {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+        
+        .channel-sms {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .channel-push {
+            background-color: #f0fdf4;
+            color: #166534;
+        }
+        
+        .filter-pill {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #d1d5db;
+        }
+        
+        .filter-pill.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .notification-item {
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .notification-item:hover {
+            background-color: #f9fafb;
+        }
+        
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                        <i data-lucide="briefcase" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold text-gray-800">EZ Bid Pro</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 rounded-full hover:bg-gray-100 relative">
+                        <i data-lucide="bell" class="w-5 h-5 text-gray-600"></i>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i data-lucide="user" class="w-4 h-4 text-blue-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">John Doe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between mb-8">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800 mb-2">Alerts & Notifications</h1>
+                <p class="text-gray-600">Manage your tender alerts and notification preferences</p>
+            </div>
+            
+            <div class="mt-4 lg:mt-0 flex items-center space-x-3">
+                <button class="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    <i data-lucide="plus" class="w-4 h-4 mr-2"></i>
+                    Create New Alert
+                </button>
+                
+                <button class="flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                    <i data-lucide="settings" class="w-4 h-4 mr-2"></i>
+                    Settings
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-8">
+            <div class="tab-button active">All Notifications</div>
+            <div class="tab-button">My Alerts</div>
+            <div class="tab-button">System</div>
+            <div class="tab-button">Preferences</div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Left Sidebar - Quick Stats -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Notification Summary -->
+                <div class="notification-card p-6">
+                    <h3 class="font-semibold text-gray-800 mb-4">Notification Summary</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <span class="notification-badge notification-unread mr-2"></span>
+                                <span class="text-sm text-gray-700">Unread</span>
+                            </div>
+                            <span class="font-semibold text-gray-800">12</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-700">Today</span>
+                            <span class="font-semibold text-gray-800">8</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-700">This Week</span>
+                            <span class="font-semibold text-gray-800">24</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-700">This Month</span>
+                            <span class="font-semibold text-gray-800">89</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <button class="w-full flex items-center justify-center text-blue-600 hover:text-blue-800 transition">
+                            <i data-lucide="check-circle" class="w-4 h-4 mr-2"></i>
+                            Mark All as Read
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="notification-card p-6">
+                    <h3 class="font-semibold text-gray-800 mb-4">Quick Actions</h3>
+                    
+                    <div class="space-y-3">
+                        <button class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <div class="flex items-center">
+                                <i data-lucide="filter" class="w-4 h-4 text-gray-600 mr-3"></i>
+                                <span class="text-sm font-medium text-gray-700">Filter Notifications</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                        </button>
+                        
+                        <button class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <div class="flex items-center">
+                                <i data-lucide="download" class="w-4 h-4 text-gray-600 mr-3"></i>
+                                <span class="text-sm font-medium text-gray-700">Export History</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                        </button>
+                        
+                        <button class="w-full flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                            <div class="flex items-center">
+                                <i data-lucide="trash-2" class="w-4 h-4 text-gray-600 mr-3"></i>
+                                <span class="text-sm font-medium text-gray-700">Clear All</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Alert Types -->
+                <div class="notification-card p-6">
+                    <h3 class="font-semibold text-gray-800 mb-4">Alert Types</h3>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-700">New Tender Matches</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-700">Deadline Reminders</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-700">Bid Status Updates</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-700">Competitor Activity</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-700">Market Insights</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content - Notifications -->
+            <div class="lg:col-span-3">
+                <!-- Filters -->
+                <div class="notification-card p-6 mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between">
+                        <h3 class="font-semibold text-gray-800 mb-4 md:mb-0">Recent Notifications</h3>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <button class="filter-pill active">All</button>
+                            <button class="filter-pill">Unread</button>
+                            <button class="filter-pill">Tenders</button>
+                            <button class="filter-pill">Deadlines</button>
+                            <button class="filter-pill">System</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notifications List -->
+                <div class="notification-card overflow-hidden">
+                    <!-- Notification Item 1 -->
+                    <div class="notification-item p-6 priority-high">
+                        <div class="flex items-start">
+                            <div class="mr-4 mt-1">
+                                <span class="notification-badge notification-unread"></span>
+                            </div>
+                            
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">New Tender Match Found</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Construction of Academic Building matches your saved criteria</p>
+                                    </div>
+                                    <span class="text-xs text-gray-500">2 hours ago</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="channel-badge channel-email">Email</span>
+                                        <span class="channel-badge channel-push">Push</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                            View Tender
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i data-lucide="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Item 2 -->
+                    <div class="notification-item p-6 priority-medium">
+                        <div class="flex items-start">
+                            <div class="mr-4 mt-1">
+                                <span class="notification-badge notification-unread"></span>
+                            </div>
+                            
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Deadline Approaching</h4>
+                                        <p class="text-sm text-gray-600 mt-1">IT Equipment Procurement closes in 3 days</p>
+                                    </div>
+                                    <span class="text-xs text-gray-500">5 hours ago</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="channel-badge channel-email">Email</span>
+                                        <span class="channel-badge channel-sms">SMS</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                            View Details
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i data-lucide="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Item 3 -->
+                    <div class="notification-item p-6">
+                        <div class="flex items-start">
+                            <div class="mr-4 mt-1">
+                                <div class="w-2 h-2"></div>
+                            </div>
+                            
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Bid Submission Successful</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Your bid for Road Construction Project has been submitted</p>
+                                    </div>
+                                    <span class="text-xs text-gray-500">1 day ago</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="channel-badge channel-email">Email</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                            Track Status
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i data-lucide="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Item 4 -->
+                    <div class="notification-item p-6 priority-low">
+                        <div class="flex items-start">
+                            <div class="mr-4 mt-1">
+                                <div class="w-2 h-2"></div>
+                            </div>
+                            
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">New Market Insight</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Healthcare sector showing 25% growth in tender volume</p>
+                                    </div>
+                                    <span class="text-xs text-gray-500">2 days ago</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="channel-badge channel-email">Email</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                            View Report
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i data-lucide="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Item 5 -->
+                    <div class="notification-item p-6">
+                        <div class="flex items-start">
+                            <div class="mr-4 mt-1">
+                                <div class="w-2 h-2"></div>
+                            </div>
+                            
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-2">
+                                    <div>
+                                        <h4 class="font-semibold text-gray-800">Weekly Summary</h4>
+                                        <p class="text-sm text-gray-600 mt-1">Your weekly bidding activity report is ready</p>
+                                    </div>
+                                    <span class="text-xs text-gray-500">3 days ago</span>
+                                </div>
+                                
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="channel-badge channel-email">Email</span>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-2">
+                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                            Download
+                                        </button>
+                                        <button class="text-gray-500 hover:text-gray-700">
+                                            <i data-lucide="x" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Active Alerts Section -->
+                <div class="mt-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800">My Active Alerts</h3>
+                        <button class="text-sm text-blue-600 font-medium flex items-center">
+                            View All Alerts
+                            <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Alert Card 1 -->
+                        <div class="alert-card notification-card p-6 alert-active">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-semibold text-gray-800">Construction Projects</h4>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <p class="text-sm text-gray-600 mb-4">Alerts for construction tenders above ৳50L</p>
+                            
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-500">12 matches this month</span>
+                                <div class="flex items-center space-x-2">
+                                    <span class="channel-badge channel-email">Email</span>
+                                    <span class="channel-badge channel-push">Push</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Alert Card 2 -->
+                        <div class="alert-card notification-card p-6 alert-active">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-semibold text-gray-800">IT & Software</h4>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <p class="text-sm text-gray-600 mb-4">Alerts for IT equipment and software tenders</p>
+                            
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-500">8 matches this month</span>
+                                <div class="flex items-center space-x-2">
+                                    <span class="channel-badge channel-email">Email</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Alert Card 3 -->
+                        <div class="alert-card notification-card p-6">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-semibold text-gray-800">Healthcare Equipment</h4>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <p class="text-sm text-gray-600 mb-4">Alerts for medical equipment supply tenders</p>
+                            
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-500">5 matches this month</span>
+                                <div class="flex items-center space-x-2">
+                                    <span class="channel-badge channel-email">Email</span>
+                                    <span class="channel-badge channel-sms">SMS</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Alert Card 4 -->
+                        <div class="alert-card notification-card p-6 alert-active">
+                            <div class="flex items-start justify-between mb-4">
+                                <h4 class="font-semibold text-gray-800">Deadline Reminders</h4>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            
+                            <p class="text-sm text-gray-600 mb-4">Reminders for upcoming tender deadlines</p>
+                            
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-500">3 active reminders</span>
+                                <div class="flex items-center space-x-2">
+                                    <span class="channel-badge channel-email">Email</span>
+                                    <span class="channel-badge channel-sms">SMS</span>
+                                    <span class="channel-badge channel-push">Push</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+        
+        // Tab functionality
+        document.querySelectorAll('.tab-button').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab-button').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Filter pill functionality
+        document.querySelectorAll('.filter-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.filter-pill').forEach(p => {
+                    p.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // Mark as read functionality
+        document.querySelectorAll('.notification-item').forEach(item => {
+            const badge = item.querySelector('.notification-badge');
+            if (badage && badge.classList.contains('notification-unread')) {
+                item.addEventListener('click', function(e) {
+                    if (!e.target.closest('button')) {
+                        badge.classList.remove('notification-unread');
+                    }
+                });
+            }
+        });
+        
+        // Toggle switch functionality
+        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const alertCard = this.closest('.alert-card');
+                if (this.checked) {
+                    alertCard.classList.add('alert-active');
+                } else {
+                    alertCard.classList.remove('alert-active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

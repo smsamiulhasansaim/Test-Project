@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EZ Bid - Streamline Your Tender Management</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom font import for better look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #f8fafc; /* Light gray background */
+        }
+        .header-shadow {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        .text-ezbid-primary { color: #1e293b; }
+        .bg-ezbid-dark { background-color: #1e293b; }
+        .bg-ezbid-light-card { background-color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); }
+        .primary-color { color: #4f46e5; } /* Corresponds to Tailwind's indigo-600 */
+        .primary-bg { background-color: #4f46e5; } /* Corresponds to Tailwind's indigo-600 */
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <!-- Header / Navbar (Frame 1) -->
+    <header class="sticky top-0 z-50 bg-white header-shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#" class="flex-shrink-0 text-2xl font-bold text-ezbid-primary">EZ Bid</a>
+
+                <!-- Navigation (Desktop) -->
+                <nav class="hidden lg:flex space-x-8 text-sm font-medium">
+                    <a href="#hero" class="text-gray-900 hover:text-indigo-600 transition">Home</a>
+                    <a href="#features" class="text-gray-500 hover:text-indigo-600 transition">Tenders</a>
+                    <a href="#analytics" class="text-gray-500 hover:text-indigo-600 transition">Analytics</a>
+                    <a href="#pricing" class="text-gray-500 hover:text-indigo-600 transition">Submissions</a>
+                    <a href="#security" class="text-gray-500 hover:text-indigo-600 transition">Alerts</a>
+                    <a href="#integrations" class="text-gray-500 hover:text-indigo-600 transition">Workspace</a>
+                </nav>
+
+                <!-- Auth/CTA (Right side) -->
+                <div class="flex items-center space-x-4">
+                    <button aria-label="Notifications" class="p-2 rounded-full hover:bg-gray-100 transition">
+                        <i data-lucide="bell" class="w-5 h-5 text-gray-500"></i>
+                    </button>
+                    <div class="flex items-center space-x-2 border-l pl-4">
+                        <div class="w-8 h-8 bg-indigo-200 rounded-full flex items-center justify-center">
+                            <i data-lucide="user" class="w-5 h-5 text-indigo-800"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700 hidden sm:block">John Doe</span>
+                    </div>
+                    <button class="btn-primary bg-gray-900 text-white hover:bg-gray-700 text-sm py-2 px-4">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section (Frame 1) -->
+        <section id="hero" class="py-20 sm:py-32 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div>
+                    <h1 class="text-5xl sm:text-6xl font-extrabold leading-tight mb-6 text-ezbid-primary">
+                        Streamline Your Tender Management with <span class="text-indigo-600">EZ Bid</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-10 max-w-lg">
+                        Discover, track, and manage government tenders with AI-powered insights. From tender discovery to submission management, we've got you covered.
+                    </p>
+
+                    <div class="flex space-x-4 mb-8">
+                        <button class="btn-primary bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200">
+                            Start Free Trial
+                        </button>
+                        <button class="btn-primary border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
+                            Watch Demo
+                        </button>
+                    </div>
+
+                    <!-- Footer Badges -->
+                    <div class="flex flex-wrap gap-x-6 text-sm text-gray-500">
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-indigo-500"></i>
+                            <span>Free 14-day trial</span>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-indigo-500"></i>
+                            <span>No credit card required</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual (Dashboard Preview Mockup) -->
+                <div class="relative flex justify-center lg:justify-end">
+                    <!-- This simulates the 3D-stacked card effect from the image -->
+                    <div class="absolute w-72 h-48 sm:w-96 sm:h-64 bg-gray-300 rounded-xl transform translate-x-4 translate-y-4 rotate-3 opacity-50 hidden sm:block"></div>
+                    <div class="absolute w-72 h-48 sm:w-96 sm:h-64 bg-gray-200 rounded-xl transform translate-x-2 translate-y-2 rotate-1 opacity-75 hidden sm:block"></div>
+                    <div class="w-72 h-48 sm:w-96 sm:h-64 bg-ezbid-dark rounded-xl p-8 flex items-center justify-center relative z-10 shadow-2xl">
+                        <span class="text-white text-lg font-semibold tracking-wider">Dashboard Preview</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section (Frame 2 - Top) -->
+        <section class="py-16 bg-white border-t border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="p-4">
+                        <p class="text-4xl font-bold text-ezbid-primary">10,000+</p>
+                        <p class="text-gray-500 mt-1">Active Tenders</p>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-4xl font-bold text-ezbid-primary">500+</p>
+                        <p class="text-gray-500 mt-1">Companies Served</p>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-4xl font-bold text-ezbid-primary">95%</p>
+                        <p class="text-gray-500 mt-1">Success Rate</p>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-4xl font-bold text-ezbid-primary">24/7</p>
+                        <p class="text-gray-500 mt-1">Support Available</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+ <!-- Main Content Area -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+ <!-- Search Bar and Advanced Options -->
+
+        <section class="mb-10 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
+            <h2 class="text-3xl font-bold primary-color mb-4 text-center">Find Your Opportunity</h2>
+
+            <div class="flex flex-col md:flex-row gap-4 items-center">
+
+                <!-- Search Input Field -->
+                <div class="flex-grow w-full">
+                    <input
+                        type="search"
+                        placeholder="Let's Start With a Search..."
+                        class="w-full p-4 border border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-100 focus:border-blue-500 text-lg shadow-inner transition duration-150"
+                    >
+                </div>
+
+                <!-- Advanced Search Button -->
+                <button
+                    class="w-full md:w-auto px-6 py-4 primary-bg text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-[1.02] active:scale-100"
+                    >
+                    Advanced Search
+                </button>
+            </div>
+        </section>
+
+<!-- Key Metrics Section -->
+
+        <section class="mb-10">
+<h3 class="text-2xl font-semibold text-center primary-color mb-6 border-b pb-2">Market Statistics</h3>
+
+<!-- Last Updated Information -->
+            <p class="mt-4 text-center text-sm text-gray-500">
+<!-- Last Updated Information from database update time and date -->
+                Last Updated at: <span class="font-medium text-gray-700">30th September 2025, 05:33 PM</span>  <!-- Last Updated Information from database update time and date -->
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Metric Card 1: Today Published -->
+                <div class="bg-white p-6 rounded-xl shadow-xl border-l-4 border-teal-500 transition duration-300 hover:shadow-2xl">
+                <div class="text-xl font-bold text-green-600 group-hover:text-green-700 transition duration-300">Today Published</div>
+                    <!-- <p class="text-sm font-medium text-gray-700 mb-1">Today Published</p> -->
+                    <div class="text-4xl font-extrabold primary-color">365</div>
+                </div>
+
+                <!-- Metric Card 2: Corrigendum -->
+                <div class="bg-white p-6 rounded-xl shadow-xl border-l-4 border-orange-500 transition duration-300 hover:shadow-2xl">
+                <div class="text-xl font-bold text-red-600 group-hover:text-red-700 transition duration-300">Corrigendum</div>
+                    <!-- <p class="text-sm font-medium text-gray-500 mb-1">Corrigendum</p> -->
+                    <div class="text-4xl font-extrabold primary-color">96</div>
+                </div>
+
+                <!-- Metric Card 3: Total Private Tenders -->
+                <div class="bg-white p-6 rounded-xl shadow-xl border-l-4 border-purple-500 transition duration-300 hover:shadow-2xl">
+                <div class="text-xl font-bold text-red-600 group-hover:text-red-700 transition duration-300">Total Private Tenders</div>
+                    <!-- <p class="text-sm font-medium text-gray-500 mb-1">Total Private Tenders</p> -->
+                    <div class="text-4xl font-extrabold primary-color">369</div>
+                </div>
+
+                <!-- Metric Card 4: Total Live Tenders -->
+                <div class="bg-white p-6 rounded-xl shadow-xl border-l-4 border-red-500 transition duration-300 hover:shadow-2xl">
+                <div class="text-xl font-bold primary-color group-hover:text-blue-600 transition duration-300">Total Live Tenders</div>
+                    <!-- <p class="text-sm font-medium text-gray-500 mb-1">Total Live Tenders</p> -->
+                    <div class="text-4xl font-extrabold primary-color">3834</div>
+                </div>
+            </div>
+        </section>
+
+<!-- Quick Categories / Hot Tenders Section -->
+        <section>
+            <h3 class="text-2xl font-semibold text-center primary-color mb-6 border-b pb-2">Explore Hot Categories</h3>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                <!-- Category 1: Free Tenders -->
+                <a href="#" class="group block p-5 text-center bg-white rounded-xl shadow-lg border border-gray-200 hover:border-blue-500 transition duration-300 transform hover:scale-105">
+                    <div class="text-xl font-bold primary-color group-hover:text-blue-600 transition duration-300">Free Tenders</div>
+                    <p class="text-sm text-gray-500 mt-1">Start bidding at no cost</p>
+                    <div class="text-4xl font-extrabold primary-color">135</div>
+                </a>
+
+                <!-- Category 2: Hot Tenders -->
+                <a href="#" class="group block p-5 text-center bg-white rounded-xl shadow-lg border border-gray-200 hover:border-red-500 transition duration-300 transform hover:scale-105">
+                    <div class="text-xl font-bold text-red-600 group-hover:text-red-700 transition duration-300">Hot Tenders</div>
+                    <p class="text-sm text-gray-500 mt-1">High-demand opportunities</p>
+                    <div class="text-4xl font-extrabold text-red-600">35</div>
+                </a>
+
+                <!-- Category 3: Hot Auction -->
+                <a href="#" class="group block p-5 text-center bg-white rounded-xl shadow-lg border border-gray-200 hover:border-orange-500 transition duration-300 transform hover:scale-105">
+                    <div class="text-xl font-bold text-orange-600 group-hover:text-orange-700 transition duration-300">Hot Auction</div>
+                    <p class="text-sm text-gray-500 mt-1">Time-sensitive auctions</p>
+                    <div class="text-4xl font-extrabold primary-color">105</div>
+                </a>
+
+                <!-- Category 4: Hot Int'l Tenders -->
+                <a href="#" class="group block p-5 text-center bg-white rounded-xl shadow-lg border border-gray-200 hover:border-green-500 transition duration-300 transform hover:scale-105">
+                    <div class="text-xl font-bold text-green-600 group-hover:text-green-700 transition duration-300">Hot Int'l Tenders</div>
+                    <p class="text-sm text-gray-500 mt-1">Global bidding prospects</p>
+                    <div class="text-4xl font-extrabold primary-color">55</div>
+                </a>
+            </div>
+        </section>
+  </div>
+        <!-- Features Grid (Frame 2 - Bottom) -->
+        <section id="features" class="py-20 sm:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-ezbid-primary mb-4">Powerful Features for Tender Management</h2>
+                <p class="text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
+                    Everything you need to discover, track, and win government tenders in one comprehensive platform.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Feature 1: Smart Tender Discovery -->
+                    <div class="bg-ezbid-light-card rounded-xl p-8 text-left">
+                        <div class="p-3 mb-4 inline-flex rounded-full bg-gray-100">
+                            <i data-lucide="search" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-ezbid-primary mb-3">Smart Tender Discovery</h3>
+                        <p class="text-gray-600 mb-4">
+                            AI-powered crawling and parsing of government tender portals with real-time updates and notifications.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Multi-portal Integration</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>OCR document processing</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Duplicate detection</li>
+                        </ul>
+                    </div>
+
+                    <!-- Feature 2: Intelligent Alerts -->
+                    <div class="bg-ezbid-light-card rounded-xl p-8 text-left">
+                        <div class="p-3 mb-4 inline-flex rounded-full bg-gray-100">
+                            <i data-lucide="bell" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-ezbid-primary mb-3">Intelligent Alerts</h3>
+                        <p class="text-gray-600 mb-4">
+                            Custom alerts based on keywords, categories, and tender values with multi-channel notifications.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Email & SMS alerts</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Push notifications</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Custom filters</li>
+                        </ul>
+                    </div>
+
+                    <!-- Feature 3: Advanced Analytics -->
+                    <div class="bg-ezbid-light-card rounded-xl p-8 text-left">
+                        <div class="p-3 mb-4 inline-flex rounded-full bg-gray-100">
+                            <i data-lucide="line-chart" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-ezbid-primary mb-3">Advanced Analytics</h3>
+                        <p class="text-gray-600 mb-4">
+                            Comprehensive insights into your bidding performance, win rates, and market trends.
+                        </p>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Win rate analysis</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Competitor tracking</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-green-500 mr-2"></i>Market insights</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How EZ Bid Works Section (Frame 3) -->
+        <section class="py-20 sm:py-32 bg-white border-t border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-ezbid-primary mb-4">How EZ Bid Works</h2>
+                <p class="text-xl text-gray-600 mb-16 max-w-2xl mx-auto">
+                    From discovery to submission, our streamlined workflow helps you manage the entire tender lifecycle.
+                </p>
+
+                <div class="grid lg:grid-cols-2 gap-12 items-start text-left">
+                    <!-- Workflow Steps (Left) -->
+                    <div class="space-y-8">
+                        <div class="flex">
+                            <div class="w-8 h-8 flex-shrink-0 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">1</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-ezbid-primary mb-1">Discover Tenders</h3>
+                                <p class="text-gray-600">Our AI-powered crawlers continuously monitor government portals and extract tender information using advanced OCR technology.</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="w-8 h-8 flex-shrink-0 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">2</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-ezbid-primary mb-1">Get Notified</h3>
+                                <p class="text-gray-600">Receive instant alerts via email, SMS, or push notifications when tenders matching your criteria are published.</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="w-8 h-8 flex-shrink-0 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">3</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-ezbid-primary mb-1">Analyze & Save</h3>
+                                <p class="text-gray-600">Use our advanced search and filtering tools to analyze tenders, save interesting opportunities, and add detailed notes.</p>
+                            </div>
+                        </div>
+                        <div class="flex">
+                            <div class="w-8 h-8 flex-shrink-0 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">4</div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-ezbid-primary mb-1">Collaborate & Submit</h3>
+                                <p class="text-gray-600">Work with your team in the submission workspace to prepare documents and track deadlines until successful submission.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Workflow Visualization (Right) -->
+                    <div class="bg-ezbid-dark rounded-xl p-8 max-w-md lg:ml-auto w-full shadow-2xl">
+                        <h3 class="text-xl font-semibold text-white mb-6 text-center">Workflow Visualization</h3>
+                        <div class="space-y-3">
+                            <div class="bg-slate-700 text-white p-4 rounded-lg text-center font-medium">Tender Discovery Engine</div>
+                            <div class="flex justify-center"><i data-lucide="arrow-down" class="w-6 h-6 text-white"></i></div>
+                            <div class="bg-slate-700 text-white p-4 rounded-lg text-center font-medium">Smart Filtering & Alerts</div>
+                            <div class="flex justify-center"><i data-lucide="arrow-down" class="w-6 h-6 text-white"></i></div>
+                            <div class="bg-slate-700 text-white p-4 rounded-lg text-center font-medium">Analysis & Collaboration</div>
+                            <div class="flex justify-center"><i data-lucide="arrow-down" class="w-6 h-6 text-white"></i></div>
+                            <div class="bg-slate-700 text-white p-4 rounded-lg text-center font-medium">Submission Management</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Powerful Dashboard Section (Frame 4) -->
+        <section class="py-20 sm:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center" id="analytics">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-ezbid-primary mb-4">Powerful Dashboard</h2>
+                <p class="text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
+                    Get a comprehensive view of all your tender activities with our intuitive dashboard interface.
+                </p>
+
+                <!-- Mock Dashboard UI -->
+                <div class="bg-ezbid-light-card rounded-xl p-4 sm:p-8 max-w-5xl mx-auto shadow-2xl">
+                    <!-- Top Bar -->
+                    <div class="bg-ezbid-dark text-white rounded-t-lg p-3 flex justify-between items-center">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                            <span class="ml-4 font-semibold">EZ Bid Dashboard</span>
+                        </div>
+                        <span class="text-xs text-gray-400 hidden sm:block">dashboard.ezbid.com</span>
+                    </div>
+
+                    <div class="p-4 sm:p-6 text-left">
+                        <!-- Key Metrics -->
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                            <!-- Metric Card Template -->
+                            <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-lg">
+                                <i data-lucide="file-text" class="w-6 h-6 text-gray-500 mx-auto mb-2"></i>
+                                <p class="text-2xl font-bold text-ezbid-primary">247</p>
+                                <p class="text-sm text-gray-500">Active Tenders</p>
+                            </div>
+                            <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-lg">
+                                <i data-lucide="mail-check" class="w-6 h-6 text-gray-500 mx-auto mb-2"></i>
+                                <p class="text-2xl font-bold text-ezbid-primary">34</p>
+                                <p class="text-sm text-gray-500">Submissions</p>
+                            </div>
+                            <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-lg">
+                                <i data-lucide="clock" class="w-6 h-6 text-gray-500 mx-auto mb-2"></i>
+                                <p class="text-2xl font-bold text-ezbid-primary">12</p>
+                                <p class="text-sm text-gray-500">Pending</p>
+                            </div>
+                            <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-lg">
+                                <i data-lucide="trophy" class="w-6 h-6 text-gray-500 mx-auto mb-2"></i>
+                                <p class="text-2xl font-bold text-ezbid-primary">8</p>
+                                <p class="text-sm text-gray-500">Won</p>
+                            </div>
+                            <!-- Placeholder to match 5-column layout style -->
+                            <div class="text-center p-3 sm:p-4 bg-gray-50 rounded-lg hidden md:block">
+                                <i data-lucide="activity" class="w-6 h-6 text-gray-500 mx-auto mb-2"></i>
+                                <p class="text-2xl font-bold text-ezbid-primary">45%</p>
+                                <p class="text-sm text-gray-500">Win Rate</p>
+                            </div>
+                        </div>
+
+                        <!-- Main Content Area: Recent Tenders & Quick Actions -->
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <!-- Recent Tenders (2/3 width) -->
+                            <div class="md:col-span-2">
+                                <h3 class="text-xl font-semibold text-ezbid-primary mb-4">Recent Tenders</h3>
+                                <div class="space-y-4">
+                                    <!-- Tender Item Template -->
+                                    <div class="flex justify-between items-start p-4 bg-white rounded-lg border">
+                                        <div>
+                                            <p class="font-semibold text-indigo-600">Road Construction Project - Dhaka</p>
+                                            <p class="text-sm text-gray-500">Ministry of Roads and Highways</p>
+                                            <p class="text-md font-medium mt-1">৳ 45,00,000</p>
+                                        </div>
+                                        <div class="text-right text-sm flex-shrink-0">
+                                            <p class="text-gray-500">2 hours ago</p>
+                                            <span class="text-xs font-medium text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-full mt-1 inline-block">New</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-start p-4 bg-white rounded-lg border">
+                                        <div>
+                                            <p class="font-semibold text-indigo-600">IT Equipment Procurement</p>
+                                            <p class="text-sm text-gray-500">Bangladesh Computer Council</p>
+                                            <p class="text-md font-medium mt-1">৳ 12,50,000</p>
+                                        </div>
+                                        <div class="text-right text-sm flex-shrink-0">
+                                            <p class="text-gray-500">5 hours ago</p>
+                                            <span class="text-xs font-medium text-green-700 bg-green-100 px-2 py-0.5 rounded-full mt-1 inline-block">Saved</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-start p-4 bg-white rounded-lg border">
+                                        <div>
+                                            <p class="font-semibold text-indigo-600">Medical Equipment Supply</p>
+                                            <p class="text-sm text-gray-500">Directorate General of Health Services</p>
+                                            <p class="text-md font-medium mt-1">৳ 78,00,000</p>
+                                        </div>
+                                        <div class="text-right text-sm flex-shrink-0">
+                                            <p class="text-gray-500">1 day ago</p>
+                                            <span class="text-xs font-medium text-yellow-700 bg-yellow-100 px-2 py-0.5 rounded-full mt-1 inline-block">In Progress</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions (1/3 width) -->
+                            <div>
+                                <h3 class="text-xl font-semibold text-ezbid-primary mb-4">Quick Actions</h3>
+                                <div class="space-y-4">
+                                    <button class="w-full flex items-center justify-center btn-primary bg-slate-700 text-white hover:bg-slate-800">
+                                        <i data-lucide="search" class="w-5 h-5 mr-2"></i>Search Tenders
+                                    </button>
+                                    <button class="w-full flex items-center justify-center btn-primary bg-slate-700 text-white hover:bg-slate-800">
+                                        <i data-lucide="plus" class="w-5 h-5 mr-2"></i>Create Alert
+                                    </button>
+                                    <button class="w-full flex items-center justify-center btn-primary bg-slate-700 text-white hover:bg-slate-800">
+                                        <i data-lucide="bar-chart-3" class="w-5 h-5 mr-2"></i>View Analytics
+                                    </button>
+                                    <button class="w-full flex items-center justify-center btn-primary bg-slate-700 text-white hover:bg-slate-800">
+                                        <i data-lucide="briefcase" class="w-5 h-5 mr-2"></i>Submission Workspace
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integrations Section (Frame 5) -->
+        <section id="integrations" class="py-20 sm:py-32 bg-white border-t border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-ezbid-primary mb-4">Seamless Integrations</h2>
+                <p class="text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
+                    Connect with your favorite tools and services to streamline your tender management workflow.
+                </p>
+
+                <!-- Integration Grid -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 mb-20">
+                    <!-- Integration Card Template -->
+                    <div class="bg-ezbid-light-card rounded-xl p-6 flex flex-col items-center justify-center h-32 hover:shadow-lg transition">
+                        <div class="p-3 bg-gray-100 rounded-full mb-2">
+                            <i data-lucide="mail" class="w-6 h-6 text-gray-700"></i>
+                        </div>
+                        <p class="font-medium text-sm">Email</p>
+                    </div>
+                    <div class="bg-ezbid-light-card rounded-xl p-6 flex flex-col items-center justify-center h-32 hover:shadow-lg transition">
+                        <div class="p-3 bg-gray-100 rounded-full mb-2">
+                            <i data-lucide="message-square" class="w-6 h-6 text-gray-700"></i>
+                        </div>
+                        <p class="font-medium text-sm">SMS</p>
+                    </div>
+                    <div class="bg-ezbid-light-card rounded-xl p-6 flex flex-col items-center justify-center h-32 hover:shadow-lg transition">
+                        <div class="p-3 bg-gray-100 rounded-full mb-2">
+                            <i data-lucide="cloud" class="w-6 h-6 text-gray-700"></i>
+                        </div>
+                        <p class="font-medium text-sm">AWS S3</p>
+                    </div>
+                    <div class="bg-ezbid-light-card rounded-xl p-6 flex flex-col items-center justify-center h-32 hover:shadow-lg transition">
+                        <div class="p-3 bg-gray-100 rounded-full mb-2">
+                            <i data-lucide="scan-face" class="w-6 h-6 text-gray-700"></i>
+                        </div>
+                        <p class="font-medium text-sm">OCR</p>
+                    </div>
+                    <div class="bg-ezbid-light-card rounded-xl p-6 flex flex-col items-center justify-center h-32 hover:shadow-lg transition">
+                        <div class="p-3 bg-gray-100 rounded-full mb-2">
+                            <i data-lucide="compass" class="w-6 h-6 text-gray-700"></i>
+                        </div>
+                        <p class="font-medium text-sm">Vector Search</p>
+                    </div>
+                    <div class="bg-ezbid-light-card rounded-xl p-6 flex flex-col items-center justify-center h-32 hover:shadow-lg transition">
+                        <div class="p-3 bg-gray-100 rounded-full mb-2">
+                            <i data-lucide="globe" class="w-6 h-6 text-gray-700"></i>
+                        </div>
+                        <p class="font-medium text-sm">e-GP Portal</p>
+                    </div>
+                </div>
+
+                <!-- Enterprise Integration / API Example -->
+                <div class="bg-gray-50 rounded-xl p-6 sm:p-10 text-left grid lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-ezbid-primary mb-4">Enterprise Integration</h3>
+                        <p class="text-gray-600 mb-6">
+                            Need custom integrations? Our enterprise plan includes API access, webhooks, and custom connector development to fit your unique workflow requirements.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-500 mr-3"></i>REST API access</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-500 mr-3"></i>Webhook notifications</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-500 mr-3"></i>Custom connector development</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-500 mr-3"></i>Dedicated support</li>
+                        </ul>
+                    </div>
+
+                    <!-- Code Snippet Card -->
+                    <div class="bg-slate-800 rounded-xl p-6 shadow-xl">
+                        <h4 class="text-white font-semibold mb-4">API Integration Example</h4>
+                        <pre class="whitespace-pre-wrap text-sm text-gray-300 font-mono bg-slate-900 p-4 rounded-lg overflow-x-auto">
+<code class="language-javascript">// Get latest tenders
+fetch('/api/tenders/search')
+  .then(response =&gt;response.json())
+  .then(data =&gt; console.log(data));</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section (Frame 6) -->
+        <section class="py-20 sm:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-ezbid-primary mb-4">What Our Clients Say</h2>
+                <p class="text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
+                    Join hundreds of companies who trust EZ Bid for their tender management needs.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-ezbid-light-card rounded-xl p-8 text-left border">
+                        <div class="flex items-center mb-4">
+                            <!-- Placeholder for Profile Picture/Avatar -->
+                            <div class="w-12 h-12 bg-gray-100 rounded-full mr-4 flex items-center justify-center">
+                                <i data-lucide="smile" class="w-6 h-6 text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-ezbid-primary">Sarah Ahmed</p>
+                                <p class="text-sm text-gray-500">CEO, TechBuild Ltd.</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic mb-4">
+                            "EZ Bid has transformed our tender management process. We've increased our win rate by 40% and saved countless hours on manual searching."
+                        </p>
+                        <div class="flex text-yellow-500">
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="bg-ezbid-light-card rounded-xl p-8 text-left border">
+                        <div class="flex items-center mb-4">
+                            <!-- Placeholder for Profile Picture/Avatar -->
+                            <div class="w-12 h-12 bg-gray-100 rounded-full mr-4 flex items-center justify-center">
+                                <i data-lucide="smile" class="w-6 h-6 text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-ezbid-primary">Mohammad Rahman</p>
+                                <p class="text-sm text-gray-500">Director, Green Solutions</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic mb-4">
+                            "The AI-powered alerts are incredibly accurate. We never miss relevant opportunities anymore, and the submission workspace keeps our team organized."
+                        </p>
+                        <div class="flex text-yellow-500">
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="bg-ezbid-light-card rounded-xl p-8 text-left border">
+                        <div class="flex items-center mb-4">
+                            <!-- Placeholder for Profile Picture/Avatar -->
+                            <div class="w-12 h-12 bg-gray-100 rounded-full mr-4 flex items-center justify-center">
+                                <i data-lucide="smile" class="w-6 h-6 text-indigo-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-ezbid-primary">Fatima Khan</p>
+                                <p class="text-sm text-gray-500">Procurement Manager, MediCorp</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 italic mb-4">
+                            "The analytics dashboard provides incredible insights into our bidding performance. We can now make data-driven decisions about which tenders to pursue."
+                        </p>
+                        <div class="flex text-yellow-500">
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section (Frame 7) -->
+        <section id="pricing" class="py-20 sm:py-32 bg-white border-t border-b border-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-ezbid-primary mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
+                    Choose the plan that best fits your business needs. All plans include a 14-day free trial.
+                </p>
+
+                <div class="grid md:grid-cols-3 gap-8 items-start">
+                    <!-- Plan 1: Starter -->
+                    <div class="bg-ezbid-light-card rounded-xl p-8 text-left border">
+                        <h3 class="text-2xl font-bold text-ezbid-primary mb-1">Starter</h3>
+                        <p class="text-4xl font-extrabold text-ezbid-primary mb-2">৳5,000<span class="text-lg font-medium text-gray-500">/month</span></p>
+                        <p class="text-gray-500 mb-6">Perfect for small businesses</p>
+
+                        <ul class="space-y-3 text-gray-700 mb-10">
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Up to 100 tender alerts/month</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Basic search and filtering</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Email notifications</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>5 saved tenders</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Basic analytics</li>
+                        </ul>
+                        <button class="w-full btn-primary bg-slate-700 text-white hover:bg-slate-800">Start Free Trial</button>
+                    </div>
+
+                    <!-- Plan 2: Professional (Most Popular) -->
+                    <div class="bg-ezbid-light-card rounded-xl p-8 text-left border-2 border-indigo-600 relative pt-12">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-indigo-600 text-white text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                            Most Popular
+                        </div>
+                        <h3 class="text-2xl font-bold text-ezbid-primary mb-1">Professional</h3>
+                        <p class="text-4xl font-extrabold text-ezbid-primary mb-2">৳15,000<span class="text-lg font-medium text-gray-500">/month</span></p>
+                        <p class="text-gray-500 mb-6">Ideal for growing companies</p>
+
+                        <ul class="space-y-3 text-gray-700 mb-10">
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Unlimited tender alerts</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Advanced search with AI</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Email + SMS notifications</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Unlimited saved tenders</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Advanced analytics</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Submission workspace</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Team collaboration (up to 5 users)</li>
+                        </ul>
+                        <button class="w-full btn-primary bg-indigo-600 text-white hover:bg-indigo-700 shadow-md shadow-indigo-200">Start Free Trial</button>
+                    </div>
+
+                    <!-- Plan 3: Enterprise -->
+                    <div class="bg-ezbid-light-card rounded-xl p-8 text-left border">
+                        <h3 class="text-2xl font-bold text-ezbid-primary mb-1">Enterprise</h3>
+                        <p class="text-4xl font-extrabold text-ezbid-primary mb-2">Custom</p>
+                        <p class="text-gray-500 mb-6">For large organizations</p>
+
+                        <ul class="space-y-3 text-gray-700 mb-10">
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Everything in Professional</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Unlimited users</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>API access</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Custom integrations</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Dedicated support</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>Custom branding</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-green-500 mr-3"></i>SLA guarantee</li>
+                        </ul>
+                        <button class="w-full btn-primary bg-slate-700 text-white hover:bg-slate-800">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section (Frame 8) -->
+        <section id="security" class="py-20 sm:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-ezbid-primary mb-4">Enterprise-Grade Security</h2>
+                <p class="text-xl text-gray-600 mb-16 max-w-3xl mx-auto">
+                    Your data security is our top priority. We implement industry-leading security measures to protect your sensitive information.
+                </p>
+
+                <!-- Security Features Grid -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 mb-4 inline-flex rounded-full bg-gray-100 border border-gray-200">
+                            <i data-lucide="lock" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                        <h3 class="font-semibold text-ezbid-primary mb-2">Data Encryption</h3>
+                        <p class="text-sm text-gray-600">End-to-end encryption for data in transit and at rest using AES-256 standards.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 mb-4 inline-flex rounded-full bg-gray-100 border border-gray-200">
+                            <i data-lucide="key-round" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                        <h3 class="font-semibold text-ezbid-primary mb-2">Access Control</h3>
+                        <p class="text-sm text-gray-600">Role-based access control with multi-factor authentication and SSO support.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 mb-4 inline-flex rounded-full bg-gray-100 border border-gray-200">
+                            <i data-lucide="server" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                        <h3 class="font-semibold text-ezbid-primary mb-2">Infrastructure</h3>
+                        <p class="text-sm text-gray-600">Hosted on secure cloud infrastructure with 99.9% uptime SLA guarantee.</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-3 mb-4 inline-flex rounded-full bg-gray-100 border border-gray-200">
+                            <i data-lucide="shield-check" class="w-6 h-6 text-indigo-600"></i>
+                        </div>
+                        <h3 class="font-semibold text-ezbid-primary mb-2">Compliance</h3>
+                        <p class="text-sm text-gray-600">SOC 2 Type II certified with GDPR and local data protection compliance.</p>
+                    </div>
+                </div>
+
+                <!-- Multi-Tenant Architecture / Certifications -->
+                <div class="bg-gray-50 rounded-xl p-6 sm:p-10 text-left grid lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-ezbid-primary mb-4">Multi-Tenant Architecture</h3>
+                        <p class="text-gray-600 mb-6">
+                            Our platform is built with a secure multi-tenant architecture that ensures complete data isolation between organizations while maintaining optimal performance and scalability.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-500 mr-3"></i>Data Isolation</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-500 mr-3"></i>Role Management</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-500 mr-3"></i>Audit Logging</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-500 mr-3"></i>Backup & Recovery</li>
+                        </ul>
+                    </div>
+
+                    <!-- Security Certifications Grid -->
+                    <div class="bg-slate-700 rounded-xl p-6 sm:p-8 grid grid-cols-2 gap-6 shadow-xl text-center">
+                        <h4 class="text-white font-semibold col-span-2 mb-2">Security Certifications</h4>
+                        <div class="p-4 bg-slate-800 text-white rounded-lg"><i data-lucide="lock" class="w-8 h-8 mx-auto mb-1"></i><p class="text-sm">SOC 2 Type II</p></div>
+                        <div class="p-4 bg-slate-800 text-white rounded-lg"><i data-lucide="key" class="w-8 h-8 mx-auto mb-1"></i><p class="text-sm">ISO 27001</p></div>
+                        <div class="p-4 bg-slate-800 text-white rounded-lg"><i data-lucide="shield" class="w-8 h-8 mx-auto mb-1"></i><p class="text-sm">GDPR</p></div>
+                        <div class="p-4 bg-slate-800 text-white rounded-lg"><i data-lucide="fingerprint" class="w-8 h-8 mx-auto mb-1"></i><p class="text-sm">AES-256</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Final Call to Action (Frame 9 - Top) -->
+        <section class="py-20 sm:py-32 bg-slate-700 text-center text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Ready to Transform Your Tender Management?</h2>
+                <p class="text-xl text-slate-300 mb-10 max-w-3xl mx-auto">
+                    Join hundreds of companies who have already streamlined their tender processes with EZ Bid. Start your free trial today and see the difference.
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <button class="btn-primary bg-white text-ezbid-primary hover:bg-gray-100 shadow-lg">
+                        Start Free 14-Day Trial
+                    </button>
+                    <button class="btn-primary border border-white text-white hover:bg-white hover:text-ezbid-primary transition">
+                        Schedule Demo
+                    </button>
+                </div>
+                <p class="text-sm text-slate-400 mt-6">
+                    No credit card required • Cancel anytime • Full feature access during trial
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer (Frame 9 - Bottom) -->
+    <footer class="bg-ezbid-dark text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 border-b border-slate-700 pb-12">
+                <!-- Company Info -->
+                <div class="col-span-2 md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-4">EZ Bid</h3>
+                    <p class="text-slate-400 mb-6 max-w-xs">
+                        Streamline your tender management with AI-powered insights and comprehensive workflow tools.
+                    </p>
+                    <!-- Social Icons -->
+                    <div class="flex space-x-4">
+                        <a href="#" aria-label="Facebook" class="text-slate-400 hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" aria-label="Twitter" class="text-slate-400 hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" aria-label="LinkedIn" class="text-slate-400 hover:text-white transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                        <a href="#" aria-label="Instagram" class="text-slate-400 hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Product Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Product</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Features</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Pricing</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">API</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Integrations</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Security</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Company</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Careers</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Press</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Partners</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Help Center</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Documentation</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Contact Us</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">Status</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white transition">System Status</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright & Legal -->
+            <div class="mt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-slate-400">
+                <p>&copy; 2025 EZ Bid. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
