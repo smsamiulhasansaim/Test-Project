@@ -19,7 +19,6 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .gradient-bg {
@@ -39,7 +38,6 @@
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s ease;
         }
         
         .sidebar {
@@ -107,7 +105,6 @@
             background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border-radius: 12px;
             padding: 1.5rem;
-            transition: all 0.3s ease;
         }
         
         .floating-action-btn {
@@ -203,7 +200,7 @@
             to { transform: translateX(0); opacity: 1; }
         }
         
-        /* Typewriter effect with blinking cursor that stops after typing */
+        /* Improved Typewriter with cursor hide after completion */
         .typewriter h1 {
             overflow: hidden;
             border-right: .15em solid #3b82f6;
@@ -212,7 +209,8 @@
             letter-spacing: .15em;
             animation: 
                 typing 3.5s steps(40, end),
-                blink-caret .75s step-end 5; /* Blink only 5 times then stop */
+                blink-caret .75s step-end 5, /* Blink only 5 times */
+                hide-cursor 1s forwards 6s; /* Hide cursor after typing */
         }
         
         @keyframes typing {
@@ -225,83 +223,40 @@
             50% { border-color: #3b82f6; }
         }
         
-        /* Dark Mode Styles - Improved */
+        @keyframes hide-cursor {
+            to { border-color: transparent; }
+        }
+        
         .dark-mode {
             background-color: #0f172a;
             color: #f1f5f9;
         }
         
-        .dark-mode .dashboard-card,
-        .dark-mode .chart-container {
+        .dark-card {
             background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             color: #f1f5f9;
             border: 1px solid #334155;
         }
         
-        .dark-mode .text-gray-800,
-        .dark-mode .text-gray-700,
-        .dark-mode .text-gray-600 {
-            color: #f1f5f9 !important;
-        }
-        
-        .dark-mode .bg-white {
-            background-color: #1e293b !important;
-        }
-        
-        .dark-mode .bg-gray-50 {
-            background-color: #334155 !important;
-        }
-        
-        .dark-mode .border-gray-300 {
-            border-color: #475569 !important;
-        }
-        
-        .dark-mode .shadow-sm {
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) !important;
-        }
-        
-        .dark-mode input,
-        .dark-mode .grid-layout-toggle {
-            background-color: #1e293b !important;
-            color: #f1f5f9 !important;
-            border-color: #475569 !important;
-        }
-        
-        .dark-mode input::placeholder {
-            color: #94a3b8 !important;
-        }
-        
-        .dark-mode .grid-layout-toggle button {
-            color: #94a3b8;
-        }
-        
-        .dark-mode .grid-layout-toggle button.active {
-            background-color: #334155 !important;
+        .dark-text {
             color: #f1f5f9;
         }
         
-        .dark-mode .bg-blue-100 { background-color: #1e3a8a !important; }
-        .dark-mode .bg-green-100 { background-color: #064e3b !important; }
-        .dark-mode .bg-purple-100 { background-color: #581c87 !important; }
-        .dark-mode .bg-red-100 { background-color: #7f1d1d !important; }
-        .dark-mode .bg-blue-50 { background-color: #1e3a8a !important; }
-        .dark-mode .bg-green-50 { background-color: #064e3b !important; }
-        .dark-mode .bg-purple-50 { background-color: #581c87 !important; }
-        .dark-mode .bg-orange-50 { background-color: #7c2d12 !important; }
-        
-        .dark-mode .text-blue-600 { color: #93c5fd !important; }
-        .dark-mode .text-green-600 { color: #86efac !important; }
-        .dark-mode .text-purple-600 { color: #c4b5fd !important; }
-        .dark-mode .text-red-600 { color: #fca5a5 !important; }
-        .dark-mode .text-blue-700 { color: #93c5fd !important; }
-        .dark-mode .text-green-700 { color: #86efac !important; }
-        .dark-mode .text-purple-700 { color: #c4b5fd !important; }
-        .dark-mode .text-orange-700 { color: #fdba74 !important; }
-        
-        .dark-mode .progress-bar {
-            background-color: #475569;
+        .dark-border {
+            border-color: #334155;
         }
         
+        .dark-input {
+            background-color: #1e293b;
+            color: #f1f5f9;
+            border-color: #334155;
+        }
+        
+        .dark-input::placeholder {
+            color: #94a3b8;
+        }
+        
+        /* Improved Dark Mode Toggle with Icons */
         .dark-mode-toggle {
             position: relative;
             display: inline-block;
@@ -325,6 +280,10 @@
             background-color: #1e293b;
             transition: .4s;
             border-radius: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
         }
         
         .toggle-slider:before {
@@ -337,6 +296,25 @@
             background-color: white;
             transition: .4s;
             border-radius: 50%;
+            z-index: 2;
+        }
+        
+        .toggle-icons {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1;
+        }
+        
+        .toggle-icons i {
+            width: 16px;
+            height: 16px;
+            color: #fbbf24;
+        }
+        
+        .toggle-icons .moon-icon {
+            color: #f1f5f9;
         }
         
         input:checked + .toggle-slider {
@@ -345,6 +323,27 @@
         
         input:checked + .toggle-slider:before {
             transform: translateX(26px);
+        }
+        
+        /* Mobile Sidebar Animation */
+        .mobile-sidebar-container {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .mobile-sidebar-container.open {
+            transform: translateX(0);
+        }
+        
+        .mobile-sidebar-backdrop {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .mobile-sidebar-backdrop.open {
+            opacity: 1;
+            visibility: visible;
         }
         
         .grid-layout-toggle {
@@ -394,50 +393,151 @@
             font-size: 1rem;
         }
         
-        /* Responsive improvements */
-        @media (max-width: 768px) {
-            .stats-cards {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-            
-            .chart-container, .dashboard-card {
-                margin-bottom: 1rem;
-            }
-            
-            .floating-action-btn {
-                bottom: 1rem;
-                right: 1rem;
-                width: 50px;
-                height: 50px;
-            }
-            
-            .typewriter h1 {
-                font-size: 1.5rem;
-                white-space: normal;
-                border-right: none;
-                animation: none;
-            }
+        /* AI Assistant Section */
+        .ai-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
         }
         
-        @media (max-width: 480px) {
-            .stats-cards {
-                grid-template-columns: 1fr !important;
-            }
-            
-            .grid-layout-toggle {
-                display: none;
-            }
+        .ai-chat-window {
+            position: absolute;
+            bottom: 160px;
+            right: 0;
+            left: auto;
+            width: 350px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: none;
+
+        }
+        
+        .ai-chat-window.open {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .ai-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .ai-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f8fafc;
+        }
+        
+        .ai-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .ai-input input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            outline: none;
+        }
+        
+        .ai-input button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-left: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        /* Dark mode improvements for AI */
+        .dark-mode .ai-chat-window {
+            background: #1e293b;
+        }
+        
+        .dark-mode .ai-messages {
+            background: #0f172a;
+        }
+        
+        .dark-mode .ai-input {
+            border-top: 1px solid #334155;
+        }
+        
+        .dark-mode .ai-input input {
+            background: #334155;
+            border: 1px solid #475569;
+            color: #f1f5f9;
         }
     </style>
 </head>
 <body class="bg-gray-50">
+    <!-- AI Assistant -->
+    <div class="ai-assistant">
+        <div class="ai-chat-window" id="ai-chat-window">
+            <div class="ai-header">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-2">
+                        <i data-lucide="bot" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold"> Zoya Assistant</h3>
+                        <p class="text-xs text-white/80">Online - Ready to help</p>
+                    </div>
+                </div>
+                <button id="close-ai-chat">
+                    <i data-lucide="x" class="w-5 h-5 text-white"></i>
+                </button>
+            </div>
+            <div class="ai-messages" id="ai-messages">
+                <div class="flex mb-4">
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
+                        <i data-lucide="bot" class="w-4 h-4 text-blue-600"></i>
+                    </div>
+                    <div class="bg-white rounded-lg p-3 shadow-sm max-w-[80%]">
+                        <p class="text-sm">Hello! I'm your Bid Assistant. How can I help with your tender management today?</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-input">
+                <input type="text" placeholder="Type your message..." id="ai-input">
+                <button id="send-ai-message">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- AI FAB Button -->
+        <div class="floating-action-btn ai-fab" id="ai-fab">
+            <i data-lucide="bot" class="w-6 h-6 text-white"></i>
+        </div>
+    </div>
+    
     <!-- Floating Action Button -->
-    <div class="floating-action-btn" id="fab">
+    <div class="floating-action-btn" id="fab" style="right: 2rem; bottom: 8rem;">
         <i data-lucide="plus" class="w-6 h-6 text-white"></i>
     </div>
     
     <!-- FAB Menu (hidden by default) -->
-    <div id="fab-menu" class="fixed bottom-24 right-8 bg-white rounded-xl shadow-xl p-4 z-50 hidden">
+    <div id="fab-menu" class="fixed bottom-40 right-8 bg-white rounded-xl shadow-xl p-4 z-50 hidden">
         <div class="space-y-3">
             <button class="flex items-center w-full p-2 text-left hover:bg-gray-100 rounded-lg transition">
                 <i data-lucide="search" class="w-5 h-5 mr-3 text-blue-600"></i>
@@ -549,9 +649,15 @@
                                 </button>
                             </div>
                             
+                            <!-- Improved Dark Mode Toggle with Icons -->
                             <label class="dark-mode-toggle">
                                 <input type="checkbox" id="dark-mode-toggle">
-                                <span class="toggle-slider"></span>
+                                <span class="toggle-slider">
+                                    <div class="toggle-icons">
+                                        <i data-lucide="sun" class="sun-icon"></i>
+                                        <i data-lucide="moon" class="moon-icon"></i>
+                                    </div>
+                                </span>
                             </label>
                         </div>
                         
@@ -619,15 +725,15 @@
                                 <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                                     <i data-lucide="user" class="w-4 h-4 text-blue-600"></i>
                                 </div>
-                                <span class="text-sm font-medium text-gray-700 hidden md:block">John Doe</span>
+                                <span class="text-sm font-medium text-gray-700 hidden md:block">S M Samiul Hasan </span>
                                 <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500"></i>
                             </button>
                             
                             <!-- User Dropdown -->
                             <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-50 hidden">
                                 <div class="p-4 border-b">
-                                    <p class="font-medium text-gray-800">John Doe</p>
-                                    <p class="text-sm text-gray-500">john.doe@example.com</p>
+                                    <p class="font-medium text-gray-800">S M Samiul Hasan </p>
+                                    <p class="text-sm text-gray-500">hello.smsamiulhasan@gmail.com</p>
                                 </div>
                                 <div class="p-2">
                                     <a href="#" class="flex items-center p-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
@@ -659,12 +765,12 @@
             <main class="flex-1 overflow-y-auto p-6" id="dashboard-content">
                 <!-- Welcome Section -->
                 <div class="mb-8 typewriter">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Welcome back, John!</h1>
+                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Welcome back, S M Samiul Hasan!</h1>
                     <p class="text-gray-600">Here's what's happening with your tenders today.</p>
                 </div>
                 
                 <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 stats-cards" id="stats-cards">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="stats-cards">
                     <div class="dashboard-card p-6 card-hover fade-in" data-aos="fade-up" data-aos-delay="100">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-gray-700">Active Tenders</h3>
@@ -800,7 +906,7 @@
                             <button class="w-full flex items-center justify-between p-4 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition">
                                 <div class="flex items-center">
                                     <i data-lucide="search" class="w-5 h-5 mr-3"></i>
-                                    <span>Find New Tenders</span>
+                                    <span class="font-medium">Search Tenders</span>
                                 </div>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
@@ -808,82 +914,91 @@
                             <button class="w-full flex items-center justify-between p-4 bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition">
                                 <div class="flex items-center">
                                     <i data-lucide="plus" class="w-5 h-5 mr-3"></i>
-                                    <span>Create New Bid</span>
+                                    <span class="font-medium">Create Alert</span>
                                 </div>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
                             
                             <button class="w-full flex items-center justify-between p-4 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition">
                                 <div class="flex items-center">
-                                    <i data-lucide="calendar" class="w-5 h-5 mr-3"></i>
-                                    <span>View Calendar</span>
+                                    <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i>
+                                    <span class="font-medium">View Analytics</span>
                                 </div>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
                             
                             <button class="w-full flex items-center justify-between p-4 bg-orange-50 text-orange-700 rounded-lg hover:bg-orange-100 transition">
                                 <div class="flex items-center">
-                                    <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i>
-                                    <span>Generate Report</span>
+                                    <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                                    <span class="font-medium">Team Workspace</span>
                                 </div>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </button>
                         </div>
                     </div>
                     
-                    <!-- Progress Tracking -->
+                    <!-- Submission Progress -->
                     <div class="dashboard-card p-6 card-hover lg:col-span-2" data-aos="zoom-in" data-aos-delay="200">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-6">Progress Tracking</h3>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-6">Submission Progress</h3>
                         
                         <div class="space-y-6">
                             <!-- Progress Item -->
                             <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <h4 class="font-medium text-gray-800">Road Construction Project</h4>
-                                    <span class="text-sm font-medium text-blue-600">65%</span>
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">Road Construction - Dhaka</h4>
+                                    <span class="text-sm font-medium text-blue-600">75%</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill bg-blue-500" style="width: 65%"></div>
+                                    <div class="progress-fill bg-blue-500" style="width: 75%"></div>
                                 </div>
-                                <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                    <span>Documentation</span>
-                                    <span>Technical Evaluation</span>
-                                    <span>Financial Proposal</span>
-                                    <span>Submission</span>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-xs text-gray-500">Due: Oct 30, 2025</span>
+                                    <span class="text-xs text-gray-500">3 days left</span>
                                 </div>
                             </div>
                             
                             <!-- Progress Item -->
                             <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <h4 class="font-medium text-gray-800">IT Equipment Supply</h4>
-                                    <span class="text-sm font-medium text-green-600">85%</span>
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">IT Equipment Procurement</h4>
+                                    <span class="text-sm font-medium text-green-600">100%</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill bg-green-500" style="width: 85%"></div>
+                                    <div class="progress-fill bg-green-500" style="width: 100%"></div>
                                 </div>
-                                <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                    <span>Documentation</span>
-                                    <span>Technical Evaluation</span>
-                                    <span>Financial Proposal</span>
-                                    <span>Submission</span>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-xs text-gray-500">Submitted: Oct 25, 2025</span>
+                                    <span class="text-xs text-green-500">Completed</span>
                                 </div>
                             </div>
                             
                             <!-- Progress Item -->
                             <div>
-                                <div class="flex items-center justify-between mb-2">
-                                    <h4 class="font-medium text-gray-800">Medical Equipment Tender</h4>
-                                    <span class="text-sm font-medium text-purple-600">45%</span>
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">Medical Equipment Supply</h4>
+                                    <span class="text-sm font-medium text-yellow-600">45%</span>
                                 </div>
                                 <div class="progress-bar">
-                                    <div class="progress-fill bg-purple-500" style="width: 45%"></div>
+                                    <div class="progress-fill bg-yellow-500" style="width: 45%"></div>
                                 </div>
-                                <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                    <span>Documentation</span>
-                                    <span>Technical Evaluation</span>
-                                    <span>Financial Proposal</span>
-                                    <span>Submission</span>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-xs text-gray-500">Due: Nov 5, 2025</span>
+                                    <span class="text-xs text-gray-500">9 days left</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Progress Item -->
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <h4 class="font-medium text-gray-800">School Furniture Tender</h4>
+                                    <span class="text-sm font-medium text-red-600">20%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill bg-red-500" style="width: 20%"></div>
+                                </div>
+                                <div class="flex justify-between mt-1">
+                                    <span class="text-xs text-gray-500">Due: Nov 10, 2025</span>
+                                    <span class="text-xs text-red-500">Urgent</span>
                                 </div>
                             </div>
                         </div>
@@ -893,22 +1008,23 @@
         </div>
     </div>
     
-    <!-- Mobile Menu (hidden by default) -->
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-50 hidden">
-        <div class="p-6">
-            <div class="flex items-center justify-between mb-8">
+    <!-- Mobile Sidebar (hidden by default) -->
+    <div id="mobile-sidebar" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black bg-opacity-50 mobile-sidebar-backdrop" id="mobile-sidebar-backdrop"></div>
+        <div class="relative sidebar w-64 h-full text-white p-6 mobile-sidebar-container" id="mobile-sidebar-container">
+            <div class="flex items-center justify-between mb-10">
                 <div class="flex items-center">
                     <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
                         <i data-lucide="briefcase" class="w-6 h-6 text-white"></i>
                     </div>
                     <h1 class="text-xl font-bold">EZ Bid Pro</h1>
                 </div>
-                <button id="mobile-menu-close">
-                    <i data-lucide="x" class="w-6 h-6 text-gray-600"></i>
+                <button id="mobile-sidebar-close">
+                    <i data-lucide="x" class="w-6 h-6 text-white"></i>
                 </button>
             </div>
             
-            <nav class="space-y-4">
+            <nav class="space-y-2">
                 <a href="#" class="sidebar-item active flex items-center p-3">
                     <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
                     <span>Dashboard</span>
@@ -920,7 +1036,7 @@
                 <a href="#" class="sidebar-item flex items-center p-3">
                     <i data-lucide="bell" class="w-5 h-5 mr-3"></i>
                     <span>Alerts & Notifications</span>
-                    <span class="notification-dot pulse-dot ml-2"></span>
+                    <span class="notification-dot pulse-dot"></span>
                 </a>
                 <a href="#" class="sidebar-item flex items-center p-3">
                     <i data-lucide="bar-chart-3" class="w-5 h-5 mr-3"></i>
@@ -943,197 +1059,311 @@
                     <span>Settings</span>
                 </a>
             </nav>
+            
+            <div class="mt-auto pt-10">
+                <div class="bg-blue-900/30 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-2">Upgrade to Premium</h3>
+                    <p class="text-sm text-blue-200 mb-3">Unlock advanced features and analytics</p>
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm font-medium transition">
+                        Upgrade Now
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-    
+
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-        
         // Initialize AOS (Animate On Scroll)
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 100
-        });
-        
-        // DOM Elements
-        const darkModeToggle = document.getElementById('dark-mode-toggle');
-        const body = document.body;
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuClose = document.getElementById('mobile-menu-close');
-        const notificationBtn = document.getElementById('notification-btn');
-        const notificationDropdown = document.getElementById('notification-dropdown');
-        const userMenuBtn = document.getElementById('user-menu-btn');
-        const userDropdown = document.getElementById('user-dropdown');
-        const fab = document.getElementById('fab');
-        const fabMenu = document.getElementById('fab-menu');
-        const gridButtons = document.querySelectorAll('.grid-btn');
-        const statsCards = document.getElementById('stats-cards');
-        const dashboardContent = document.getElementById('dashboard-content');
-        
-        // Dark Mode Toggle
-        darkModeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('dark-mode');
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                body.classList.remove('dark-mode');
-                localStorage.setItem('darkMode', 'disabled');
-            }
-        });
-        
-        // Check for saved dark mode preference
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            darkModeToggle.checked = true;
-            body.classList.add('dark-mode');
-        }
-        
-        // Mobile Menu Toggle
-        mobileMenuToggle.addEventListener('click', function() {
-            mobileMenu.classList.remove('hidden');
-        });
-        
-        mobileMenuClose.addEventListener('click', function() {
-            mobileMenu.classList.add('hidden');
-        });
-        
-        // Notification Dropdown Toggle
-        notificationBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            notificationDropdown.classList.toggle('hidden');
-            userDropdown.classList.add('hidden');
-        });
-        
-        // User Dropdown Toggle
-        userMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            userDropdown.classList.toggle('hidden');
-            notificationDropdown.classList.add('hidden');
-        });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function() {
-            notificationDropdown.classList.add('hidden');
-            userDropdown.classList.add('hidden');
-            fabMenu.classList.add('hidden');
-        });
-        
-        // FAB Toggle
-        fab.addEventListener('click', function(e) {
-            e.stopPropagation();
-            fabMenu.classList.toggle('hidden');
-        });
-        
-        // Grid Layout Toggle
-        gridButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                gridButtons.forEach(btn => btn.classList.remove('active'));
-                
-                // Add active class to clicked button
-                this.classList.add('active');
-                
-                // Get grid layout value
-                const gridValue = this.getAttribute('data-grid');
-                
-                // Update stats cards grid layout
-                if (gridValue === '1') {
-                    statsCards.classList.remove('grid-2', 'grid-3', 'grid-4');
-                    statsCards.classList.add('grid', 'grid-cols-1');
-                    dashboardContent.classList.add('compact-view');
-                } else if (gridValue === '2') {
-                    statsCards.classList.remove('grid-3', 'grid-4');
-                    statsCards.classList.add('grid-2');
-                    dashboardContent.classList.remove('compact-view');
-                } else if (gridValue === '4') {
-                    statsCards.classList.remove('grid-2', 'grid-3');
-                    statsCards.classList.add('grid-4');
-                    dashboardContent.classList.remove('compact-view');
-                }
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 100
             });
-        });
-        
-        // Activity Chart
-        const ctx = document.getElementById('activityChart').getContext('2d');
-        const activityChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [
-                    {
-                        label: 'Tenders Viewed',
-                        data: [12, 19, 14, 17, 22, 18, 15],
+            
+            // Initialize Lucide Icons
+            lucide.createIcons();
+            
+            // Initialize Chart.js
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            const activityChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Tenders Submitted',
+                        data: [12, 19, 15, 25, 22, 30, 28, 35, 32, 40],
                         borderColor: '#3b82f6',
                         backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    },
-                    {
-                        label: 'Tenders Saved',
-                        data: [5, 8, 6, 9, 12, 7, 10],
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Tenders Won',
+                        data: [5, 8, 6, 12, 10, 15, 14, 18, 16, 20],
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    }
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            drawBorder: false
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
                         }
                     },
-                    x: {
-                        grid: {
-                            display: false
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
                         }
                     }
                 }
+            });
+            
+            // Mobile Menu Toggle with Animation
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileSidebar = document.getElementById('mobile-sidebar');
+            const mobileSidebarClose = document.getElementById('mobile-sidebar-close');
+            const mobileSidebarBackdrop = document.getElementById('mobile-sidebar-backdrop');
+            const mobileSidebarContainer = document.getElementById('mobile-sidebar-container');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                mobileSidebar.classList.remove('hidden');
+                setTimeout(() => {
+                    mobileSidebarBackdrop.classList.add('open');
+                    mobileSidebarContainer.classList.add('open');
+                }, 10);
+            });
+            
+            function closeMobileSidebar() {
+                mobileSidebarBackdrop.classList.remove('open');
+                mobileSidebarContainer.classList.remove('open');
+                setTimeout(() => {
+                    mobileSidebar.classList.add('hidden');
+                }, 300);
             }
-        });
-        
-        // Typewriter effect fix - remove cursor after animation completes
-        setTimeout(() => {
-            const typewriter = document.querySelector('.typewriter h1');
-            if (typewriter) {
-                typewriter.style.borderRight = 'none';
+            
+            mobileSidebarClose.addEventListener('click', closeMobileSidebar);
+            mobileSidebarBackdrop.addEventListener('click', closeMobileSidebar);
+            
+            // Notification Dropdown
+            const notificationBtn = document.getElementById('notification-btn');
+            const notificationDropdown = document.getElementById('notification-dropdown');
+            
+            notificationBtn.addEventListener('click', function() {
+                notificationDropdown.classList.toggle('hidden');
+            });
+            
+            // User Menu Dropdown
+            const userMenuBtn = document.getElementById('user-menu-btn');
+            const userDropdown = document.getElementById('user-dropdown');
+            
+            userMenuBtn.addEventListener('click', function() {
+                userDropdown.classList.toggle('hidden');
+            });
+            
+            // FAB Menu
+            const fab = document.getElementById('fab');
+            const fabMenu = document.getElementById('fab-menu');
+            
+            fab.addEventListener('click', function() {
+                fabMenu.classList.toggle('hidden');
+            }); 
+            
+            // AI Assistant
+            const aiFab = document.getElementById('ai-fab');
+            const aiChatWindow = document.getElementById('ai-chat-window');
+            const closeAiChat = document.getElementById('close-ai-chat');
+            const sendAiMessage = document.getElementById('send-ai-message');
+            const aiInput = document.getElementById('ai-input');
+            const aiMessages = document.getElementById('ai-messages');
+            
+            aiFab.addEventListener('click', function() {
+                aiChatWindow.classList.toggle('open');
+            });
+            
+            closeAiChat.addEventListener('click', function() {
+                aiChatWindow.classList.remove('open');
+            });
+            
+            function addAiMessage(message, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `flex mb-4 ${isUser ? 'justify-end' : ''}`;
+                
+                if (!isUser) {
+                    messageDiv.innerHTML = `
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
+                            <i data-lucide="bot" class="w-4 h-4 text-blue-600"></i>
+                        </div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm max-w-[80%]">
+                            <p class="text-sm">${message}</p>
+                        </div>
+                    `;
+                } else {
+                    messageDiv.innerHTML = `
+                        <div class="bg-blue-500 text-white rounded-lg p-3 shadow-sm max-w-[80%]">
+                            <p class="text-sm">${message}</p>
+                        </div>
+                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center ml-2 flex-shrink-0">
+                            <i data-lucide="user" class="w-4 h-4 text-white"></i>
+                        </div>
+                    `;
+                }
+                
+                aiMessages.appendChild(messageDiv);
+                aiMessages.scrollTop = aiMessages.scrollHeight;
+                lucide.createIcons();
             }
-        }, 4000); // Animation duration + blink duration
-        
-        // Responsive adjustments
-        function handleResize() {
-            if (window.innerWidth < 768) {
-                statsCards.classList.remove('grid-2', 'grid-3', 'grid-4');
-                statsCards.classList.add('grid', 'grid-cols-1');
-            } else {
-                const activeGrid = document.querySelector('.grid-btn.active').getAttribute('data-grid');
-                if (activeGrid === '1') {
-                    statsCards.classList.remove('grid-2', 'grid-3', 'grid-4');
-                    statsCards.classList.add('grid', 'grid-cols-1');
-                } else if (activeGrid === '2') {
-                    statsCards.classList.remove('grid-3', 'grid-4');
-                    statsCards.classList.add('grid-2');
-                } else if (activeGrid === '4') {
-                    statsCards.classList.remove('grid-2', 'grid-3');
-                    statsCards.classList.add('grid-4');
+            
+            sendAiMessage.addEventListener('click', function() {
+                const message = aiInput.value.trim();
+                if (message) {
+                    addAiMessage(message, true);
+                    aiInput.value = '';
+                    
+                    // Simulate AI response
+                    setTimeout(() => {
+                        addAiMessage("I understand you're asking about: '" + message + "'. As an AI assistant, I can help you with tender searches, deadline tracking, and bid preparation. How can I assist you further?");
+                    }, 1000);
+                }
+            });
+            
+            aiInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendAiMessage.click();
+                }
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!notificationBtn.contains(event.target) && !notificationDropdown.contains(event.target)) {
+                    notificationDropdown.classList.add('hidden');
+                }
+                
+                if (!userMenuBtn.contains(event.target) && !userDropdown.contains(event.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+                
+                if (!fab.contains(event.target) && !fabMenu.contains(event.target)) {
+                    fabMenu.classList.add('hidden');
+                }
+                
+                if (!aiFab.contains(event.target) && !aiChatWindow.contains(event.target)) {
+                    aiChatWindow.classList.remove('open');
+                }
+            });
+            
+            // Improved Dark Mode Toggle
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const body = document.body;
+            
+            // Function to apply dark mode styles
+            function applyDarkMode(isDark) {
+                if (isDark) {
+                    body.classList.add('dark-mode');
+                    document.querySelectorAll('.dashboard-card').forEach(card => {
+                        card.classList.add('dark-card');
+                    });
+                    document.querySelectorAll('.chart-container').forEach(chart => {
+                        chart.classList.add('dark-card');
+                    });
+                    document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span').forEach(text => {
+                        if (!text.closest('.sidebar') && !text.closest('.dark-card') && !text.classList.contains('text-gray-500')) {
+                            text.classList.add('dark-text');
+                        }
+                    });
+                    document.querySelectorAll('input').forEach(input => {
+                        input.classList.add('dark-input');
+                    });
+                    
+                    // Update status badges for dark mode
+                    document.querySelectorAll('.status-open').forEach(badge => {
+                        badge.classList.remove('bg-blue-100', 'text-blue-700');
+                        badge.classList.add('bg-blue-900', 'text-blue-200');
+                    });
+                    document.querySelectorAll('.status-closed').forEach(badge => {
+                        badge.classList.remove('bg-red-100', 'text-red-700');
+                        badge.classList.add('bg-red-900', 'text-red-200');
+                    });
+                    document.querySelectorAll('.status-upcoming').forEach(badge => {
+                        badge.classList.remove('bg-yellow-100', 'text-yellow-700');
+                        badge.classList.add('bg-yellow-900', 'text-yellow-200');
+                    });
+                } else {
+                    body.classList.remove('dark-mode');
+                    document.querySelectorAll('.dashboard-card').forEach(card => {
+                        card.classList.remove('dark-card');
+                    });
+                    document.querySelectorAll('.chart-container').forEach(chart => {
+                        chart.classList.remove('dark-card');
+                    });
+                    document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span').forEach(text => {
+                        text.classList.remove('dark-text');
+                    });
+                    document.querySelectorAll('input').forEach(input => {
+                        input.classList.remove('dark-input');
+                    });
+                    
+                    // Revert status badges for light mode
+                    document.querySelectorAll('.status-open').forEach(badge => {
+                        badge.classList.add('bg-blue-100', 'text-blue-700');
+                        badge.classList.remove('bg-blue-900', 'text-blue-200');
+                    });
+                    document.querySelectorAll('.status-closed').forEach(badge => {
+                        badge.classList.add('bg-red-100', 'text-red-700');
+                        badge.classList.remove('bg-red-900', 'text-red-200');
+                    });
+                    document.querySelectorAll('.status-upcoming').forEach(badge => {
+                        badge.classList.add('bg-yellow-100', 'text-yellow-700');
+                        badge.classList.remove('bg-yellow-900', 'text-yellow-200');
+                    });
                 }
             }
-        }
-        
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Initial call
+            
+            darkModeToggle.addEventListener('change', function() {
+                applyDarkMode(this.checked);
+            });
+            
+            // Grid Layout Toggle
+            const gridButtons = document.querySelectorAll('.grid-btn');
+            const statsCards = document.getElementById('stats-cards');
+            
+            gridButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    gridButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get grid value
+                    const gridValue = this.getAttribute('data-grid');
+                    
+                    // Update grid layout
+                    statsCards.className = `grid grid-cols-1 gap-6 mb-8`;
+                    
+                    if (gridValue === '4') {
+                        statsCards.classList.add('md:grid-cols-2', 'lg:grid-cols-4');
+                    } else if (gridValue === '2') {
+                        statsCards.classList.add('md:grid-cols-2');
+                    } else if (gridValue === '1') {
+                        // Already set to grid-cols-1
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
