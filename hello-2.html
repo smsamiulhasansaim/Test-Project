@@ -16,7 +16,6 @@
             --accent: #d97706;
             --dark: #0f172a;
             --light: #f8fafc;
-            --gradient: linear-gradient(135deg, #2563eb 0%, #059669 100%);
         }
         
         * {
@@ -32,12 +31,6 @@
             overflow-x: hidden;
         }
         
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
         .hero-gradient {
             background: linear-gradient(135deg, #1e3a8a 0%, #0f766e 100%);
         }
@@ -50,12 +43,12 @@
         }
         
         .card-hover {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
         }
         
         .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
         }
         
         .floating {
@@ -63,14 +56,9 @@
         }
         
         @keyframes floating {
-            0% { transform: translate(0, 0px) rotate(0deg); }
-            50% { transform: translate(0, -20px) rotate(5deg); }
-            100% { transform: translate(0, 0px) rotate(0deg); }
-        }
-        
-        .feature-icon {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.2);
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, -15px); }
+            100% { transform: translate(0, 0px); }
         }
         
         .nav-blur {
@@ -79,33 +67,14 @@
             border-bottom: 1px solid rgba(226, 232, 240, 0.8);
         }
         
-        .section-padding {
-            padding: 80px 0;
-        }
-        
         .btn-primary {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
             transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.4);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
         }
         
         .scroll-animation {
@@ -119,47 +88,89 @@
             transform: translateY(0);
         }
         
-        .stat-card {
+        .feature-card {
             background: white;
             border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.05);
             border: 1px solid #e2e8f0;
             height: 100%;
             transition: all 0.3s ease;
         }
         
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
         }
         
         .tender-card {
             background: white;
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
             border: 1px solid #e2e8f0;
         }
         
         .tender-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            height: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+        
+        .step-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -201,100 +212,93 @@
     <!-- Hero Section -->
     <section class="pt-32 pb-20 hero-gradient text-white overflow-hidden relative">
         <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse animation-delay-2000"></div>
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
         </div>
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
                     <div class="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6">
-                        <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
-                        <span class="text-sm font-medium">AI-Powered Tender Management Platform</span>
+                        <span class="w-2 h-2 rounded-full bg-green-400 mr-2"></span>
+                        <span class="text-sm font-medium">AI-Powered Tender Management</span>
                     </div>
                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
                         Win More Tenders with 
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-400">AI-Powered</span> 
-                        Insights
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-400">AI Insights</span>
                     </h1>
                     <p class="text-xl text-white/80 mb-8 max-w-lg">
-                        Our AI platform analyzes thousands of tenders to give you the competitive edge. Discover opportunities and submit winning bids faster than ever.
+                        Discover opportunities, track deadlines, and submit winning bids faster with our AI-powered platform.
                     </p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-10">
                         <a href="#" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center">
                             <span>Start Free Trial</span>
                             <i class="fas fa-arrow-right ml-2"></i>
                         </a>
-                        <a href="#" class="btn-secondary px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center border-white text-white hover:bg-white/10">
+                        <a href="#" class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center transition-all">
                             <i class="fas fa-play-circle mr-2"></i>
                             <span>Watch Demo</span>
                         </a>
                     </div>
                     <div class="flex items-center text-white/70">
                         <div class="flex -space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 border-2 border-white shadow-lg"></div>
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-cyan-500 border-2 border-white shadow-lg"></div>
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 border-2 border-white shadow-lg"></div>
+                            <img class="w-10 h-10 rounded-full border-2 border-white shadow-lg" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                            <img class="w-10 h-10 rounded-full border-2 border-white shadow-lg" src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
+                            <img class="w-10 h-10 rounded-full border-2 border-white shadow-lg" src="https://randomuser.me/api/portraits/men/76.jpg" alt="User">
                         </div>
                         <span class="ml-4 text-sm font-medium">Join 2,500+ companies winning more tenders</span>
                     </div>
                 </div>
                 <div class="relative">
                     <div class="relative z-10 floating">
-                        <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
-                            <div class="bg-white rounded-2xl shadow-xl p-6">
-                                <div class="flex items-center justify-between mb-6">
-                                    <h3 class="text-lg font-bold text-gray-900">Active Tender Alerts</h3>
-                                    <div class="flex space-x-2">
-                                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                                    </div>
+                        <div class="bg-white rounded-2xl shadow-xl p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-bold text-gray-900">Active Tender Alerts</h3>
+                                <div class="flex space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
                                 </div>
-                                <div class="space-y-4">
-                                    <div class="flex items-start p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
-                                        <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                                            <i class="fas fa-building text-blue-600 text-lg"></i>
-                                        </div>
-                                        <div class="ml-4">
-                                            <h4 class="font-semibold text-gray-900">Road Construction Project</h4>
-                                            <p class="text-sm text-gray-600">Ministry of Infrastructure • Deadline: 15 Dec 2025</p>
-                                            <div class="flex items-center mt-2">
-                                                <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">High Value</span>
-                                                <span class="ml-2 px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Match: 92%</span>
-                                            </div>
-                                        </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-start p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-building text-blue-600 text-lg"></i>
                                     </div>
-                                    <div class="flex items-start p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100">
-                                        <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                                            <i class="fas fa-heart text-green-600 text-lg"></i>
-                                        </div>
-                                        <div class="ml-4">
-                                            <h4 class="font-semibold text-gray-900">Medical Equipment Supply</h4>
-                                            <p class="text-sm text-gray-600">Health Department • Deadline: 22 Nov 2025</p>
-                                            <div class="flex items-center mt-2">
-                                                <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">Urgent</span>
-                                                <span class="ml-2 px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Match: 87%</span>
-                                            </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold text-gray-900">Road Construction Project</h4>
+                                        <p class="text-sm text-gray-600">Ministry of Infrastructure</p>
+                                        <div class="flex items-center mt-2">
+                                            <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">High Value</span>
+                                            <span class="ml-2 px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Match: 92%</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-6 pt-4 border-t border-gray-200">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-sm text-gray-600">3 new tenders match your profile</span>
-                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
-                                            View All
-                                            <i class="fas fa-chevron-right ml-1 text-xs"></i>
-                                        </button>
+                                <div class="flex items-start p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border border-green-100">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                                        <i class="fas fa-heart text-green-600 text-lg"></i>
                                     </div>
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold text-gray-900">Medical Equipment Supply</h4>
+                                        <p class="text-sm text-gray-600">Health Department</p>
+                                        <div class="flex items-center mt-2">
+                                            <span class="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">Urgent</span>
+                                            <span class="ml-2 px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">Match: 87%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-gray-200">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">3 new tenders match your profile</span>
+                                    <button class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
+                                        View All
+                                        <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Floating elements -->
-                    <div class="absolute -top-10 -left-10 w-24 h-24 bg-amber-400/20 rounded-full blur-xl"></div>
-                    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-400/20 rounded-full blur-xl"></div>
                 </div>
             </div>
         </div>
@@ -305,19 +309,19 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <div class="stat-card text-center">
-                    <div class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">15K+</div>
+                    <div class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">15K+</div>
                     <div class="text-gray-600 font-medium">Active Tenders</div>
                 </div>
                 <div class="stat-card text-center">
-                    <div class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">2.5K+</div>
+                    <div class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">2.5K+</div>
                     <div class="text-gray-600 font-medium">Companies</div>
                 </div>
                 <div class="stat-card text-center">
-                    <div class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">68%</div>
-                    <div class="text-gray-600 font-medium">Average Win Rate</div>
+                    <div class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">68%</div>
+                    <div class="text-gray-600 font-medium">Win Rate</div>
                 </div>
                 <div class="stat-card text-center">
-                    <div class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">24/7</div>
+                    <div class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">24/7</div>
                     <div class="text-gray-600 font-medium">AI Monitoring</div>
                 </div>
             </div>
@@ -325,11 +329,11 @@
     </section>
 
     <!-- Features Section -->
-    <section class="section-padding bg-gradient-to-b from-white to-gray-50">
+    <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Powerful Features for Tender Success</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Streamline your entire tender management process with our AI-powered platform.</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Powerful Features</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Everything you need to streamline your tender management process</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -361,41 +365,41 @@
     </section>
 
     <!-- How It Works -->
-    <section class="section-padding bg-white">
+    <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How EZ Bid Pro Works</h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Transform your tender management process in four simple steps</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to transform your tender management process</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center scroll-animation">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <span class="text-white text-2xl font-bold">1</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="step-card scroll-animation">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center mb-6 shadow-lg">
+                        <span class="text-white text-xl font-bold">1</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Set Up Your Profile</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Set Up Profile</h3>
                     <p class="text-gray-600">Tell us about your business and the types of tenders you're interested in.</p>
                 </div>
                 
-                <div class="text-center scroll-animation">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <span class="text-white text-2xl font-bold">2</span>
+                <div class="step-card scroll-animation">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg">
+                        <span class="text-white text-xl font-bold">2</span>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Receive AI Matches</h3>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Receive Matches</h3>
                     <p class="text-gray-600">Our AI scans thousands of tenders and notifies you of the best matches.</p>
                 </div>
                 
-                <div class="text-center scroll-animation">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <span class="text-white text-2xl font-bold">3</span>
+                <div class="step-card scroll-animation">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center mb-6 shadow-lg">
+                        <span class="text-white text-xl font-bold">3</span>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Analyze & Prepare</h3>
                     <p class="text-gray-600">Use our tools to analyze requirements and prepare documents.</p>
                 </div>
                 
-                <div class="text-center scroll-animation">
-                    <div class="w-20 h-20 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <span class="text-white text-2xl font-bold">4</span>
+                <div class="step-card scroll-animation">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 flex items-center justify-center mb-6 shadow-lg">
+                        <span class="text-white text-xl font-bold">4</span>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Submit & Track</h3>
                     <p class="text-gray-600">Submit your bid and track its status with real-time updates.</p>
@@ -404,14 +408,59 @@
         </div>
     </section>
 
+    <!-- Testimonials -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">What Our Clients Say</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Hear from companies that transformed their tender process</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="testimonial-card scroll-animation">
+                    <div class="flex items-center mb-6">
+                        <img class="w-12 h-12 rounded-full" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-900">Michael Johnson</h4>
+                            <p class="text-gray-600 text-sm">Construction Manager</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"EZ Bid Pro helped us increase our win rate by 40%. The AI matching is incredibly accurate."</p>
+                </div>
+                
+                <div class="testimonial-card scroll-animation">
+                    <div class="flex items-center mb-6">
+                        <img class="w-12 h-12 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-900">Sarah Williams</h4>
+                            <p class="text-gray-600 text-sm">Procurement Director</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"The deadline management feature saved us from missing several important submissions. Game changer!"</p>
+                </div>
+                
+                <div class="testimonial-card scroll-animation">
+                    <div class="flex items-center mb-6">
+                        <img class="w-12 h-12 rounded-full" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Client">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-gray-900">David Chen</h4>
+                            <p class="text-gray-600 text-sm">IT Services CEO</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Competitive intelligence gave us the edge we needed. We now understand the market better than ever."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Section -->
-    <section class="py-20 bg-gradient-to-r from-blue-600 to-emerald-600 text-white rounded-t-3xl">
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-emerald-600 text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Tender Process?</h2>
-            <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">Join thousands of companies already using EZ Bid Pro to win more tenders with less effort.</p>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Win More Tenders?</h2>
+            <p class="text-xl text-white/80 mb-8 max-w-2xl mx-auto">Join thousands of companies using EZ Bid Pro to transform their tender process.</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                 <a href="#" class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-xl font-semibold text-lg shadow-lg transition-all">
-                    Start Your Free Trial
+                    Start Free Trial
                 </a>
                 <a href="#" class="border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-xl font-semibold text-lg transition-all">
                     Schedule a Demo
@@ -432,7 +481,7 @@
                         </div>
                         <span class="ml-3 text-2xl font-bold">EZ <span class="text-blue-400">Bid</span></span>
                     </div>
-                    <p class="text-gray-400 mb-6">AI-powered tender management platform helping businesses win more contracts with data-driven insights.</p>
+                    <p class="text-gray-400 mb-6">AI-powered tender management platform helping businesses win more contracts.</p>
                     <div class="flex space-x-4">
                         <a href="#" class="text-gray-400 hover:text-white transition-colors">
                             <i class="fab fa-twitter text-xl"></i>
@@ -510,23 +559,6 @@
             const animatedElements = document.querySelectorAll('.scroll-animation');
             animatedElements.forEach(el => {
                 observer.observe(el);
-            });
-            
-            // Add animation delay for stats counting (simulated)
-            const statNumbers = document.querySelectorAll('.text-4xl, .text-5xl');
-            statNumbers.forEach(stat => {
-                const target = parseInt(stat.textContent);
-                let current = 0;
-                const increment = target / 50;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        stat.textContent = target.toLocaleString() + (stat.textContent.includes('%') ? '%' : '+');
-                        clearInterval(timer);
-                    } else {
-                        stat.textContent = Math.floor(current).toLocaleString() + (stat.textContent.includes('%') ? '%' : '+');
-                    }
-                }, 30);
             });
         });
     </script>
